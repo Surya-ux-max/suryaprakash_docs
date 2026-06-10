@@ -1,18 +1,52 @@
-# React + Vite
+# 🌟 Suryaprakash's Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio showcasing skills, achievements, and projects with a bold yellow-and-black design aesthetic.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Interactive Sections**: Hover, click, and peel effects for engagement
+- **Smooth Animations**: Physics-based transitions with motion/react
+- **Responsive Design**: Works perfectly on all screen sizes
+- **Snap Scrolling**: Clean, full-page transitions
+- **Hello Intro**: Multilingual greeting with local storage cooldown
 
-## React Compiler
+## 📦 Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **React 19**
+- **Vite 8**
+- **Tailwind CSS 4**
+- **motion/react**
+- **lucide-react**
 
-Note: This will impact Vite dev & build performances.
+## 🛠️ Getting Started
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd prt
+npm install
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+## 📚 Documentation
+
+See [documentation.md](./documentation.md) for detailed architecture and customization guide.
+
+## 👤 Author
+
+**Suryaprakash** - AI Engineer & Web Developer
+- GitHub: [Surya-ux-max](https://github.com/Surya-ux-max)
+- LinkedIn: [Suryaprakash S](https://www.linkedin.com/in/suryaprakash-s-20269631a/)
