@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  --font-cursive: "Playfair Display", serif;
+  --font-display: "Inter", sans-serif;
+}
+
+@layer components {
+  .hello-word-reveal {
+    animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
