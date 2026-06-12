@@ -9,6 +9,9 @@ A modern, interactive portfolio showcasing skills, achievements, and projects wi
 - **Responsive Design**: Works perfectly on all screen sizes
 - **Snap Scrolling**: Clean, full-page transitions
 - **Hello Intro**: Multilingual greeting with local storage cooldown
+- **Profiles Section**: Connect via various platforms
+- **GitHub-Style Connect Section**: Interactive contact page with contact info
+- **Updated Projects**: Added Survex AI Assistant project
 
 ## 📦 Tech Stack
 

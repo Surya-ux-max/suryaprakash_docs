@@ -30,6 +30,7 @@ prt/
 │   ├── App.jsx           # Main app + sections
 │   ├── HelloIntro.jsx    # Opening greeting animation
 │   ├── ImagePeel.jsx     # Interactive peel effect for Achievements
+│   ├── ProfilesSection.jsx # Profiles section component
 │   ├── RotatingText.jsx  # Animated text rotation
 │   ├── Stack.jsx         # 3D card stack component
 │   ├── index.css         # Global styles
@@ -46,11 +47,17 @@ prt/
 4. **Education**: School and college info
 5. **Skills**: Interactive planner grid with 3D stacks
 6. **Achievements**: Image peel effect with dynamic text
-7. **Projects**: Hover-expanding split panels
-8. **Hobbies**: Bouncing grid of hobby cards
-9. **CTA**: MacBook-style connect section with GitHub/LinkedIn
+7. **Profiles**: Connect via various platforms
+8. **Projects**: Hover-expanding split panels
+9. **Hobbies**: Bouncing grid of hobby cards
+10. **CTA**: GitHub-style connect section with contact info
 
 ## Key Components
+
+### ProfilesSection.jsx
+- Interactive cards for connecting via various platforms
+- Hover effects with scaling
+- Grid layout responsive to screen size
 
 ### HelloIntro.jsx
 - Multi-language rotating greetings

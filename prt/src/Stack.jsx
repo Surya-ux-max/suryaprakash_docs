@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }) {
   const x = useMotionValue(0);
@@ -39,6 +39,11 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
   );
 }
 
+// Helper to generate stable random rotations
+const generateRandomRotations = (count) => {
+  return Array.from({ length: count }, () => Math.random() * 10 - 5);
+};
+
 export default function Stack({
   randomRotation = false,
   sensitivity = 200,
@@ -67,65 +72,61 @@ export default function Stack({
   const shouldDisableDrag = mobileClickOnly && isMobile;
   const shouldEnableClick = sendToBackOnClick || shouldDisableDrag;
 
-  const [stack, setStack] = useState(() => {
+  // Use useMemo to create initial cards
+  const initialCards = useMemo(() => {
     if (cards.length) {
       return cards.map((content, index) => ({ id: index + 1, content }));
     } else {
       return [
-        {
-          id: 1,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format"
-              alt="card-1"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        },
-        {
-          id: 2,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format"
-              alt="card-2"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        },
-        {
-          id: 3,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format"
-              alt="card-3"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        },
-        {
-          id: 4,
-          content: (
-            <img
-              src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format"
-              alt="card-4"
-              className="w-full h-full object-cover pointer-events-none"
-            />
-          )
-        }
+        { id: 1, content: (
+          <img
+            src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format"
+            alt="card-1"
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )},
+        { id: 2, content: (
+          <img
+            src="https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format"
+            alt="card-2"
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )},
+        { id: 3, content: (
+          <img
+            src="https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format"
+            alt="card-3"
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )},
+        { id: 4, content: (
+          <img
+            src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format"
+            alt="card-4"
+            className="w-full h-full object-cover pointer-events-none"
+          />
+        )}
       ];
-    }
-  });
-
-  useEffect(() => {
-    if (cards.length) {
-      setStack(cards.map((content, index) => ({ id: index + 1, content })));
     }
   }, [cards]);
 
-  const sendToBack = id => {
-    setStack(prev => {
+  const [stack, setStack] = useState(initialCards);
+  const [randomRotations, setRandomRotations] = useState(() => generateRandomRotations(initialCards.length));
+
+  // Update stack and randomRotations when cards change
+  useEffect(() => {
+    if (cards.length) {
+      const newStack = cards.map((content, index) => ({ id: index + 1, content }));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setStack(newStack);
+      setRandomRotations(generateRandomRotations(newStack.length));
+    }
+  }, [cards]);
+
+  const sendToBack = (id) => {
+    setStack((prev) => {
       const newStack = [...prev];
-      const index = newStack.findIndex(card => card.id === id);
+      const index = newStack.findIndex((card) => card.id === id);
       const [card] = newStack.splice(index, 1);
       newStack.unshift(card);
       return newStack;
@@ -146,14 +147,12 @@ export default function Stack({
   return (
     <div
       className="relative w-full h-full"
-      style={{
-        perspective: 600
-      }}
+      style={{ perspective: 600 }}
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
       {stack.map((card, index) => {
-        const randomRotate = randomRotation ? Math.random() * 10 - 5 : 0;
+        const randomRotate = randomRotation ? (randomRotations[index] || 0) : 0;
         return (
           <CardRotate
             key={card.id}
