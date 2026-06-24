@@ -25,6 +25,7 @@ import pic6 from "./achieve/pic6.jpeg";
 import pic7 from "./achieve/pic7.jpeg";
 import pic8 from "./achieve/pic8.jpeg";
 import bill4food from "./projects/Bill4Food.png";
+import bill4food1 from "./projects/Bill4Food1.png";
 import trinetra1 from "./projects/trinetra1.png";
 import survex from "./projects/Survex.png";
 import RotatingText from "./RotatingText";
@@ -365,22 +366,60 @@ function App() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={achievementIndex}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="flex flex-col gap-4"
+                exit={{ opacity: 0, x: 30 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="flex flex-col gap-6"
               >
-                <div className="flex items-center gap-4">
-                  <span className="px-3 py-1 bg-black text-yellow-400 font-black rounded uppercase text-sm tracking-widest">
-                    {ACHIEVEMENT_DATA[achievementIndex].status}
-                  </span>
+                {/* Status Badge — Large Stamp Style */}
+                <div className="flex items-center gap-5">
+                  <motion.div
+                    initial={{ scale: 2.8, rotate: -15, opacity: 0 }}
+                    animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                    transition={{ type: "spring", damping: 12, stiffness: 350, delay: 0.1 }}
+                    className="relative"
+                  >
+                    <div className="relative px-6 py-3 bg-black border-4 border-black">
+                      <span className="text-[min(5vh,3vw)] font-black uppercase tracking-[0.15em] text-yellow-400 leading-none drop-shadow-[0_0_12px_rgba(250,204,21,0.4)]">
+                        {ACHIEVEMENT_DATA[achievementIndex].status}
+                      </span>
+                      {/* Corner accents */}
+                      <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-[3px] border-l-[3px] border-yellow-400" />
+                      <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-[3px] border-r-[3px] border-yellow-400" />
+                      <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-[3px] border-l-[3px] border-yellow-400" />
+                      <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-[3px] border-r-[3px] border-yellow-400" />
+                    </div>
+                  </motion.div>
+
+
                 </div>
-                <h3 className="text-[min(4vh,2.5vw)] font-black uppercase tracking-tight leading-tight">
+
+                {/* Decorative Divider */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                  className="h-[3px] bg-black w-24 origin-left"
+                />
+
+                <motion.h3
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                  className="text-[min(4vh,2.5vw)] font-black uppercase tracking-tight leading-tight"
+                >
                   {ACHIEVEMENT_DATA[achievementIndex].title}
-                </h3>
-                <p className="text-[min(2.5vh,1.5vw)] font-semibold leading-relaxed opacity-80 max-w-xl">
+                </motion.h3>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35 }}
+                  className="text-[min(2.5vh,1.5vw)] font-semibold leading-relaxed opacity-80 max-w-xl"
+                >
                   {ACHIEVEMENT_DATA[achievementIndex].desc}
-                </p>
+                </motion.p>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -481,6 +520,139 @@ function App() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6.314 5.314l.707.707M16.979 5.314l-.707.707M12 19l-.01.01M6.314 18.686l.707-.707M16.979 18.686l-.707-.707M12 3v.01" />
             </svg>
             <span className="text-sm font-bold uppercase tracking-widest">Hover to Explore</span>
+          </div>
+        </section>
+
+        {/* Flagship Impact Section — Bill4Food */}
+        <section className="h-screen w-full snap-start relative flex items-center overflow-hidden bg-black px-[6vw]">
+
+          {/* Background watermark */}
+          <div className="absolute right-[-4vw] bottom-0 pointer-events-none opacity-[0.04] leading-none select-none">
+            <span className="text-[min(90vh,55vw)] font-black tracking-[-0.1em] text-yellow-400">₹</span>
+          </div>
+
+          {/* Left Content */}
+          <div className="flex flex-col gap-[4vh] max-w-[48vw] z-10">
+
+            {/* Section Label */}
+            <div className="flex items-center gap-4">
+              <div className="h-[2px] w-10 bg-yellow-400" />
+              <span className="text-yellow-400/60 font-mono text-[min(1.8vh,1.1vw)] uppercase tracking-[0.25em]">Flagship Project</span>
+            </div>
+
+            {/* Title */}
+            <div className="flex items-end leading-[0.8]">
+              <h1 className="text-[min(30vh,14vw)] font-black tracking-[-0.08em] text-yellow-400">B</h1>
+              <span className="text-[min(8vh,4.5vw)] font-bold ml-[1vw] mb-[2vh] text-yellow-400">ill4Food</span>
+            </div>
+
+            {/* Revenue Stamp Badge */}
+            <motion.div
+              initial={{ scale: 2.2, rotate: 12, opacity: 0 }}
+              whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ type: "spring", damping: 12, stiffness: 300 }}
+              className="relative inline-flex self-start"
+            >
+              <div className="relative px-5 py-2.5 border-4 border-yellow-400">
+                <span className="text-[min(3vh,1.8vw)] font-black uppercase tracking-[0.2em] text-yellow-400 leading-none">
+                  Revenue Generating
+                </span>
+                <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-[3px] border-l-[3px] border-yellow-400/50" />
+                <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-[3px] border-r-[3px] border-yellow-400/50" />
+                <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-[3px] border-l-[3px] border-yellow-400/50" />
+                <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-[3px] border-r-[3px] border-yellow-400/50" />
+              </div>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: 0.2 }}
+              className="text-[min(2.4vh,1.5vw)] text-white/70 font-medium leading-relaxed max-w-lg"
+            >
+              A live payment & billing platform built for Sri Eshwar College students.
+              Real-time cafeteria transactions — no queues, no cash, no delays.
+            </motion.p>
+
+            {/* Key Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: 0.3 }}
+              className="grid grid-cols-3 gap-4"
+            >
+              {[
+                { value: "Live", label: "Deployed" },
+                { value: "Real‑time", label: "Billing" },
+                { value: "Digital", label: "Payments" },
+              ].map((stat, i) => (
+                <div key={i} className="border border-yellow-400/20 rounded-xl p-4 flex flex-col gap-1 bg-white/5">
+                  <span className="text-[min(3vh,1.8vw)] font-black text-yellow-400 leading-none">{stat.value}</span>
+                  <span className="text-[min(1.6vh,0.9vw)] font-mono text-white/50 uppercase tracking-widest">{stat.label}</span>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Tags */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: 0.4 }}
+              className="flex gap-2 flex-wrap"
+            >
+              {["React", "Payment Integration", "Real-time Billing", "Sri Eshwar"].map(tag => (
+                <span key={tag} className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-[min(1.4vh,0.85vw)] font-black rounded-full uppercase tracking-wide">
+                  {tag}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right — Dual Screenshots */}
+          <div className="absolute right-[4vw] top-1/2 -translate-y-1/2 w-[44vw] h-[80vh] z-10 pointer-events-none">
+            {/* Back screenshot */}
+            <motion.div
+              initial={{ opacity: 0, x: 60, rotate: 6 }}
+              whileInView={{ opacity: 1, x: 0, rotate: 5 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.15 }}
+              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-yellow-400/10"
+              style={{ transformOrigin: "center center" }}
+            >
+              <img src={bill4food1} alt="Bill4Food App" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-black/20" />
+            </motion.div>
+
+            {/* Front screenshot */}
+            <motion.div
+              initial={{ opacity: 0, x: -40, rotate: -3 }}
+              whileInView={{ opacity: 1, x: 0, rotate: -3 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.3 }}
+              className="absolute inset-4 rounded-2xl overflow-hidden shadow-[0_30px_80px_rgba(250,204,21,0.15)] border-2 border-yellow-400/30"
+              style={{ transformOrigin: "center center" }}
+            >
+              <img src={bill4food} alt="Bill4Food Dashboard" className="w-full h-full object-cover" />
+              {/* Glow edge */}
+              <div className="absolute inset-0 rounded-2xl ring-1 ring-yellow-400/20" />
+            </motion.div>
+          </div>
+
+          {/* Bottom Ticker */}
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-yellow-400/20 py-3 z-20">
+            <div
+              className="flex gap-12 whitespace-nowrap text-yellow-400/40 font-mono text-[min(1.6vh,1vw)] uppercase tracking-widest"
+              style={{ animation: "marquee 18s linear infinite" }}
+            >
+              {Array(4).fill(["Live", "Revenue Generating", "Sri Eshwar College", "Digital Cafeteria", "Real-time Billing", "Zero Cash", "Instant Receipts"]).flat().map((item, i) => (
+                <span key={i}>{item} &nbsp;·</span>
+              ))}
+            </div>
           </div>
         </section>
 
