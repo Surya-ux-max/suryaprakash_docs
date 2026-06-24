@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Brain, 
@@ -34,6 +34,10 @@ import Stack from "./Stack";
 import ImagePeel from "./ImagePeel";
 import ProfilesSection from "./ProfilesSection";
 import ResumeDrawer from "./ResumeDrawer";
+import CardSwap, { Card } from "./CardSwap";
+import certServicenow from "./certificates/Servicenow.png";
+import certGuidewire from "./certificates/guidewire.png";
+import certPowerBI from "./certificates/powerbi.png";
 
 const ROLES = [
   "SURYAPRAKASH",
@@ -124,6 +128,30 @@ const PROJECT_DATA = [
     image: survex,
     tags: ["AI Assistant", "LLM", "Natural Language"]
   }
+];
+
+const CERT_DATA = [
+  {
+    title: "ServiceNow CSA",
+    issuer: "ServiceNow",
+    year: "2025",
+    color: "#81B5A1",
+    image: certServicenow,
+  },
+  {
+    title: "Guidewire",
+    issuer: "Guidewire Software",
+    year: "2025",
+    color: "#F4A825",
+    image: certGuidewire,
+  },
+  {
+    title: "Power BI",
+    issuer: "Microsoft",
+    year: "2024",
+    color: "#F2C811",
+    image: certPowerBI,
+  },
 ];
 
 const HOBBIES_DATA = [
@@ -449,6 +477,113 @@ function App() {
           </div>
         </section>
 
+        {/* Certificates Section */}
+        <section className="h-screen w-full snap-start relative flex overflow-hidden bg-black">
+
+          {/* Left Sidebar — narrow, title + index */}
+          <div className="flex flex-col justify-center gap-[3vh] px-[5vw] w-[30vw] flex-shrink-0 z-10 border-r border-yellow-400/10">
+
+            {/* Label */}
+            <div className="flex items-center gap-3">
+              <div className="h-[2px] w-8 bg-yellow-400" />
+              <span className="text-yellow-400/50 font-mono text-xs uppercase tracking-[0.25em]">Verified Skills</span>
+            </div>
+
+            {/* Title */}
+            <div className="flex items-end leading-[0.8]">
+              <h1 className="text-[min(22vh,10vw)] font-black tracking-[-0.08em] text-yellow-400">C</h1>
+              <span className="text-[min(6vh,3.2vw)] font-bold ml-[0.8vw] mb-[1.5vh] text-yellow-400">ertificates</span>
+            </div>
+
+            {/* Numbered cert index */}
+            <div className="flex flex-col gap-5 mt-2">
+              {CERT_DATA.map((cert, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, type: "spring", stiffness: 300, damping: 25 }}
+                  className="flex items-start gap-3 group"
+                >
+                  <span className="text-yellow-400/30 font-mono text-xs mt-1 w-5 flex-shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: cert.color }} />
+                      <span className="text-white font-black text-[min(2vh,1.1vw)] uppercase tracking-tight">
+                        {cert.title}
+                      </span>
+                    </div>
+                    <span className="text-white/35 font-mono text-[min(1.3vh,0.75vw)] uppercase tracking-widest mt-0.5 block">
+                      {cert.issuer}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* More coming */}
+            <div className="flex items-center gap-2 mt-4">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-40" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400/60" />
+              </span>
+              <span className="text-yellow-400/30 font-mono text-xs uppercase tracking-widest">More coming soon</span>
+            </div>
+          </div>
+
+          {/* Right — Large centered CardSwap */}
+          <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+
+            {/* Subtle radial glow behind stack */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="w-[50vw] h-[50vw] rounded-full bg-yellow-400/5 blur-[80px]" />
+            </div>
+
+
+
+            {/* The card stack — centered via containerClassName */}
+            {/* We give a relative host div sized to give breathing room around the stack */}
+            <div className="relative" style={{ width: 'min(58vh, 38vw)', height: 'min(44vh, 29vw)' }}>
+              <CardSwap
+                width="min(58vh, 38vw)"
+                height="min(44vh, 29vw)"
+                cardDistance={52}
+                verticalDistance={58}
+                delay={3800}
+                pauseOnHover={false}
+                skewAmount={4}
+                easing="elastic"
+                containerClassName="absolute bottom-0 right-0 translate-x-[8%] translate-y-[12%] overflow-visible"
+              >
+                {CERT_DATA.map((cert, i) => (
+                  <Card key={i} customClass="overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.9)] border-2 border-yellow-400/15">
+                    <img
+                      src={cert.image}
+                      alt={cert.title}
+                      className="w-full h-full object-cover"
+                      draggable={false}
+                    />
+                    {/* Overlay gradient + label */}
+                    <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-gradient-to-t from-black via-black/60 to-transparent">
+                      <p className="text-yellow-400 font-black text-[min(2.2vh,1.4vw)] uppercase tracking-tight leading-none">{cert.title}</p>
+                      <p className="text-white/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mt-1">{cert.issuer}</p>
+                    </div>
+
+                  </Card>
+                ))}
+              </CardSwap>
+            </div>
+          </div>
+
+          {/* Background C watermark */}
+          <div className="absolute right-0 bottom-0 pointer-events-none opacity-[0.025] leading-none select-none">
+            <span className="text-[min(90vh,50vw)] font-black tracking-[-0.1em] text-yellow-400">C</span>
+          </div>
+        </section>
+
         {/* Profiles Section */}
         <ProfilesSection />
 
@@ -701,249 +836,177 @@ function App() {
         </section>
 
         {/* CTA / Connect Section */}
-        <section className="min-h-screen w-full snap-start relative bg-yellow-400 text-black">
-          {/* GitHub Top Nav */}
-          <div className="w-full border-b border-black bg-black px-6 py-3">
-            <div className="max-w-7xl mx-auto flex items-center gap-4">
-              <svg className="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-              </svg>
-              <div className="flex items-center gap-2">
-                <a href="https://github.com/Surya-ux-max" target="_blank" rel="noopener noreferrer" className="font-semibold text-yellow-400 hover:underline">Surya-ux-max</a>
-                <span className="text-yellow-400/60">/</span>
-                <a href="#" className="font-bold text-yellow-400 hover:underline">Connect-with-Me</a>
-              </div>
-              <div className="flex-1" />
-              <div className="flex items-center gap-4">
-                <button className="px-3 py-1 border border-yellow-400/60 rounded-md text-sm font-medium text-yellow-400 hover:bg-yellow-400/10 transition-colors">
-                  <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    Watch
-                  </span>
-                </button>
-                <button className="px-3 py-1 border border-yellow-400/60 rounded-md text-sm font-medium text-yellow-400 hover:bg-yellow-400/10 transition-colors">
-                  <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-                    </svg>
-                    Fork
-                  </span>
-                </button>
-                <button className="px-4 py-1.5 bg-yellow-400 border border-yellow-400/60 rounded-md text-sm font-semibold text-black hover:bg-yellow-300 transition-colors">
-                  <span className="flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    Star
-                  </span>
-                </button>
-              </div>
-            </div>
+        <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-yellow-400 text-black">
+
+          {/* Background CONNECT watermark */}
+          <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden">
+            <span className="text-[min(55vh,35vw)] font-black tracking-[-0.1em] text-black/[0.04] select-none leading-none pr-[2vw]">
+              CONNECT
+            </span>
           </div>
 
-          {/* Tabs */}
-          <div className="w-full border-b border-black bg-yellow-400 px-6">
-            <div className="max-w-7xl mx-auto flex gap-2">
-              <button className="px-4 py-3 border-b-2 border-black text-black font-medium flex items-center gap-2">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
+          {/* Main content — grows to fill, split layout */}
+          <div className="flex-1 flex items-center px-[6vw] gap-[6vw] z-10 min-h-0">
+
+            {/* Left — Title + tagline + status */}
+            <div className="flex flex-col gap-[3vh] flex-shrink-0 max-w-[46vw]">
+
+              {/* Section label */}
+              <div className="flex items-center gap-3">
+                <div className="h-[2px] w-10 bg-black" />
+                <span className="font-mono text-[min(1.6vh,1vw)] uppercase tracking-[0.25em] text-black/60">Get In Touch</span>
+              </div>
+
+              {/* Big letter title */}
+              <div className="flex items-end leading-[0.8]">
+                <h1 className="text-[min(28vh,14vw)] font-black tracking-[-0.08em]">C</h1>
+                <span className="text-[min(7.5vh,4.2vw)] font-bold ml-[1vw] mb-[2vh]">onnect</span>
+              </div>
+
+              {/* Tagline */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 280, damping: 25 }}
+                className="text-[min(3.2vh,2vw)] font-black leading-tight tracking-tight uppercase max-w-lg"
+              >
+                Let's build something<br />
+                <span className="text-black/40">remarkable together.</span>
+              </motion.p>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-[min(2.2vh,1.4vw)] font-semibold leading-relaxed text-black/70 max-w-md"
+              >
+                I'm an AI Engineer & Web Developer based in Coimbatore, passionate about RAG systems, AI agents, and scalable full-stack solutions. Always open to new ideas.
+              </motion.p>
+
+              {/* Open to work status */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, type: "spring", stiffness: 300, damping: 22 }}
+                className="inline-flex items-center gap-3 px-5 py-2.5 bg-black rounded-full self-start"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-70" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400" />
+                </span>
+                <span className="text-yellow-400 font-black text-[min(1.8vh,1.1vw)] uppercase tracking-widest">Open to Opportunities</span>
+              </motion.div>
+            </div>
+
+            {/* Right — Contact cards */}
+            <div className="flex-1 flex flex-col gap-[2.5vh]">
+
+              {/* Email */}
+              <motion.a
+                href="mailto:suryapr.exe14@gmail.com"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15, type: "spring", stiffness: 260, damping: 24 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
+              >
+                <div className="w-14 h-14 rounded-xl bg-yellow-400 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-7 h-7 text-black" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">Email</p>
+                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] truncate group-hover:text-white transition-colors">suryapr.exe14@gmail.com</p>
+                </div>
+                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-                Code
-              </button>
-              {['Issues', 'Pull requests', 'Actions', 'Projects', 'Wiki', 'Security', 'Insights', 'Settings'].map((tab) => (
-                <button key={tab} className="px-4 py-3 text-black/60 hover:text-black transition-colors">
-                  {tab}
-                </button>
-              ))}
+              </motion.a>
+
+              {/* GitHub */}
+              <motion.a
+                href="https://github.com/Surya-ux-max"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.25, type: "spring", stiffness: 260, damping: 24 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
+              >
+                <div className="w-14 h-14 rounded-xl bg-yellow-400 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-7 h-7 text-black" fill="currentColor" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">GitHub</p>
+                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] group-hover:text-white transition-colors">@Surya-ux-max</p>
+                </div>
+                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </motion.a>
+
+              {/* LinkedIn */}
+              <motion.a
+                href="https://www.linkedin.com/in/suryaprakash-s-20269631a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.35, type: "spring", stiffness: 260, damping: 24 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
+              >
+                <div className="w-14 h-14 rounded-xl bg-[#0a66c2] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">LinkedIn</p>
+                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] group-hover:text-white transition-colors">Suryaprakash S</p>
+                </div>
+                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </motion.a>
             </div>
           </div>
 
-          {/* Main Content */}
-          <div className="max-w-7xl mx-auto px-6 py-6">
-              {/* Repo Info Bar */}
-              <div className="flex items-center gap-6 mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-black flex items-center justify-center font-bold text-yellow-400">
-                    S
-                  </div>
-                  <div>
-                    <h1 className="text-3xl font-black flex items-center gap-2">
-                      Connect-with-Me
-                      <span className="text-xs px-2 py-0.5 border border-black rounded-full text-black/60">Public</span>
-                    </h1>
-                  </div>
-                </div>
-              </div>
-
-              {/* Branch and File Actions */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 bg-black border border-black rounded-md text-sm font-medium text-yellow-400 hover:bg-black/80 transition-colors flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-                    </svg>
-                    main
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                </div>
-                <div className="flex-1" />
-                <button className="px-3 py-1.5 bg-black border border-black rounded-md text-sm font-medium text-yellow-400 hover:bg-black/80 transition-colors">
-                  Go to file
-                </button>
-                <button className="px-3 py-1.5 bg-[#22c55e] border border-black rounded-md text-sm font-semibold text-black hover:bg-[#16a34a] transition-colors">
-                  Add file
-                </button>
-              </div>
-
-              {/* Commit Info */}
-              <div className="border border-black rounded-t-lg bg-black px-4 py-2 flex items-center gap-3 mb-0">
-                <div className="w-8 h-8 rounded-full bg-yellow-400" />
-                <div className="flex-1">
-                  <span className="font-semibold text-yellow-400">Surya-ux-max</span>
-                  <span className="text-yellow-400/60 ml-2">Let's build something amazing together</span>
-                </div>
-                <span className="text-yellow-400/60 text-sm font-mono">0d4c4ac</span>
-                <span className="text-yellow-400/60 text-sm">3 days ago</span>
-              </div>
-
-              {/* File List */}
-              <div className="border border-t-0 border-black bg-black">
-                <div className="flex items-center gap-3 px-4 py-2 border-b border-black hover:bg-black/80 transition-colors cursor-pointer">
-                  <svg className="w-5 h-5 text-yellow-400/60" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M13.5 2c.224 0 .44.08.608.226l5 4A.75.75 0 0 1 19 7v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h9.5zM13 3.5V7h3.5L13 3.5zM6 13.5h6v-2H6v2zm0 4h6v-2H6v2z"/>
-                  </svg>
-                  <span className="flex-1 font-medium text-yellow-400">README.md</span>
-                  <span className="text-yellow-400/60 text-sm font-mono">Welcome to my collaboration repo</span>
-                  <span className="text-yellow-400/60 text-sm">3 days ago</span>
-                </div>
-              </div>
-
-              {/* README Content */}
-              <div className="border border-t-0 border-black rounded-b-lg mt-2">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-black bg-black">
-                  <svg className="w-5 h-5 text-yellow-400/60" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M13.5 2c.224 0 .44.08.608.226l5 4A.75.75 0 0 1 19 7v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h9.5zM13 3.5V7h3.5L13 3.5zM6 13.5h6v-2H6v2zm0 4h6v-2H6v2z"/>
-                  </svg>
-                  <span className="font-semibold text-yellow-400">README</span>
-                  <div className="flex-1" />
-                  <button className="text-yellow-400/60 hover:text-yellow-400">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                    </svg>
-                  </button>
-                </div>
-
-                <div className="p-8 bg-black">
-                  <div className="max-w-4xl">
-                    <h1 className="text-4xl font-black mb-6 pb-3 border-b border-black flex items-center gap-3 text-yellow-400">
-                      <span>🤝</span>
-                      Connect-with-Me - Built for Developers
-                    </h1>
-
-                    <p className="text-lg text-yellow-400/60 mb-8">
-                      Hey there! I'm <span className="text-yellow-400 font-semibold">Suryaprakash S</span>, an AI Engineer and Web Developer.
-                      Let's build something amazing together!
-                    </p>
-
-                    <div className="space-y-8">
-                      <div>
-                        <h2 className="text-2xl font-black mb-4 pb-2 border-b border-black text-yellow-400">📧 Contact Me</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <a
-                            href="mailto:suryapr.exe14@gmail.com"
-                            className="p-4 border border-black rounded-lg hover:border-black hover:bg-yellow-400 transition-colors group bg-black"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                                </svg>
-                              </div>
-                              <div>
-                                <p className="text-yellow-400/60 text-sm font-mono uppercase">Email</p>
-                                <p className="text-lg font-semibold group-hover:text-black transition-colors text-yellow-400">suryapr.exe14@gmail.com</p>
-                              </div>
-                            </div>
-                          </a>
-
-                          <a
-                            href="https://github.com/Surya-ux-max"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-4 border border-black rounded-lg hover:border-black hover:bg-yellow-400 transition-colors group bg-black"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 rounded-full bg-yellow-400/20 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-                                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-                                </svg>
-                              </div>
-                              <div>
-                                <p className="text-yellow-400/60 text-sm font-mono uppercase">GitHub</p>
-                                <p className="text-lg font-semibold group-hover:text-black transition-colors text-yellow-400">@Surya-ux-max</p>
-                              </div>
-                            </div>
-                          </a>
-
-                          <a
-                            href="https://www.linkedin.com/in/suryaprakash-s-20269631a/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-4 border border-black rounded-lg hover:border-black hover:bg-yellow-400 transition-colors group bg-black"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 rounded-full bg-[#0a66c2] flex items-center justify-center">
-                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                              </div>
-                              <div>
-                                <p className="text-yellow-400/60 text-sm font-mono uppercase">LinkedIn</p>
-                                <p className="text-lg font-semibold group-hover:text-black transition-colors text-yellow-400">Suryaprakash S</p>
-                              </div>
-                            </div>
-                          </a>
-
-                          <div className="p-4 border border-black rounded-lg bg-black">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                              </div>
-                              <div>
-                                <p className="text-yellow-400/60 text-sm font-mono uppercase">Status</p>
-                                <p className="text-lg font-semibold text-green-400">Open for Collaborations!</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h2 className="text-2xl font-black mb-4 pb-2 border-b border-black text-yellow-400">🚀 About Me</h2>
-                        <ul className="space-y-3 text-yellow-400/60">
-                          <li className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">•</span>
-                            <span>AI Engineer & Full-Stack Developer</span>
-                          </li>
-                          <li className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">•</span>
-                            <span>Building RAG systems and AI Agent pipelines</span>
-                          </li>
-                          <li className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">•</span>
-                            <span>Always excited to work on new and innovative projects</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          {/* Bottom — Marquee + Footer */}
+          <div className="flex-shrink-0 z-10">
+            {/* Marquee */}
+            <div className="w-full overflow-hidden border-t-2 border-black/10 py-3">
+              <div
+                className="flex gap-12 whitespace-nowrap font-mono text-[min(1.5vh,0.9vw)] uppercase tracking-[0.2em] text-black/30"
+                style={{ animation: "marquee 22s linear infinite" }}
+              >
+                {Array(6).fill(["AI Engineer", "RAG Specialist", "Web Developer", "Full-Stack", "LLM Ops", "Open to Work", "Coimbatore", "Sri Eshwar"]).flat().map((item, i) => (
+                  <span key={i}>{item}&nbsp;&nbsp;·</span>
+                ))}
               </div>
             </div>
+
+            {/* Footer strip */}
+            <div className="w-full border-t border-black/10 px-[6vw] py-4 flex items-center justify-between bg-black/5">
+              <span className="font-black text-[min(1.8vh,1.1vw)] uppercase tracking-widest">Suryaprakash S</span>
+              <span className="font-mono text-[min(1.4vh,0.85vw)] text-black/50 uppercase tracking-widest">© 2026 · Built with React &amp; Motion</span>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-[min(1.4vh,0.85vw)] text-black/50 uppercase tracking-widest">Designed &amp; Developed by</span>
+                <span className="font-black text-[min(1.6vh,1vw)] uppercase tracking-widest">Surya</span>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
     </>
