@@ -33,6 +33,7 @@ import { HelloIntro } from "./HelloIntro";
 import Stack from "./Stack";
 import ImagePeel from "./ImagePeel";
 import ProfilesSection from "./ProfilesSection";
+import ResumeDrawer from "./ResumeDrawer";
 
 const ROLES = [
   "SURYAPRAKASH",
@@ -151,6 +152,7 @@ function App() {
   return (
     <>
       {showIntro && <HelloIntro />}
+      <ResumeDrawer />
       <main className="h-screen overflow-y-auto snap-y snap-mandatory bg-yellow-400 select-none scroll-smooth text-black">
         {/* Hero Section */}
       <section className="h-screen w-full snap-start relative flex items-center overflow-hidden">
