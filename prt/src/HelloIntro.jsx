@@ -3,35 +3,26 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
 
+// 9-piece perfectly tiling shatter pattern with 3D explosion physics
 const SHARDS = [
-  { // 1: Top Left
-    clipPath: "polygon(0% 0%, 50% 0%, 50% 50%, 0% 30%)",
-    exit: { x: "-30vw", y: "-30vh", rotate: -45, opacity: 0, transition: { duration: 0.8, ease: "easeIn" } }
-  },
-  { // 2: Top Right
-    clipPath: "polygon(50% 0%, 100% 0%, 100% 20%, 50% 50%)",
-    exit: { x: "40vw", y: "-40vh", rotate: 30, opacity: 0, transition: { duration: 0.9, ease: "easeIn" } }
-  },
-  { // 3: Right
-    clipPath: "polygon(100% 20%, 100% 70%, 50% 50%)",
-    exit: { x: "50vw", y: "10vh", rotate: 60, opacity: 0, transition: { duration: 0.7, ease: "easeIn" } }
-  },
-  { // 4: Bottom Right
-    clipPath: "polygon(100% 70%, 100% 100%, 60% 100%, 50% 50%)",
-    exit: { x: "40vw", y: "50vh", rotate: 45, opacity: 0, transition: { duration: 0.8, ease: "easeIn" } }
-  },
-  { // 5: Bottom
-    clipPath: "polygon(60% 100%, 20% 100%, 50% 50%)",
-    exit: { x: "-10vw", y: "60vh", rotate: -20, opacity: 0, transition: { duration: 0.9, ease: "easeIn" } }
-  },
-  { // 6: Bottom Left
-    clipPath: "polygon(20% 100%, 0% 100%, 0% 70%, 50% 50%)",
-    exit: { x: "-40vw", y: "40vh", rotate: -60, opacity: 0, transition: { duration: 0.7, ease: "easeIn" } }
-  },
-  { // 7: Left
-    clipPath: "polygon(0% 70%, 0% 30%, 50% 50%)",
-    exit: { x: "-50vw", y: "-10vh", rotate: -30, opacity: 0, transition: { duration: 0.8, ease: "easeIn" } }
-  }
+  { clipPath: "polygon(0% 0%, 30% 0%, 50% 50%, 0% 20%)",
+    exit: { x: "-40vw", y: "-40vh", rotateZ: -120, rotateX: 180, rotateY: 45, scale: 0.5, opacity: 0, transition: { duration: 1.1, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(30% 0%, 65% 0%, 50% 50%)",
+    exit: { x: "15vw", y: "-50vh", rotateZ: 75, rotateX: -120, rotateY: -180, scale: 0.8, opacity: 0, transition: { duration: 1.3, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(65% 0%, 100% 0%, 100% 25%, 50% 50%)",
+    exit: { x: "50vw", y: "-35vh", rotateZ: 140, rotateX: 180, rotateY: 90, scale: 0.4, opacity: 0, transition: { duration: 1.0, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(100% 25%, 100% 60%, 50% 50%)",
+    exit: { x: "65vw", y: "15vh", rotateZ: 210, rotateX: -180, rotateY: 180, scale: 1.3, opacity: 0, transition: { duration: 1.4, ease: [0.1, 0.9, 0.2, 1] } } }, // Comes forward
+  { clipPath: "polygon(100% 60%, 100% 100%, 70% 100%, 50% 50%)",
+    exit: { x: "45vw", y: "55vh", rotateZ: 85, rotateX: 90, rotateY: -90, scale: 0.6, opacity: 0, transition: { duration: 1.2, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(70% 100%, 35% 100%, 50% 50%)",
+    exit: { x: "-10vw", y: "65vh", rotateZ: -65, rotateX: -180, rotateY: 90, scale: 0.9, opacity: 0, transition: { duration: 1.1, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(35% 100%, 0% 100%, 0% 75%, 50% 50%)",
+    exit: { x: "-55vw", y: "45vh", rotateZ: -160, rotateX: 180, rotateY: -180, scale: 0.5, opacity: 0, transition: { duration: 1.0, ease: [0.1, 0.9, 0.2, 1] } } },
+  { clipPath: "polygon(0% 75%, 0% 45%, 50% 50%)",
+    exit: { x: "-65vw", y: "10vh", rotateZ: -110, rotateX: -90, rotateY: 90, scale: 1.2, opacity: 0, transition: { duration: 1.3, ease: [0.1, 0.9, 0.2, 1] } } }, // Comes forward
+  { clipPath: "polygon(0% 45%, 0% 20%, 50% 50%)",
+    exit: { x: "-45vw", y: "-20vh", rotateZ: -35, rotateX: 90, rotateY: -180, scale: 0.7, opacity: 0, transition: { duration: 1.1, ease: [0.1, 0.9, 0.2, 1] } } },
 ];
 
 export function HelloIntro() {
@@ -56,7 +47,7 @@ export function HelloIntro() {
     const t5 = setTimeout(() => setPhase(5), 4500);  // MASSIVE EARTHQUAKE (Cracks appear)
     const t6 = setTimeout(() => setPhase(6), 5500);  // SHATTER
     const t7 = setTimeout(() => setIsExiting(true), 5500); // Shards fly apart
-    const t8 = setTimeout(() => setIsVisible(false), 6500); // Unmount entire wrapper
+    const t8 = setTimeout(() => setIsVisible(false), 7000); // Allow longer time for 3D shards to clear
 
     return () => { [t1,t2,t3,t4,t5,t6,t7,t8].forEach(clearTimeout); };
   }, []);
@@ -104,36 +95,39 @@ export function HelloIntro() {
         className="absolute top-0 right-0 w-1/2 h-full bg-black z-[110] shadow-[-20px_0_50px_rgba(0,0,0,0.8)] border-l-4 border-yellow-400"
       />
 
-      {/* Glitch Flash Overlay during Quake */}
+      {/* Extreme Glitch Flash Overlay during Quake */}
       <AnimatePresence>
         {phase === 5 && (
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 0.3, 0, 0.6, 0] }}
-            transition={{ duration: 0.2, repeat: Infinity }}
+            animate={{ opacity: [0, 0.4, 0.1, 0.8, 0, 0.5, 0] }}
+            transition={{ duration: 0.3, repeat: Infinity }}
             className="absolute inset-0 z-[120] bg-white pointer-events-none mix-blend-difference"
           />
         )}
       </AnimatePresence>
 
-      {/* Cracks Overlay (Appears during Earthquake before shatter) */}
+      {/* Aggressive Cracks Overlay matching Shard Geometry */}
       <AnimatePresence>
         {phase === 5 && (
           <motion.svg 
             initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: [1, 0.3, 1, 0.5, 1], scale: [1, 1.01, 0.99, 1, 1.02] }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, repeat: Infinity }}
             className="absolute inset-0 w-full h-full pointer-events-none z-[130]"
           >
-            <g stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.8">
-               <line x1="50%" y1="50%" x2="0%" y2="0%" />
-               <line x1="50%" y1="50%" x2="50%" y2="0%" />
-               <line x1="50%" y1="50%" x2="100%" y2="20%" />
-               <line x1="50%" y1="50%" x2="100%" y2="70%" />
-               <line x1="50%" y1="50%" x2="60%" y2="100%" />
-               <line x1="50%" y1="50%" x2="20%" y2="100%" />
-               <line x1="50%" y1="50%" x2="0%" y2="70%" />
-               <line x1="50%" y1="50%" x2="0%" y2="30%" />
+            <g stroke="white" strokeWidth="4" strokeLinecap="round" opacity="0.9" style={{ filter: "drop-shadow(0px 0px 8px rgba(255,255,255,0.8))" }}>
+               {/* Lines from center 50% 50% to exact points on edge */}
+               <line x1="50%" y1="50%" x2="0%" y2="20%" />
+               <line x1="50%" y1="50%" x2="30%" y2="0%" />
+               <line x1="50%" y1="50%" x2="65%" y2="0%" />
+               <line x1="50%" y1="50%" x2="100%" y2="25%" />
+               <line x1="50%" y1="50%" x2="100%" y2="60%" />
+               <line x1="50%" y1="50%" x2="70%" y2="100%" />
+               <line x1="50%" y1="50%" x2="35%" y2="100%" />
+               <line x1="50%" y1="50%" x2="0%" y2="75%" />
+               <line x1="50%" y1="50%" x2="0%" y2="45%" />
             </g>
           </motion.svg>
         )}
@@ -157,7 +151,10 @@ export function HelloIntro() {
             animate={phase >= 2 ? { y: 0, opacity: 1, scale: 1, rotate: 0 } : {}}
             transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
             className="relative z-10 text-[min(10vw,90px)] md:text-[min(8vw,140px)] font-black uppercase tracking-[-0.04em] text-yellow-400 leading-none whitespace-nowrap"
-            style={{ WebkitTextStroke: "min(0.5vw, 6px) black" }}
+            style={{ 
+              WebkitTextStroke: "min(0.5vw, 6px) black",
+              textShadow: phase === 5 ? "10px 0px 0px red, -10px 0px 0px cyan" : "none" // Chromatic Aberration during quake
+            }}
           >
             SURYAPRAKASH
           </motion.h1>
@@ -194,13 +191,13 @@ export function HelloIntro() {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] origin-center"
+      className="fixed inset-0 z-[100] origin-center perspective-[1000px]"
       style={{ pointerEvents: isExiting ? 'none' : 'auto' }}
       animate={
         phase === 5 ? {
-          x: [-20, 20, -15, 15, -25, 25, -10, 10],
-          y: [15, -15, 20, -20, 10, -10, 25, -25],
-          rotate: [-3, 3, -2, 2, -4, 4, -1, 1],
+          x: [-25, 25, -20, 20, -30, 30, -15, 15],
+          y: [20, -20, 25, -25, 15, -15, 30, -30],
+          rotate: [-4, 4, -3, 3, -5, 5, -2, 2],
           scale: 1.1 
         } : phase === 4 ? {
           x: [-3, 3, -2, 2],
@@ -210,7 +207,7 @@ export function HelloIntro() {
         } : { x: 0, y: 0, rotate: 0, scale: 1 }
       }
       transition={
-        phase === 5 ? { duration: 0.3, repeat: Infinity, ease: "linear" }
+        phase === 5 ? { duration: 0.25, repeat: Infinity, ease: "linear" }
         : phase === 4 ? { duration: 0.1, repeat: Infinity, ease: "linear" }
         : { duration: 0 } 
       }
@@ -219,8 +216,12 @@ export function HelloIntro() {
         {!isExiting && SHARDS.map((shard, i) => (
           <motion.div
             key={`shard-${i}`}
-            className="absolute inset-0 overflow-hidden"
-            style={{ clipPath: shard.clipPath, willChange: "transform, opacity" }}
+            className="absolute inset-0 overflow-hidden transform-gpu"
+            style={{ 
+              clipPath: shard.clipPath, 
+              willChange: "transform, opacity",
+              transformStyle: "preserve-3d"
+            }}
             exit={shard.exit}
           >
             {uiContent}
