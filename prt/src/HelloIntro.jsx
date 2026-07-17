@@ -1,121 +1,141 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-
-const HELLO_WORDS = [
-    { word: "Hello", cursive: true },
-    { word: "नमस्ते", cursive: false }, // Hindi
-    { word: "Bonjour", cursive: true },
-    { word: "こんにちは", cursive: false }, // Japanese
-    { word: "Hola", cursive: true },
-    { word: "안녕하세요", cursive: false }, // Korean
-    { word: "Ciao", cursive: true },
-    { word: "你好", cursive: false }, // Chinese
-    { word: "Hallo", cursive: true },
-    { word: "مرحبا", cursive: false }, // Arabic
-    { word: "Olá", cursive: true },
-    { word: "Привет", cursive: false }, // Russian
-    { word: "Xin chào", cursive: false }, // Vietnamese
-    {word: "ನಮಸ್ಕಾರ", cursive: false}, // Kannada 
-    {word: "வணக்கம்", cursive: false}, // Tamil 
-]; 
-
-const ROTATE_MS = 480; 
-const EXIT_MS = 1000; 
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 export function HelloIntro() {
-    const [wordIndex, setWordIndex] = useState(0);
-    const [isExiting, setIsExiting] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const [phase, setPhase] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
 
-    const current = useMemo(() => HELLO_WORDS[wordIndex % HELLO_WORDS.length], [wordIndex]);
+  useEffect(() => {
+    // Timing sequence for maximum impact and lag-free rendering
+    const t1 = setTimeout(() => setPhase(1), 300);   // Thin line shoots across
+    const t2 = setTimeout(() => setPhase(2), 650);   // Violent vertical expansion -> Yellow screen
+    const t3 = setTimeout(() => setPhase(3), 900);   // Name characters reveal
+    const t4 = setTimeout(() => setPhase(4), 1400);  // First stamp (AI ENGINEER)
+    const t5 = setTimeout(() => setPhase(5), 1700);  // Second stamp (PORTFOLIO)
+    const t6 = setTimeout(() => setIsExiting(true), 2900); // Start sliding up curtain
+    const t7 = setTimeout(() => setIsVisible(false), 3700); // Unmount from DOM
 
-    useEffect(() => {
-        if (!isVisible || isExiting) return;
+    return () => { [t1,t2,t3,t4,t5,t6,t7].forEach(clearTimeout); };
+  }, []);
 
-        const rotateTimer = window.setInterval(() => {
-            setWordIndex(prev => {
-                if (prev >= HELLO_WORDS.length - 1) {
-                    window.setTimeout(() => setIsExiting(true), 800);
-                    window.clearInterval(rotateTimer);
-                    return prev;
-                }
-                return prev + 1;
-            });
-        }, ROTATE_MS);
+  // Allow clicking or pressing any key to skip
+  useEffect(() => {
+    if (!isVisible || isExiting) return;
+    const skip = () => setIsExiting(true);
+    window.addEventListener("pointerdown", skip, { once: true });
+    window.addEventListener("keydown", skip, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", skip);
+      window.removeEventListener("keydown", skip);
+    };
+  }, [isVisible, isExiting]);
 
-        return () => window.clearInterval(rotateTimer);
-    }, [isVisible, isExiting]);
+  if (!isVisible) return null;
 
-    useEffect(() => {
-        if (!isExiting) return;
-        const hideTimer = window.setTimeout(() => setIsVisible(false), EXIT_MS);
-        return () => window.clearTimeout(hideTimer);
-    }, [isExiting]);
-
-    useEffect(() => {
-        if (!isVisible) return;
-
-        const onDismiss = () => setIsExiting(true);
-        window.addEventListener("pointerdown", onDismiss, { once: true });
-        window.addEventListener("keydown", onDismiss, { once: true });
-
-        return () => {
-            window.removeEventListener("pointerdown", onDismiss);
-            window.removeEventListener("keydown", onDismiss);
-        };
-    }, [isVisible]);
-
-    if (!isVisible) return null;
-
-    return (
-        <div
-            aria-live="polite"
-            aria-label="Opening greeting"
-            className={[
-                "fixed inset-0 z-[100] overflow-hidden flex items-center justify-center",
-                "bg-[#09090b]",
-                "transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                isExiting ? "opacity-0 scale-105 blur-2xl" : "opacity-100 scale-100 blur-0",
-            ].join(" ")}
+  return (
+    <AnimatePresence>
+      {!isExiting && (
+        <motion.div
+          key="intro-curtain"
+          exit={{ y: "-100%" }} // Curtain pulls up to reveal the app
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-[100] bg-black select-none overflow-hidden flex flex-col items-center justify-center"
         >
-            {/* Liquid Industrial Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#EAB308]/20 blur-[120px] rounded-full animate-pulse" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#EAB308]/10 blur-[150px] rounded-full" />
-                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-white/5 blur-[100px] rounded-full" />
-            </div>
+          {/* Expanding Yellow Background */}
+          <motion.div
+            initial={{ scaleX: 0, scaleY: 0.005 }}
+            animate={
+              phase === 1 ? { scaleX: 1, scaleY: 0.005 } :
+              phase >= 2 ? { scaleX: 1, scaleY: 1 } : {}
+            }
+            transition={{
+              scaleX: { duration: 0.35, ease: "circOut" },
+              scaleY: { duration: 0.25, ease: "circOut" } // Violent snap open
+            }}
+            className="absolute inset-0 bg-yellow-400 origin-center"
+          />
 
-            {/* Content */}
-            <div className="relative z-10 text-center px-4 w-full">
-                <div className="space-y-4">
-                    <div className="h-[20vh] flex items-center justify-center overflow-visible">
-                        <h1
-                            key={wordIndex}
-                            className={[
-                                "transition-all duration-500 ease-out select-none",
-                                current.cursive ? "font-[var(--font-cursive)] text-[#EAB308]" : "font-[var(--font-display)] text-white",
-                                "text-[clamp(4rem,15vw,14rem)] leading-none tracking-tight",
-                                "hello-word-reveal"
-                            ].join(" ")}
-                            style={{
-                                transformOrigin: "center center",
-                                textShadow: current.cursive ? "0 0 40px rgba(234, 179, 8, 0.2)" : "none"
-                            }}
-                        >
-                            {current.word}
-                        </h1>
-                    </div>
-                </div>
-            </div>
+          {/* Content layer (only rendered after background expands) */}
+          {phase >= 2 && (
+            <div className="relative z-10 flex flex-col items-center">
+               
+               {/* Massive Name Text */}
+               <div className="overflow-hidden flex">
+                  {"SURYAPRAKASH".split("").map((char, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ y: "100%", opacity: 0 }}
+                      animate={phase >= 3 ? { y: 0, opacity: 1 } : {}}
+                      transition={{ 
+                          type: "spring", 
+                          stiffness: 400, 
+                          damping: 20, 
+                          delay: i * 0.02 
+                      }}
+                      className="text-[min(12vw,120px)] font-black text-black uppercase leading-[0.85] tracking-[-0.05em]"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+               </div>
 
-            {/* Progress Bar (Visual Only) */}
-            <div className="absolute bottom-0 left-0 h-[2px] bg-[#EAB308] transition-all ease-linear"
-                 style={{
-                     width: isExiting ? '100%' : `${((wordIndex + 1) / HELLO_WORDS.length) * 100}%`,
-                     transitionDuration: isExiting ? `${EXIT_MS}ms` : `${ROTATE_MS}ms`
-                 }}
-            />
-        </div>
-    );
+               {/* Impact Stamps */}
+               <div className="flex gap-4 mt-[4vh] h-[8vh] items-center">
+                  {phase >= 4 && (
+                    <motion.div
+                       initial={{ opacity: 0, scale: 2.5, rotate: -15 }}
+                       animate={{ opacity: 1, scale: 1, rotate: -4 }}
+                       transition={{ type: "spring", stiffness: 450, damping: 15 }}
+                       className="px-6 py-2 bg-black text-yellow-400 text-[min(3vw,24px)] font-black uppercase tracking-[0.2em] border-4 border-black drop-shadow-[8px_8px_0_rgba(0,0,0,0.25)]"
+                    >
+                       AI ENGINEER
+                    </motion.div>
+                  )}
+
+                  {phase >= 5 && (
+                    <motion.div
+                       initial={{ opacity: 0, scale: 2.5, rotate: 15 }}
+                       animate={{ opacity: 1, scale: 1, rotate: 4 }}
+                       transition={{ type: "spring", stiffness: 450, damping: 15 }}
+                       className="px-6 py-2 bg-black text-yellow-400 text-[min(3vw,24px)] font-black uppercase tracking-[0.2em] border-4 border-black drop-shadow-[8px_8px_0_rgba(0,0,0,0.25)]"
+                    >
+                       PORTFOLIO
+                    </motion.div>
+                  )}
+               </div>
+            </div>
+          )}
+          
+          {/* Faint Background Watermark (Matching App theme) */}
+          {phase >= 2 && (
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.9 }} 
+               animate={{ opacity: 0.06, scale: 1 }} 
+               transition={{ duration: 1.5, ease: "easeOut" }}
+               className="absolute right-[-5vw] bottom-[-5vh] pointer-events-none"
+            >
+               <h1 className="text-[min(90vh,60vw)] font-black leading-none tracking-[-0.1em] text-black">
+                  HI
+               </h1>
+            </motion.div>
+          )}
+
+          {/* Skip Hint */}
+          {phase >= 3 && (
+             <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.4 }}
+                transition={{ delay: 1 }}
+                className="absolute bottom-[4vh] text-black font-mono text-[min(1.5vh,1vw)] uppercase tracking-[0.3em] font-bold"
+             >
+                Initializing Workspace
+             </motion.div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
