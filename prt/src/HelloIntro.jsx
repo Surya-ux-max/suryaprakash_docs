@@ -1,49 +1,144 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
+
+const SHADOW_OBJECTS = [
+  {
+    id: "react",
+    // Top-left, rotating and bobbing faster
+    initial: { x: "-20vw", y: "0vh", rotate: -45, scale: 0.8 },
+    animate: { x: "15vw", y: "25vh", rotate: 315, scale: 1.1 },
+    transition: { duration: 8, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+    shadow: "15px 15px 0px rgba(0,0,0,1)",
+    svg: (
+      <svg viewBox="-12 -12 24 24" className="w-24 h-24 md:w-32 md:h-32">
+        <circle cx="0" cy="0" r="2.5" fill="black"/>
+        <g stroke="black" strokeWidth="2.5" fill="none">
+          <ellipse rx="10" ry="4"/>
+          <ellipse rx="10" ry="4" transform="rotate(60)"/>
+          <ellipse rx="10" ry="4" transform="rotate(120)"/>
+        </g>
+      </svg>
+    )
+  },
+  {
+    id: "plane",
+    // Swoops rapidly across the screen like a real paper plane
+    initial: { x: "-20vw", y: "90vh", rotate: -25, scale: 0.8 },
+    animate: { x: "120vw", y: "-30vh", rotate: -5, scale: 1.2 },
+    transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+    shadow: "12px 20px 0px rgba(0,0,0,1)",
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-20 h-20 md:w-28 md:h-28" fill="black">
+        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+      </svg>
+    )
+  },
+  {
+    id: "python",
+    // Slithers and bobs more aggressively
+    initial: { x: "110vw", y: "85vh", rotate: -20, scale: 0.8 },
+    animate: { x: "60vw", y: "65vh", rotate: 10, scale: 1.1 },
+    transition: { duration: 5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+    shadow: "-15px 15px 0px rgba(0,0,0,1)",
+    svg: (
+      <svg viewBox="0 0 110 110" className="w-28 h-28 md:w-40 md:h-40" fill="black">
+        <path d="M54,11 c-23,0-22,10-22,10 l0,11 l22,0 l0,3 l-31,0 c0,0 -12,1 -12,20 c0,19 11,20 11,20 l10,0 l0,-12 c0,0 0,-13 14,-13 l21,0 c0,0 12,0 12,-11 l0,-17 c0,0 1,-11 -25,-11 Z M45,21 a4,4 0 1,1 -8,0 a4,4 0 1,1 8,0 Z M56,99 c23,0 22,-10 22,-10 l0,-11 l-22,0 l0,-3 l31,0 c0,0 12,-1 12,-20 c0,-19 -11,-20 -11,-20 l-10,0 l0,12 c0,0 0,13 -14,13 l-21,0 c0,0 -12,0 -12,11 l0,17 c0,0 -1,11 25,11 Z M65,89 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0 Z" />
+      </svg>
+    )
+  },
+  {
+    id: "soldier",
+    // Snaps into defensive position quicker
+    initial: { x: "-20vw", y: "90vh", rotate: 15, scale: 0.8 },
+    animate: { x: "15vw", y: "55vh", rotate: -5, scale: 1.1 },
+    transition: { duration: 6, repeat: Infinity, repeatType: "reverse", ease: "easeOut" },
+    shadow: "15px 15px 0px rgba(0,0,0,1)",
+    svg: (
+      <svg viewBox="0 0 100 100" className="w-32 h-32 md:w-48 md:h-48" fill="black">
+        <circle cx="50" cy="20" r="8" />
+        <path d="M 45 18 C 45 10 55 10 55 18 L 57 20 L 43 20 Z" /> 
+        <path d="M 45 28 L 55 28 L 58 55 L 42 55 Z" />
+        <path d="M 42 55 L 35 90 L 42 90 L 48 55 Z" />
+        <path d="M 58 55 L 65 90 L 58 90 L 52 55 Z" />
+        <path d="M 45 30 L 25 40 L 30 45 L 42 35 Z" /> 
+        <path d="M 55 30 L 70 35 L 75 32 L 58 27 Z" /> 
+        <path d="M 20 38 L 90 38 L 90 42 L 20 42 Z" /> 
+        <path d="M 30 38 L 30 52 L 36 52 L 36 42 Z" /> 
+        <path d="M 20 38 L 10 46 L 15 50 L 25 42 Z" /> 
+        <text x="50" y="47" fill="#facc15" fontSize="12" fontFamily="monospace" fontWeight="bold" textAnchor="middle">C++</text>
+      </svg>
+    )
+  },
+  {
+    id: "transformer",
+    // Aggressively looms into frame
+    initial: { x: "110vw", y: "-20vh", rotate: 25, scale: 0.8 },
+    animate: { x: "65vw", y: "15vh", rotate: -10, scale: 1.25 },
+    transition: { duration: 7, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" },
+    shadow: "-12px -12px 0px rgba(0,0,0,1)",
+    svg: (
+      <svg viewBox="0 0 100 100" className="w-32 h-32 md:w-48 md:h-48" fill="black">
+        <polygon points="10,80 90,80 100,90 0,90" />
+        <rect x="20" y="82" width="60" height="4" fill="#facc15" />
+        <polygon points="15,80 35,40 65,40 85,80" />
+        <polygon points="35,40 50,10 65,40" />
+        <circle cx="45" cy="25" r="4" fill="#facc15" />
+        <circle cx="55" cy="25" r="4" fill="#facc15" />
+        <polygon points="30,50 5,25 12,20 35,45" />
+        <polygon points="70,50 95,25 88,20 65,45" />
+        <path d="M 50 40 L 50 70 M 35 60 L 65 60" stroke="#facc15" strokeWidth="3" />
+      </svg>
+    )
+  }
+];
 
 export function HelloIntro() {
   const [isVisible, setIsVisible] = useState(true);
   const [phase, setPhase] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
 
-  // Anti-gravity floating debris (Rocks ascending to the vortex)
-  const [debris] = useState(() => Array.from({ length: 50 }).map(() => ({
-      xStart: Math.random() * 100, 
-      yStart: 110 + Math.random() * 40, // Start below the screen
-      xMove: (Math.random() - 0.5) * 40, // Lazy left/right drift
-      scale: Math.random() * 1.5 + 0.4,
-      duration: Math.random() * 15 + 10, // Very slow, heavy float upwards
-      delay: Math.random() * 5,
-      rotation: Math.random() * 360,
-      spinSpeed: (Math.random() - 0.5) * 360,
-      // Generates different jagged rock shapes
-      clipPath: [
-          "polygon(20% 0%, 80% 10%, 100% 50%, 70% 90%, 10% 80%, 0% 30%)",
-          "polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)",
-          "polygon(10% 10%, 90% 0%, 100% 80%, 60% 100%, 0% 90%)"
-      ][Math.floor(Math.random() * 3)]
-  })));
+  // Mouse shadow tracking for brutalist interactivity
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 80, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 80, damping: 20 });
+
+  // Map mouse movement to shadow offsets (inverted so shadow moves opposite to light source)
+  const shadowX = useTransform(smoothX, (v) => (-v * 25) + 12);
+  const shadowY = useTransform(smoothY, (v) => (-v * 25) + 12);
 
   useEffect(() => {
-    // Timing sequence for the Ascension Vortex
-    const t1 = setTimeout(() => setPhase(1), 100);   // Vortex starts swirling, rocks float
-    const t2 = setTimeout(() => setPhase(2), 1500);  // Typography materializes
-    const t3 = setTimeout(() => setPhase(3), 3000);  // Subtitles
-    const t4 = setTimeout(() => setPhase(4), 6000);  // Ascension Warp!
-    const t5 = setTimeout(() => setIsExiting(true), 7000); // Yellow flash
-    const t6 = setTimeout(() => setIsVisible(false), 7200); // Unmount
+    // Brutalist timing sequence
+    const t1 = setTimeout(() => setPhase(1), 400);   // The Black Curtain opens
+    const t2 = setTimeout(() => setPhase(2), 1200);  // Name stamps in with heavy shadow
+    const t3 = setTimeout(() => setPhase(3), 2200);  // Badges (AI Engineer, Portfolio) appear
+    const t4 = setTimeout(() => setPhase(4), 5000);  // Auto-skip initiation
+    const t5 = setTimeout(() => setIsExiting(true), 5500); 
+    const t6 = setTimeout(() => setIsVisible(false), 6300); // Fully unmounts
 
     return () => { [t1,t2,t3,t4,t5,t6].forEach(clearTimeout); };
   }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Normalize from -1 to 1
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   // Jump/Skip functionality
   useEffect(() => {
     if (!isVisible || isExiting) return;
     const skip = () => {
         setPhase(4); 
-        setTimeout(() => setIsExiting(true), 1000);
+        setTimeout(() => setIsExiting(true), 200);
     };
     window.addEventListener("pointerdown", skip, { once: true });
     window.addEventListener("keydown", skip, { once: true });
@@ -59,247 +154,117 @@ export function HelloIntro() {
     <AnimatePresence>
       {!isExiting && (
         <motion.div
-          key="intro-ascension"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed inset-0 z-[100] bg-[#050302] select-none overflow-hidden flex flex-col items-center justify-center font-sans" // Pitch black cavern atmosphere
+          key="intro-brutalist"
+          exit={{ y: "-100%" }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-[100] bg-yellow-400 select-none overflow-hidden flex flex-col items-center justify-center font-sans"
         >
-          {/* Static Ambient Cavern Glow */}
+          {/* Phase 0 & 1: The Black Curtain Reveal */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={phase >= 1 ? { opacity: 1 } : {}}
-            transition={{ duration: 5, ease: "easeOut" }}
-            className="absolute inset-0 pointer-events-none z-0"
-            style={{ 
-                background: "radial-gradient(ellipse at 50% 15%, rgba(255,120,0,0.15) 0%, rgba(0,0,0,0) 70%)"
-            }}
+            initial={{ x: 0 }}
+            animate={phase >= 1 ? { x: "-100%" } : { x: 0 }}
+            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+            className="absolute top-0 left-0 w-1/2 h-full bg-black z-[110] shadow-[20px_0_50px_rgba(0,0,0,0.8)] border-r-4 border-yellow-400"
+          />
+          <motion.div
+            initial={{ x: 0 }}
+            animate={phase >= 1 ? { x: "100%" } : { x: 0 }}
+            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+            className="absolute top-0 right-0 w-1/2 h-full bg-black z-[110] shadow-[-20px_0_50px_rgba(0,0,0,0.8)] border-l-4 border-yellow-400"
           />
 
-          {/* Golden Magic Beams (Lightning strikes upward to the vortex) */}
-          {phase >= 1 && (
-              <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full pointer-events-none z-10">
-                  <defs>
-                      <linearGradient id="goldBeam" x1="0%" y1="100%" x2="0%" y2="0%">
-                          <stop offset="0%" stopColor="rgba(255,200,0,0)" />
-                          <stop offset="80%" stopColor="rgba(255,255,255,0.7)" />
-                          <stop offset="100%" stopColor="rgba(255,255,255,1)" />
-                      </linearGradient>
-                      <filter id="glow">
-                          <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
-                          <feMerge>
-                              <feMergeNode in="coloredBlur"/>
-                              <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                      </filter>
-                  </defs>
-                  
-                  {/* Beam 1 - Left Snaking line */}
-                  <motion.path 
-                      d="M 15 100 Q 35 70 20 50 T 45 15" // Curves aggressively towards the top center
-                      fill="none" stroke="url(#goldBeam)" strokeWidth="0.3"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
-                      filter="url(#glow)"
-                  />
-                  {/* Beam 2 - Right Zigzag */}
-                  <motion.path 
-                      d="M 85 100 Q 65 80 80 40 T 55 15"
-                      fill="none" stroke="url(#goldBeam)" strokeWidth="0.4"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: [0, 1, 1], opacity: [0, 0.8, 0] }}
-                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                      filter="url(#glow)"
-                  />
-                  {/* Beam 3 - Center Branching */}
-                  <motion.path 
-                      d="M 45 100 L 35 70 L 60 40 L 50 15"
-                      fill="none" stroke="url(#goldBeam)" strokeWidth="0.25"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 2.5 }}
-                      filter="url(#glow)"
-                  />
-              </svg>
-          )}
-
-          {/* Anti-Gravity Debris (Dark Rocks floating up) */}
-          <div className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
-            {debris.map((p, i) => (
-                <motion.div
-                    key={`rock-${i}`}
-                    initial={{ left: `${p.xStart}vw`, top: `${p.yStart}vh`, scale: p.scale, rotate: 0 }}
-                    animate={ phase >= 1 ? { x: `${p.xMove}vw`, y: `-${p.yStart + 20}vh`, rotate: p.spinSpeed } : {} }
-                    transition={{ duration: p.duration, repeat: Infinity, ease: "linear", delay: p.delay }}
-                    className="absolute bg-[#0f0805]" // Heavy dark stone
-                    style={{ 
-                        width: "15px", height: "15px",
-                        clipPath: p.clipPath,
-                        boxShadow: "inset 0px 3px 5px rgba(255, 180, 0, 0.5)", // Epic Rim Light casting from the vortex above!
-                        willChange: "transform" 
-                    }}
-                />
+          {/* Background Geometric Elements & Shadow Objects */}
+          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-center">
+            {/* Giant rotating dashed ring */}
+            <motion.div
+               animate={phase >= 1 ? { rotate: 360 } : {}}
+               transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+               className="absolute w-[150vw] h-[150vw] md:w-[90vw] md:h-[90vw] border-[2px] border-black opacity-15 rounded-full"
+               style={{ borderStyle: "dashed" }}
+            />
+            
+            {/* Custom Shadow Objects */}
+            {SHADOW_OBJECTS.map((obj) => (
+              <motion.div
+                key={obj.id}
+                initial={{ ...obj.initial, opacity: 0 }}
+                animate={phase >= 1 ? { ...obj.animate, opacity: 1 } : {}}
+                transition={{ ...obj.transition, opacity: { duration: 1.5, ease: "easeOut" } }}
+                className="absolute top-0 left-0"
+                style={{
+                  filter: `drop-shadow(${obj.shadow})`,
+                  willChange: "transform, opacity"
+                }}
+              >
+                {obj.svg}
+              </motion.div>
             ))}
           </div>
 
-          {/* --- THE CELESTIAL SKY VORTEX --- */}
-          <div className="absolute top-[12vh] left-1/2 w-0 h-0 z-[5] perspective-[800px] pointer-events-none flex justify-center items-center">
-              
-              {/* The Swirling 3D Rings (Flatted into the sky) */}
-              {Array.from({ length: 6 }).map((_, i) => (
-                  <motion.div
-                      key={`vortex-ring-${i}`}
-                      className="absolute rounded-full border-t-[3px] border-b-[1px] border-[#ffcc00]"
-                      style={{ 
-                          width: `${25 + i * 15}vw`, 
-                          height: `${25 + i * 15}vw`,
-                          rotateX: "75deg", // Extreme tilt backwards creates the "sky ceiling" illusion
-                          boxShadow: `0 0 50px rgba(255, 120, 0, ${0.4 - i*0.05}), inset 0 0 50px rgba(255, 120, 0, ${0.4 - i*0.05})`,
-                          opacity: 0
-                      }}
-                      initial={{ scale: 0 }}
-                      animate={
-                          phase >= 4 ? { scale: 5, opacity: 1, y: "60vh", rotateZ: (i%2===0?1:-1)*360 } // ASCENSION: It comes DOWN to swallow the camera
-                          : phase >= 1 ? { scale: 1, opacity: 1, y: 0, rotateZ: (i%2===0?1:-1)*360 } 
-                          : {}
-                      }
-                      transition={{ 
-                          scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 4, ease: "easeOut" },
-                          y: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 0 },
-                          opacity: { duration: 2 },
-                          rotateZ: { duration: 15 + i * 5, repeat: Infinity, ease: "linear" } // Rings spin on the flattened plane
-                      }}
-                  />
-              ))}
-
-              {/* The White-Hot Core (The Eye of the Vortex) */}
+          <div className="relative z-20 flex flex-col items-center">
+            {/* Typography Stamp */}
+            <div className="relative flex justify-center items-center">
+              {/* Dynamic Shadow Layer */}
               <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={
-                      phase >= 4 ? { scale: 15, opacity: 1, y: "50vh" } 
-                      : phase >= 1 ? { scale: 1, opacity: 1, y: 0 } 
-                      : {}
-                  }
-                  transition={{
-                      scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 4, ease: "easeOut" },
-                      y: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 0 },
-                      opacity: { duration: 2 }
-                  }}
-                  className="absolute w-[15vw] h-[15vw] rounded-full"
-                  style={{ 
-                      rotateX: "75deg",
-                      background: "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,200,50,0.9) 40%, rgba(255,100,0,0) 70%)",
-                      boxShadow: "0 0 120px 60px rgba(255, 120, 0, 0.7)",
-                      willChange: "transform, opacity"
-                  }}
-              />
+                 style={{ x: shadowX, y: shadowY }}
+                 className="absolute inset-0 z-0 flex justify-center items-center"
+              >
+                <motion.h1 
+                  initial={{ opacity: 0, scale: 1.5, rotate: -4 }}
+                  animate={phase >= 2 ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+                  transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
+                  className="text-[min(10vw,90px)] md:text-[min(8vw,140px)] font-black uppercase tracking-[-0.04em] text-black leading-none whitespace-nowrap"
+                >
+                  SURYAPRAKASH
+                </motion.h1>
+              </motion.div>
+              
+              {/* Foreground Text Layer */}
+              <motion.h1 
+                initial={{ y: -60, opacity: 0, scale: 1.5, rotate: -4 }}
+                animate={phase >= 2 ? { y: 0, opacity: 1, scale: 1, rotate: 0 } : {}}
+                transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
+                className="relative z-10 text-[min(10vw,90px)] md:text-[min(8vw,140px)] font-black uppercase tracking-[-0.04em] text-yellow-400 leading-none whitespace-nowrap"
+                style={{ WebkitTextStroke: "min(0.5vw, 6px) black" }}
+              >
+                SURYAPRAKASH
+              </motion.h1>
+            </div>
+
+            {/* Brutalist Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={phase >= 3 ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, type: "spring", bounce: 0.4 }}
+              className="mt-8 flex flex-wrap justify-center items-center gap-6 z-20"
+            >
+              <motion.div 
+                whileHover={{ scale: 1.05, rotate: 0 }}
+                className="bg-black text-yellow-400 px-6 py-2 border-4 border-black font-bold uppercase tracking-widest text-xs md:text-lg transform -rotate-3 cursor-default"
+                style={{ boxShadow: "8px 8px 0px rgba(0,0,0,0.1)" }}
+              >
+                AI Engineer
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ scale: 1.05, rotate: 0 }}
+                className="bg-yellow-400 text-black px-6 py-2 border-4 border-black font-bold uppercase tracking-widest text-xs md:text-lg transform rotate-2 cursor-default"
+                style={{ boxShadow: "8px 8px 0px rgba(0,0,0,1)" }}
+              >
+                Portfolio 2026
+              </motion.div>
+            </motion.div>
           </div>
 
-          {/* --- ARCHITECTURAL SILHOUETTES (Creates cavern depth) --- */}
+          {/* Interactive Skip Badge */}
           <motion.div 
-             initial={{ y: 0 }}
-             animate={phase >= 4 ? { y: "100vh" } : {}} // Falls completely away during camera ascension
-             transition={{ duration: 1.2, ease: "circIn" }}
-             className="absolute inset-0 pointer-events-none z-30"
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: phase >= 2 && phase < 4 ? 1 : 0, y: phase >= 2 && phase < 4 ? 0 : 20 }}
+             transition={{ duration: 0.4 }}
+             className="absolute bottom-[6vh] bg-black text-yellow-400 px-6 py-3 border-2 border-black font-mono text-xs md:text-sm uppercase tracking-widest font-bold z-50 shadow-[6px_6px_0px_rgba(0,0,0,0.15)] group cursor-pointer"
           >
-              {/* Left Pillar Block */}
-              <div 
-                  className="absolute bottom-0 left-0 w-[20vw] md:w-[15vw] h-[75vh] bg-[#050201]" 
-                  style={{ 
-                      clipPath: "polygon(0% 0%, 100% 15%, 80% 100%, 0% 100%)",
-                      boxShadow: "inset -5px 0 30px rgba(255, 120, 0, 0.15)" // Side light from vortex
-                  }} 
-              />
-              {/* Right Pillar Block */}
-              <div 
-                  className="absolute bottom-0 right-0 w-[25vw] md:w-[18vw] h-[85vh] bg-[#050201]" 
-                  style={{ 
-                      clipPath: "polygon(0% 20%, 100% 0%, 100% 100%, 15% 100%)",
-                      boxShadow: "inset 5px 0 30px rgba(255, 120, 0, 0.15)"
-                  }} 
-              />
-              {/* Bottom Ground / Broken Stairs */}
-              <div 
-                  className="absolute bottom-0 left-0 right-0 h-[30vh] bg-[#050201]" 
-                  style={{ 
-                      clipPath: "polygon(0% 100%, 15% 15%, 35% 20%, 60% 10%, 85% 25%, 100% 100%)",
-                      boxShadow: "inset 0 10px 40px rgba(255, 150, 0, 0.2)" // Top light
-                  }} 
-              />
-          </motion.div>
-
-          <motion.div 
-             initial={{ y: 0 }}
-             animate={phase >= 4 ? { y: "100vh" } : {}} // Text also falls away out the bottom of the screen as we ascend!
-             transition={{ duration: 1.2, ease: "circIn" }}
-             className="relative z-40 flex flex-col items-center mt-[15vh]" // Pushed down to give space to the sky vortex
-          >
-             {/* Epic Golden Typography Bathed in Light */}
-             <motion.h1
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={
-                   phase >= 2 ? { opacity: 1, scale: 1.05 } 
-                   : {}
-               }
-               transition={{ 
-                   opacity: { duration: 2, ease: "easeOut" },
-                   scale: { duration: 15, ease: "linear" } 
-               }}
-               className="text-[min(6vw,60px)] md:text-[min(4vw,70px)] font-bold uppercase tracking-[0.5em] md:tracking-[0.8em] ml-[0.5em] md:ml-[0.8em] text-center"
-               style={{ 
-                   color: "#fff",
-                   WebkitTextStroke: "1px rgba(255, 180, 0, 0.8)", 
-                   textShadow: "0 -15px 50px rgba(255,180,0,0.9), 0 15px 30px rgba(0,0,0,1)", // Intense glow from ABOVE, pitch black shadow BELOW
-                   willChange: "transform, opacity" 
-               }}
-             >
-               SURYAPRAKASH
-             </motion.h1>
-
-             {/* Minimalist Subtitles */}
-             <motion.div
-               initial={{ opacity: 0, y: 20 }}
-               animate={phase >= 3 ? { opacity: 0.9, y: 0 } : {}}
-               transition={{ duration: 2, ease: "easeOut" }}
-               className="mt-8 flex flex-col items-center gap-5"
-               style={{ willChange: "transform, opacity" }}
-             >
-               <span className="text-[#ffcc00] text-[min(2vw,16px)] font-bold tracking-[0.8em] ml-[0.8em] uppercase" style={{ textShadow: "0 5px 15px rgba(0,0,0,1)" }}>
-                 AI Engineer
-               </span>
-               <motion.div 
-                   initial={{ height: 0 }}
-                   animate={phase >= 3 ? { height: "30px" } : {}}
-                   transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-                   className="w-[1px] bg-[#ff9d00] opacity-80" 
-               />
-               <span className="text-[#ffeb73] text-[min(1.5vw,12px)] font-medium tracking-[0.6em] ml-[0.6em] uppercase opacity-90" style={{ textShadow: "0 5px 10px rgba(0,0,0,1)" }}>
-                 Portfolio 2026
-               </span>
-             </motion.div>
-          </motion.div>
-          
-          {/* Ascension Yellow Flash */}
-          <AnimatePresence>
-              {phase >= 4 && (
-                  <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.6, ease: "easeIn", delay: 0.5 }}
-                      className="absolute inset-0 bg-yellow-400 z-[200] pointer-events-none"
-                      style={{ willChange: "opacity" }}
-                  />
-              )}
-          </AnimatePresence>
-
-          {/* Skip Hint */}
-          <motion.div 
-             initial={{ opacity: 0 }}
-             animate={{ opacity: phase >= 2 && phase < 4 ? 0.3 : 0 }}
-             transition={{ duration: 2 }}
-             className="absolute bottom-[4vh] text-[#ffeb73] font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] font-light z-50 opacity-50"
-          >
-             Press any key to ascend
+             <span className="hidden md:inline group-hover:animate-pulse">Press any key or click to enter</span>
+             <span className="inline md:hidden group-hover:animate-pulse">Tap to enter</span>
           </motion.div>
         </motion.div>
       )}
