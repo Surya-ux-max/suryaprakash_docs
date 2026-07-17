@@ -7,39 +7,59 @@ export function HelloIntro() {
   const [isVisible, setIsVisible] = useState(true);
   const [phase, setPhase] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // High-speed Sling Ring Sparks with Gravity
+  const [sparks] = useState(() => Array.from({ length: 120 }).map(() => {
+      const angle = Math.random() * Math.PI * 2;
+      const startRadius = 22 + Math.random() * 1; // Start exactly at the rim of the 45vw ring (45/2 = 22.5)
+      const distance = Math.random() * 12 + 4; // Shoot outwards
+      return {
+          angle,
+          startRadius,
+          distance,
+          scale: Math.random() * 0.5 + 0.2,
+          duration: Math.random() * 0.5 + 0.3, // Extremely fast!
+          delay: Math.random() * 1,
+          color: Math.random() > 0.7 ? "#ffffff" : Math.random() > 0.4 ? "#ffcc00" : "#ff3300" // White hot, gold, red
+      };
+  }));
+
+  // Ambient falling embers for the void background
+  const [embers] = useState(() => Array.from({ length: 40 }).map(() => ({
+      xStart: Math.random() * 100,
+      yStart: Math.random() * -20,
+      xMove: (Math.random() - 0.5) * 30,
+      yMove: 120, // Fall down past the screen
+      scale: Math.random() * 0.4 + 0.2,
+      duration: Math.random() * 8 + 6,
+      delay: Math.random() * 5,
+      color: Math.random() > 0.5 ? "rgba(255, 150, 0, 0.6)" : "rgba(255, 50, 0, 0.4)"
+  })));
 
   useEffect(() => {
-    // Timing sequence for the new "Kinetic Brutalist" intro
-    const t1 = setTimeout(() => setPhase(1), 100);   // Show Barcode Boot
-    const t2 = setTimeout(() => setPhase(2), 700);   // Crash Yellow Panels
-    const t3 = setTimeout(() => setPhase(3), 1100);  // Typography Drop + Marquee
-    const t4 = setTimeout(() => setPhase(4), 1600);  // 3D Stamps
-    const t5 = setTimeout(() => setIsExiting(true), 3200); // Fade out seamlessly
-    const t6 = setTimeout(() => setIsVisible(false), 3800); // Unmount
+    // Timing sequence for Doctor Strange Sling Ring
+    const t1 = setTimeout(() => setPhase(1), 100);   // Ambient embers
+    const t2 = setTimeout(() => setPhase(2), 1000);  // Epic Golden Name appears
+    const t3 = setTimeout(() => setPhase(3), 3000);  // Sling Ring rips open!
+    const t4 = setTimeout(() => setPhase(4), 6000);  // Transit warp
+    const t5 = setTimeout(() => setIsExiting(true), 7000); // Yellow flash seamless cut
+    const t6 = setTimeout(() => setIsVisible(false), 7200); // Unmount
 
     return () => { [t1,t2,t3,t4,t5,t6].forEach(clearTimeout); };
   }, []);
 
-  // Allow skipping and handle mouse parallax
+  // Jump/Skip functionality
   useEffect(() => {
     if (!isVisible || isExiting) return;
-    const skip = () => setIsExiting(true);
-    const handleMove = (e) => {
-        setMousePos({ 
-            x: (e.clientX / window.innerWidth - 0.5) * 30, 
-            y: (e.clientY / window.innerHeight - 0.5) * 30 
-        });
+    const skip = () => {
+        setPhase(4); 
+        setTimeout(() => setIsExiting(true), 1000);
     };
-    
     window.addEventListener("pointerdown", skip, { once: true });
     window.addEventListener("keydown", skip, { once: true });
-    window.addEventListener("mousemove", handleMove);
-    
     return () => {
       window.removeEventListener("pointerdown", skip);
       window.removeEventListener("keydown", skip);
-      window.removeEventListener("mousemove", handleMove);
     };
   }, [isVisible, isExiting]);
 
@@ -49,175 +69,195 @@ export function HelloIntro() {
     <AnimatePresence>
       {!isExiting && (
         <motion.div
-          key="intro-kinetic"
-          // Seamless exit: Instead of sliding, we just fade out the intro. 
-          // Since the background is yellow and the app is yellow, it looks like the text melts away to reveal the app.
-          exit={{ opacity: 0, scale: 1.05 }} 
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-black select-none overflow-hidden flex flex-col items-center justify-center font-sans"
+          key="intro-drstrange-perfect"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="fixed inset-0 z-[100] bg-[#0a0200] select-none overflow-hidden flex flex-col items-center justify-center font-sans" // Deep, dark burnt umber void
         >
-          {/* Phase 1: Barcode / Terminal Boot */}
+          {/* Static Cinematic Vignette */}
+          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_20vw_rgba(0,0,0,1)]" />
+
+          {/* Background Ambient Heat Glow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={phase >= 1 ? { opacity: 0.1, scale: 1 } : {}}
+            transition={{ duration: 8, ease: "easeOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] pointer-events-none z-0"
+            style={{ 
+                background: "radial-gradient(circle, rgba(255,100,0,1) 0%, rgba(200,0,0,0) 60%)",
+                willChange: "transform, opacity"
+            }}
+          />
+
+          {/* Ambient Falling Embers */}
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            {embers.map((p, i) => (
+                <motion.div
+                    key={`ember-${i}`}
+                    initial={{ left: `${p.xStart}vw`, top: `${p.yStart}vh`, opacity: 0, scale: p.scale }}
+                    animate={ phase >= 1 ? { x: `${p.xMove}vw`, y: `${p.yMove}vh`, opacity: [0, 1, 0] } : {} }
+                    transition={{ duration: p.duration, repeat: Infinity, ease: "linear", delay: p.delay }}
+                    className="absolute w-1.5 h-1.5 rounded-full blur-[1px]"
+                    style={{ backgroundColor: p.color, willChange: "transform, opacity" }}
+                />
+            ))}
+          </div>
+
+          {/* --- THE SLING RING PORTAL --- */}
+          
+          {/* Main Solid Hot Ring (Empty center) */}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={
+                phase >= 4 ? { scale: 7, opacity: 1 } // Swallows screen during warp
+                : phase >= 3 ? { scale: 1, opacity: 1 } 
+                : {}
+            }
+            transition={{
+                scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 1.5, ease: "backOut" },
+                opacity: phase >= 4 ? { duration: 0.5 } : { duration: 1.5, ease: "easeOut" }
+            }}
+            className="absolute top-1/2 left-1/2 w-[45vw] h-[45vw] -translate-x-1/2 -translate-y-1/2 rounded-full z-10"
+            style={{ 
+                border: "4px solid rgba(255, 255, 255, 0.9)", // White hot core of the ring
+                boxShadow: "0 0 35px 15px rgba(255, 120, 0, 0.9), inset 0 0 35px 15px rgba(255, 120, 0, 0.9)", // Intense fiery glow inside and out
+                willChange: "transform, opacity"
+            }}
+          />
+
+          {/* Chaotic Spinning Spark Rings (Simulates the aggressive spark generation on the rim) */}
+          {phase >= 2 && Array.from({ length: 6 }).map((_, i) => (
+            <motion.div
+               key={`chaos-ring-${i}`}
+               initial={{ scale: 0.6, opacity: 0, rotate: 0 }}
+               animate={
+                   phase >= 4 ? { scale: 7, opacity: 1, rotate: (i % 2 === 0 ? 1 : -1) * 720 } 
+                   : phase >= 3 ? { scale: 1 + i * 0.015, opacity: 1, rotate: (i % 2 === 0 ? 1 : -1) * 360 } 
+                   : {}
+               }
+               transition={{
+                   scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 1.5, ease: "backOut" },
+                   rotate: phase >= 4 ? { duration: 1.5, ease: "easeIn" } : { duration: 1 + i * 0.3, ease: "linear", repeat: Infinity } // Insanely fast spin
+               }}
+               className="absolute top-1/2 left-1/2 rounded-full -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
+               style={{ 
+                   width: "45vw",
+                   height: "45vw",
+                   border: `${3 + (i%3)*2}px dotted ${i % 3 === 0 ? "#ffffff" : i % 2 === 0 ? "#ffcc00" : "#ff3300"}`,
+                   filter: `blur(${i * 0.5}px)`, 
+                   willChange: "transform, opacity"
+               }}
+            />
+          ))}
+
+          {/* Flying Sparks from the rim (With Gravity!) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 z-30 overflow-visible pointer-events-none">
+            {phase >= 3 && sparks.map((p, i) => {
+                const xStart = Math.cos(p.angle) * p.startRadius;
+                const yStart = Math.sin(p.angle) * p.startRadius;
+                const xEnd = Math.cos(p.angle) * (p.startRadius + p.distance);
+                const yEnd = Math.sin(p.angle) * (p.startRadius + p.distance) + 15; // Gravity pulls them down!
+                return (
+                    <motion.div
+                        key={`spark-${i}`}
+                        initial={{ x: `${xStart}vw`, y: `${yStart}vw`, opacity: 0, scale: p.scale }}
+                        animate={
+                            phase >= 4 
+                            ? { scale: p.scale * 8, opacity: 0, x: `${xEnd * 3}vw`, y: `${yEnd * 3}vw` }
+                            : { x: [`${xStart}vw`, `${xEnd}vw`], y: [`${yStart}vw`, `${yEnd}vw`], opacity: [0, 1, 0] }
+                        }
+                        transition={{ 
+                            scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 0 },
+                            x: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: p.duration, repeat: Infinity, ease: "easeOut", delay: p.delay },
+                            y: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: p.duration, repeat: Infinity, ease: "easeIn", delay: p.delay }, // easeIn accelerates downwards like gravity
+                            opacity: phase >= 4 ? { duration: 0.5, ease: "easeOut" } : { duration: p.duration, repeat: Infinity, ease: "easeOut", delay: p.delay }
+                        }}
+                        className="absolute w-3 h-1 rounded-full" 
+                        style={{ 
+                            backgroundColor: p.color,
+                            boxShadow: `0 0 6px ${p.color}`,
+                            rotate: `${(p.angle * 180) / Math.PI}deg`,
+                            willChange: "transform, opacity" 
+                        }}
+                    />
+                )
+            })}
+          </div>
+
+          <div className="relative z-40 flex flex-col items-center">
+             {/* Epic Golden Typography */}
+             <motion.h1
+               initial={{ opacity: 0, scale: 0.9 }}
+               animate={
+                   phase >= 4 ? { opacity: 0, scale: 4 } 
+                   : phase >= 2 ? { opacity: 1, scale: 1.05 } 
+                   : {}
+               }
+               transition={{ 
+                   opacity: phase >= 4 ? { duration: 0.6, ease: "easeIn" } : { duration: 2, ease: "easeOut" },
+                   scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 12, ease: "linear" } 
+               }}
+               className="text-[#ffeb73] text-[min(6vw,60px)] md:text-[min(4vw,70px)] font-bold uppercase tracking-[0.5em] md:tracking-[0.8em] ml-[0.5em] md:ml-[0.8em] text-center"
+               style={{ 
+                   textShadow: "0 10px 40px rgba(255,100,0,0.8), 0 2px 5px rgba(255,255,255,0.6)", 
+                   willChange: "transform, opacity" 
+               }}
+             >
+               SURYAPRAKASH
+             </motion.h1>
+
+             {/* Minimalist Subtitles */}
+             <motion.div
+               initial={{ opacity: 0, y: 20, scale: 1 }}
+               animate={
+                   phase >= 4 ? { opacity: 0, scale: 3 }
+                   : phase >= 3 ? { opacity: 0.9, y: 0, scale: 1 } 
+                   : {}
+               }
+               transition={{ 
+                   opacity: phase >= 4 ? { duration: 0.5, ease: "easeIn" } : { duration: 2, ease: "easeOut" },
+                   scale: phase >= 4 ? { duration: 1.2, ease: "circIn" } : { duration: 10, ease: "linear" }
+               }}
+               className="mt-10 md:mt-12 flex flex-col items-center gap-6"
+               style={{ willChange: "transform, opacity" }}
+             >
+               <span className="text-[#ffeb73] text-[min(2vw,16px)] font-bold tracking-[0.8em] ml-[0.8em] uppercase" style={{ textShadow: "0 5px 15px rgba(255,100,0,0.9)" }}>
+                 AI Engineer
+               </span>
+               <motion.div 
+                   initial={{ height: 0 }}
+                   animate={phase >= 3 ? { height: "40px" } : {}}
+                   transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+                   className="w-[2px] bg-[#ff9d00] opacity-80" 
+               />
+               <span className="text-[#ffeb73] text-[min(1.5vw,12px)] font-medium tracking-[0.6em] ml-[0.6em] uppercase opacity-90" style={{ textShadow: "0 5px 10px rgba(255,100,0,0.9)" }}>
+                 Portfolio 2026
+               </span>
+             </motion.div>
+          </div>
+          
+          {/* Seamless Yellow Flash - perfectly matches the app background (bg-yellow-400) for an invisible cut */}
           <AnimatePresence>
-             {phase === 1 && (
-                <motion.div 
-                   exit={{ opacity: 0, scale: 2, filter: "blur(10px)" }}
-                   transition={{ duration: 0.3 }}
-                   className="absolute inset-0 flex items-center justify-center text-white flex-col gap-4 z-50"
-                >
-                    <div className="flex items-end gap-[3px] h-16">
-                        {Array(25).fill(0).map((_, i) => (
-                           <motion.div 
-                              key={i}
-                              initial={{ height: "10%" }}
-                              animate={{ height: ["10%", "100%", "20%", "90%", "10%"] }}
-                              transition={{ 
-                                  repeat: Infinity, 
-                                  duration: 0.3 + Math.random() * 0.4, 
-                                  ease: "linear",
-                                  delay: Math.random() * -1
-                              }}
-                              className={`bg-white ${i % 4 === 0 ? "w-3" : i % 3 === 0 ? "w-2" : "w-1"}`}
-                           />
-                        ))}
-                    </div>
-                    <span className="font-mono text-xs md:text-sm tracking-[0.4em] mt-2 font-bold opacity-80 animate-pulse">
-                       ESTABLISHING CONNECTION...
-                    </span>
-                </motion.div>
-             )}
+              {phase >= 4 && (
+                  <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6, ease: "easeIn", delay: 0.5 }}
+                      className="absolute inset-0 bg-yellow-400 z-[200] pointer-events-none"
+                      style={{ willChange: "opacity" }}
+                  />
+              )}
           </AnimatePresence>
 
-          {/* Phase 2: Yellow Panels Crash */}
-          <motion.div
-            initial={{ y: "-100%" }}
-            animate={phase >= 2 ? { y: 0 } : {}}
-            transition={{ duration: 0.35, ease: "circOut" }}
-            className="absolute top-0 left-0 right-0 h-1/2 bg-yellow-400 z-0"
-          />
-          <motion.div
-            initial={{ y: "100%" }}
-            animate={phase >= 2 ? { y: 0 } : {}}
-            transition={{ duration: 0.35, ease: "circOut" }}
-            className="absolute bottom-0 left-0 right-0 h-1/2 bg-yellow-400 z-0"
-          />
-          
-          {/* Horizontal Flash on Crash */}
-          {phase === 2 && (
-             <motion.div
-                initial={{ scaleX: 0, opacity: 1 }}
-                animate={{ scaleX: 1, opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute top-1/2 left-0 right-0 h-2 bg-white -translate-y-1/2 z-20"
-             />
-          )}
-
-          {/* Phase 3: Background Marquee (Kinetic Typography) */}
-          {phase >= 3 && (
-             <div className="absolute inset-0 opacity-[0.07] flex flex-col justify-between py-5 pointer-events-none overflow-hidden z-0" style={{ transform: 'rotate(-4deg) scale(1.2)' }}>
-                 {Array(5).fill(0).map((_, i) => (
-                    <motion.div 
-                       key={i}
-                       initial={{ x: i % 2 === 0 ? "0%" : "-50%" }}
-                       animate={{ x: i % 2 === 0 ? "-50%" : "0%" }}
-                       transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                       className="text-[min(8vw,60px)] font-black uppercase whitespace-nowrap text-black"
-                    >
-                       {Array(15).fill("SYSTEM INITIALIZED • ").join("")}
-                    </motion.div>
-                 ))}
-             </div>
-          )}
-
-          {/* Phase 3: Foreground Main Typography */}
-          {phase >= 3 && (
-             <motion.div 
-                 animate={{ x: mousePos.x, y: mousePos.y }}
-                 transition={{ type: "spring", stiffness: 100, damping: 25, mass: 0.5 }}
-                 className="relative z-10 flex flex-col items-center"
-             >
-                {/* Massive Name Text with 3D Echo Effect */}
-                <div className="relative">
-                   {/* Main Black Text */}
-                   <div className="overflow-hidden flex relative z-10">
-                       {"SURYAPRAKASH".split("").map((char, i) => (
-                         <motion.span
-                           key={i}
-                           initial={{ y: "100%", skewY: 15, opacity: 0 }}
-                           animate={{ y: 0, skewY: 0, opacity: 1 }}
-                           transition={{ 
-                               type: "spring", 
-                               stiffness: 300, 
-                               damping: 18, 
-                               delay: i * 0.02 
-                           }}
-                           className="text-[min(12vw,120px)] font-black text-black uppercase leading-[0.85] tracking-[-0.05em]"
-                         >
-                           {char}
-                         </motion.span>
-                       ))}
-                   </div>
-                   
-                   {/* Echo/Stroke Text behind for depth */}
-                   <div className="absolute top-2 left-4 flex opacity-30 pointer-events-none z-0">
-                       {"SURYAPRAKASH".split("").map((char, i) => (
-                         <motion.span
-                           key={'echo-'+i}
-                           initial={{ y: "100%", skewY: 15, opacity: 0 }}
-                           animate={{ y: 0, skewY: 0, opacity: 1 }}
-                           transition={{ 
-                               type: "spring", 
-                               stiffness: 300, 
-                               damping: 18, 
-                               delay: i * 0.02 + 0.05 
-                           }}
-                           style={{ WebkitTextStroke: "2px black", color: "transparent" }}
-                           className="text-[min(12vw,120px)] font-black uppercase leading-[0.85] tracking-[-0.05em]"
-                         >
-                           {char}
-                         </motion.span>
-                       ))}
-                   </div>
-                </div>
-
-                {/* Phase 4: 3D Impact Stamps */}
-                <div className="flex gap-4 sm:gap-6 mt-[6vh] items-center" style={{ perspective: 1000 }}>
-                   {phase >= 4 && (
-                     <>
-                         <motion.div
-                            initial={{ opacity: 0, z: 200, rotateX: -90 }}
-                            animate={{ opacity: 1, z: 0, rotateX: 0 }}
-                            transition={{ type: "spring", stiffness: 350, damping: 15 }}
-                            className="px-4 sm:px-6 py-2 bg-black text-yellow-400 text-[min(2.5vw,24px)] font-black uppercase tracking-[0.2em] shadow-[6px_6px_0_rgba(0,0,0,0.4)]"
-                         >
-                            AI ENGINEER
-                         </motion.div>
-                         
-                         <motion.div
-                            initial={{ opacity: 0, z: 200, rotateX: 90 }}
-                            animate={{ opacity: 1, z: 0, rotateX: 0 }}
-                            transition={{ type: "spring", stiffness: 350, damping: 15, delay: 0.1 }}
-                            className="px-4 sm:px-6 py-2 bg-black text-yellow-400 text-[min(2.5vw,24px)] font-black uppercase tracking-[0.2em] shadow-[6px_6px_0_rgba(0,0,0,0.4)]"
-                         >
-                            PORTFOLIO
-                         </motion.div>
-                     </>
-                   )}
-                </div>
-             </motion.div>
-          )}
-
-          {/* Interactive Hint */}
-          {phase >= 4 && (
-             <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
-                transition={{ delay: 0.8 }}
-                className="absolute bottom-[4vh] text-black font-mono text-[min(1.5vh,1vw)] uppercase tracking-[0.2em] font-bold z-10 pointer-events-none flex gap-2 items-center"
-             >
-                <div className="w-2 h-2 rounded-full bg-black animate-ping" />
-                Move cursor to inspect
-             </motion.div>
-          )}
+          {/* Skip Hint */}
+          <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: phase >= 2 && phase < 4 ? 0.4 : 0 }}
+             transition={{ duration: 2 }}
+             className="absolute bottom-[6vh] text-[#ffeb73] font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] font-light z-30 opacity-50"
+          >
+             Press any key to jump
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
