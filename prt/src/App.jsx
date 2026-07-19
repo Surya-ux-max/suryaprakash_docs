@@ -152,6 +152,80 @@ const CERT_DATA = [
 ];
 
 
+function SkillCard({ item, index }) {
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = e.clientX - box.left - box.width / 2;
+    const y = e.clientY - box.top - box.height / 2;
+    const rotX = -(y / (box.height / 2)) * 12;
+    const rotY = (x / (box.width / 2)) * 12;
+    setTilt({ rotateX: rotX, rotateY: rotY });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transformStyle: "preserve-3d",
+        perspective: "800px",
+        rotateX: tilt.rotateX,
+        rotateY: tilt.rotateY,
+      }}
+      whileHover={{ y: -6 }}
+      className="bg-black text-yellow-400 p-6 rounded-3xl border-[3px] border-black hover:border-yellow-400 shadow-[8px_8px_0px_#000] flex flex-col justify-between h-[34vh] relative overflow-hidden group select-none transition-colors duration-300"
+    >
+      {/* Laser scan line overlay */}
+      <div className="absolute top-0 left-0 w-full h-[2px] bg-yellow-400/30 group-hover:animate-[scan_1.5s_ease-in-out_infinite] z-0" />
+      
+      <div className="flex flex-col gap-3 z-10" style={{ transform: "translateZ(20px)" }}>
+        <div className="flex justify-between items-start">
+          <div className="text-yellow-400 w-12 h-12 flex items-center justify-center border-2 border-yellow-400/20 rounded-2xl bg-yellow-400/5 group-hover:scale-105 transition-transform duration-300">
+            {item.icon}
+          </div>
+          <span className="font-mono text-[9px] text-yellow-400/40 border border-yellow-400/20 px-2 py-0.5 rounded-md uppercase tracking-wider">
+            SKL-0{index + 1}
+          </span>
+        </div>
+        
+        <h4 className="text-lg font-black uppercase tracking-tight leading-tight mt-1">
+          {item.title}
+        </h4>
+        <p className="text-[11px] font-semibold leading-relaxed opacity-75">
+          {item.desc}
+        </p>
+      </div>
+
+      {/* Segmented LED matrix loading bar */}
+      <div className="flex flex-col gap-1 mt-auto z-10" style={{ transform: "translateZ(10px)" }}>
+        <div className="flex gap-1.5 mt-1 w-full">
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ backgroundColor: "rgba(250,204,21,0.06)" }}
+              animate={{ backgroundColor: "#facc15" }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                delay: 0.1 + idx * 0.04
+              }}
+              className="h-2 flex-1 rounded-[1px]"
+            />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showIntro] = useState(() => {
@@ -166,6 +240,7 @@ function App() {
   });
   const [achievementIndex, setAchievementIndex] = useState(0);
   const [bioTilt, setBioTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [activeSkillCategory, setActiveSkillCategory] = useState(0);
 
   return (
     <>
@@ -315,56 +390,72 @@ function App() {
 
         {/* Skills Section */}
         <section className="h-screen w-full snap-start relative flex flex-col justify-center overflow-hidden bg-yellow-400 px-[6vw]">
-          {/* Header Area */}
-          <div className="flex items-end leading-[0.8] mb-[6vh] z-10">
-            <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em]">
+          
+          {/* Background Watermark */}
+          <div className="absolute right-0 bottom-0 h-full flex items-end pointer-events-none opacity-5 z-0">
+            <h1 className="text-[min(90vh,40vw)] font-black leading-none tracking-[-0.1em] select-none text-black">
+              SKILLS
+            </h1>
+          </div>
+
+          {/* Section Title */}
+          <div className="flex items-end leading-[0.8] mb-[6vh] z-10 select-none">
+            <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em] text-black">
               S
             </h1>
-            <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh]">
-              kills & Planner
+            <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh] text-black">
+              kills
             </span>
           </div>
 
-          {/* Planner Grid of Stacks */}
-          <div className="grid grid-cols-3 gap-[4vw] w-full z-10">
-            {SKILL_GROUPS.map((group, groupIdx) => (
-              <div key={groupIdx} className="flex flex-col gap-[2vh]">
-                <h3 className="text-[min(2.5vh,1.5vw)] font-black uppercase tracking-widest opacity-60">
-                  {group.category}
-                </h3>
-                <div className="w-full h-[min(35vh,25vw)] pointer-events-auto">
-                  <Stack
-                    randomRotation={true}
-                    sensitivity={200}
-                    sendToBackOnClick={true}
-                    cards={group.items.map((item, i) => (
-                      <div
-                        key={i}
-                        className="w-full h-full bg-black text-yellow-400 p-[3vh] flex flex-col justify-center gap-[1.5vh] rounded-2xl border-2 border-yellow-400/20"
-                      >
-                        <div className="text-yellow-400">{item.icon}</div>
-                        <h4 className="text-[min(2.5vh,1.6vw)] font-black uppercase tracking-tight leading-none">
-                          {item.title}
-                        </h4>
-                        <p className="text-[min(1.6vh,1vw)] font-medium leading-tight opacity-80">
-                          {item.desc}
-                        </p>
+          {/* Console Grid */}
+          <div className="w-full h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-8 z-10">
+            
+            {/* Left Column: Category Selector Buttons */}
+            <div className="flex flex-col gap-4 lg:gap-6 w-full lg:w-[35%]">
+              {SKILL_GROUPS.map((group, idx) => {
+                const isActive = activeSkillCategory === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveSkillCategory(idx)}
+                    className={`group relative w-full border-4 border-black p-5 rounded-2xl text-left font-black transition-all duration-300 ${
+                      isActive 
+                        ? "bg-black text-yellow-400 translate-y-[-4px] shadow-[8px_8px_0px_#000]"
+                        : "bg-transparent text-black hover:bg-black/5 hover:translate-y-[-2px]"
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex flex-col">
+                        <span className="font-mono text-xs opacity-50 mb-1">CATEGORY 0{idx + 1}</span>
+                        <span className="text-xl sm:text-2xl uppercase tracking-tight">{group.category}</span>
                       </div>
-                    ))}
-                    autoplay={true}
-                    autoplayDelay={3000 + groupIdx * 500}
-                    pauseOnHover={true}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+                      <span className={`text-xl font-mono transition-transform duration-300 ${isActive ? "translate-x-2" : "group-hover:translate-x-1"}`}>
+                        →
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
 
-          {/* Background Text Pattern (matching EDU) */}
-          <div className="absolute right-0 bottom-0 h-full flex items-end pointer-events-none opacity-5">
-            <h1 className="text-[min(90vh,40vw)] font-black leading-none tracking-[-0.1em] select-none">
-              SKILLS
-            </h1>
+            {/* Right Column: Dynamic Skills Cards Grid */}
+            <div className="w-full lg:w-[60%] h-full flex items-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeSkillCategory}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full"
+                >
+                  {SKILL_GROUPS[activeSkillCategory].items.map((item, i) => (
+                    <SkillCard key={i} item={item} index={i} />
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </section>
 
