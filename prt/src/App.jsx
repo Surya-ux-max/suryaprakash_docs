@@ -165,6 +165,7 @@ function App() {
     return shouldShow;
   });
   const [achievementIndex, setAchievementIndex] = useState(0);
+  const [bioTilt, setBioTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   return (
     <>
@@ -231,32 +232,32 @@ function App() {
           />
         </div>
       </section>
-      {/* Bio Section */}
-       <section className="h-screen w-full snap-start flex items-center justify-between overflow-hidden bg-yellow-400 px-[6vw]">
-         {/* Bio Content - Left */}
-         <div className="flex flex-col gap-[4vh] max-w-[50vw] z-10">
-           {/* Bio Name/Title */}
-           <div className="flex items-end leading-[0.8]">
-             <h1 className="text-[min(40vh,20vw)] font-black tracking-[-0.08em]">
-               B
-             </h1>
-             <span className="text-[min(10vh,5vw)] font-bold ml-[1.5vw] mb-[2.5vh]">
-               io
-             </span>
-           </div>
+      
+      <section className="h-screen w-full snap-start flex items-center justify-between overflow-hidden bg-yellow-400 px-[6vw]">
+        {/* Bio Content - Left */}
+        <div className="flex flex-col gap-[4vh] max-w-[50vw] z-10">
+          {/* Bio Name/Title */}
+          <div className="flex items-end leading-[0.8]">
+            <h1 className="text-[min(40vh,20vw)] font-black tracking-[-0.08em]">
+              B
+            </h1>
+            <span className="text-[min(10vh,5vw)] font-bold ml-[1.5vw] mb-[2.5vh]">
+              io
+            </span>
+          </div>
 
-           <p className="text-[min(3.2vh,2.2vw)] leading-relaxed font-black text-pretty">
-             Hello Developers! I'm{" "}
-             <span className="underline decoration-4 underline-offset-4">
-               Suryaprakash
-             </span>
-             , an aspiring AI Engineer passionate about building
-             Retrieval-Augmented Generation (RAG) systems, AI agent pipelines,
-             and modern web solutions that solve real-world problems. I enjoy
-             combining artificial intelligence with intuitive design to create
-             impactful and scalable applications.
-           </p>
-         </div>
+          <p className="text-[min(3.2vh,2.2vw)] leading-relaxed font-black text-pretty">
+            Hello Developers! I'm{" "}
+            <span className="underline decoration-4 underline-offset-4">
+              Suryaprakash
+            </span>
+            , an aspiring AI Engineer passionate about building
+            Retrieval-Augmented Generation (RAG) systems, AI agent pipelines,
+            and modern web solutions that solve real-world problems. I enjoy
+            combining artificial intelligence with intuitive design to create
+            impactful and scalable applications.
+          </p>
+        </div>
 
         {/* Bio Image - Right */}
         <div className="h-[80vh] flex items-end">
