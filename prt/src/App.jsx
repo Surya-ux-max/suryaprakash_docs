@@ -22,6 +22,7 @@ import bill4food from "./projects/Bill4Food.png";
 import bill4food1 from "./projects/Bill4Food1.png";
 import trinetra1 from "./projects/trinetra1.png";
 import survex from "./projects/Survex.png";
+import survexVideo from "./projects/video.mp4";
 import RotatingText from "./RotatingText";
 import { HelloIntro } from "./HelloIntro";
 import Stack from "./Stack";
@@ -121,6 +122,7 @@ const PROJECT_DATA = [
     title: "Survex",
     desc: "An intelligent AI assistant inspired by Jarvis, designed for natural, engaging conversations. Survex is built to be supportive, loyal, and personable—creating a comfortable interaction experience while assisting with queries, brainstorming, and everyday tasks.",
     image: survex,
+    video: survexVideo,
     tags: ["AI Assistant", "LLM", "Natural Language"]
   }
 ];
@@ -575,84 +577,42 @@ function App() {
         <ProfilesSection />
 
         {/* Projects Section */}
-        <section className="h-screen w-full snap-start relative flex flex-col justify-center overflow-hidden bg-yellow-400 px-[6vw]">
-          {/* Header */}
-          <div className="flex items-end leading-[0.8] mb-[6vh] z-10">
-            <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em]">
+        <section className="h-screen w-full snap-start relative flex flex-col justify-center overflow-hidden bg-black">
+          
+          {/* Full-Section Video Background with high visibility */}
+          <div className="absolute inset-0 z-0 select-none pointer-events-none bg-black">
+            <video
+              src={survexVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover opacity-100"
+            />
+          </div>
+
+          {/* Section Header */}
+          <div className="absolute top-[8vh] left-[6vw] z-20 flex items-end leading-[0.8] text-white select-none pointer-events-none">
+            <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em] text-white">
               P
             </h1>
-            <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh]">
+            <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh] text-white">
               rojects
             </span>
           </div>
 
-          {/* Project Split Panels */}
-          <div className="flex h-[60vh] gap-4 z-10">
-            {PROJECT_DATA.map((project) => (
-              <motion.div
-                key={project.id}
-                className="relative group flex-grow overflow-hidden rounded-3xl bg-black transition-all duration-700 ease-in-out hover:flex-[3]"
-                initial={{ flex: 1 }}
-                whileHover={{ flex: 3 }}
-              >
-                {/* Background Image with Overlay */}
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover opacity-90 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent opacity-70" />
-                </div>
-
-                {/* Content Overlay */}
-                <div className="absolute inset-0 p-[4vh] flex flex-col justify-end">
-                  <div className="transform transition-all duration-500 translate-y-8 group-hover:translate-y-0">
-                    <h3 className="text-[min(5vh,3vw)] font-black text-yellow-400 uppercase tracking-tighter mb-4">
-                      {project.title}
-                    </h3>
-                    
-                    {/* Tags */}
-                    <div className="flex gap-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="px-3 py-1 bg-yellow-400 text-black text-[min(1.4vh,0.8vw)] font-black rounded-full uppercase">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Description - only visible on hover */}
-                    <p className="text-white text-[min(2.2vh,1.3vw)] font-medium leading-relaxed max-w-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                      {project.desc}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Background Text Pattern */}
-          <div className="absolute right-0 top-0 pointer-events-none opacity-5">
-            <h1 className="text-[min(90vh,40vw)] font-black leading-none tracking-[-0.1em] select-none transform rotate-180">
-              BUILD
-            </h1>
-          </div>
-          
-          {/* Interaction Hint */}
-          <div className="absolute bottom-[6vh] left-1/2 -translate-x-1/2 flex items-center gap-2 text-black/60 z-20">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h.01M12 12h.01M19 12h.01M6.314 5.314l.707.707M16.979 5.314l-.707.707M12 19l-.01.01M6.314 18.686l.707-.707M16.979 18.686l-.707-.707M12 3v.01" />
-            </svg>
-            <span className="text-sm font-bold uppercase tracking-widest">Hover to Explore</span>
+          {/* Floating AI HUD Icon Overlay (Hiding Gemini Logo in bottom-right) */}
+          <div className="absolute bottom-[10%] right-[8.5%] z-30 flex items-center justify-center w-14 h-14 bg-black/85 border-2 border-white/20 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-white select-none pointer-events-none transition-all duration-300">
+            <Bot className="w-6 h-6 text-white animate-pulse" />
           </div>
         </section>
 
         {/* Flagship Impact Section — Bill4Food */}
-        <section className="h-screen w-full snap-start relative flex items-center overflow-hidden bg-black px-[6vw]">
+        <section className="h-screen w-full snap-start relative flex items-center overflow-hidden bg-yellow-400 px-[6vw] text-black">
 
           {/* Background watermark */}
-          <div className="absolute right-[-4vw] bottom-0 pointer-events-none opacity-[0.04] leading-none select-none">
-            <span className="text-[min(90vh,55vw)] font-black tracking-[-0.1em] text-yellow-400">₹</span>
+          <div className="absolute right-[-4vw] bottom-0 pointer-events-none opacity-[0.05] leading-none select-none">
+            <span className="text-[min(90vh,55vw)] font-black tracking-[-0.1em] text-black">₹</span>
           </div>
 
           {/* Left Content */}
@@ -660,14 +620,14 @@ function App() {
 
             {/* Section Label */}
             <div className="flex items-center gap-4">
-              <div className="h-[2px] w-10 bg-yellow-400" />
-              <span className="text-yellow-400/60 font-mono text-[min(1.8vh,1.1vw)] uppercase tracking-[0.25em]">Flagship Project</span>
+              <div className="h-[2px] w-10 bg-black" />
+              <span className="text-black/60 font-mono text-[min(1.8vh,1.1vw)] uppercase tracking-[0.25em]">Flagship Project</span>
             </div>
 
             {/* Title */}
             <div className="flex items-end leading-[0.8]">
-              <h1 className="text-[min(30vh,14vw)] font-black tracking-[-0.08em] text-yellow-400">B</h1>
-              <span className="text-[min(8vh,4.5vw)] font-bold ml-[1vw] mb-[2vh] text-yellow-400">ill4Food</span>
+              <h1 className="text-[min(30vh,14vw)] font-black tracking-[-0.08em] text-black">B</h1>
+              <span className="text-[min(8vh,4.5vw)] font-bold ml-[1vw] mb-[2vh] text-black">ill4Food</span>
             </div>
 
             {/* Revenue Stamp Badge */}
@@ -678,14 +638,14 @@ function App() {
               transition={{ type: "spring", damping: 12, stiffness: 300 }}
               className="relative inline-flex self-start"
             >
-              <div className="relative px-5 py-2.5 border-4 border-yellow-400">
-                <span className="text-[min(3vh,1.8vw)] font-black uppercase tracking-[0.2em] text-yellow-400 leading-none">
+              <div className="relative px-5 py-2.5 border-4 border-black">
+                <span className="text-[min(3vh,1.8vw)] font-black uppercase tracking-[0.2em] text-black leading-none">
                   Revenue Generating
                 </span>
-                <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-[3px] border-l-[3px] border-yellow-400/50" />
-                <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-[3px] border-r-[3px] border-yellow-400/50" />
-                <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-[3px] border-l-[3px] border-yellow-400/50" />
-                <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-[3px] border-r-[3px] border-yellow-400/50" />
+                <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-[3px] border-l-[3px] border-black/50" />
+                <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-[3px] border-r-[3px] border-black/50" />
+                <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-[3px] border-l-[3px] border-black/50" />
+                <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-[3px] border-r-[3px] border-black/50" />
               </div>
             </motion.div>
 
@@ -695,7 +655,7 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ delay: 0.2 }}
-              className="text-[min(2.4vh,1.5vw)] text-white/70 font-medium leading-relaxed max-w-lg"
+              className="text-[min(2.4vh,1.5vw)] text-black/85 font-semibold leading-relaxed max-w-lg"
             >
               A live payment & billing platform built for Sri Eshwar College students.
               Real-time cafeteria transactions — no queues, no cash, no delays.
@@ -710,13 +670,13 @@ function App() {
               className="grid grid-cols-3 gap-4"
             >
               {[
-                { value: "Live", label: "Deployed" },
+                { value: "Live & Deployed", label: "Status" },
                 { value: "Real‑time", label: "Billing" },
                 { value: "Digital", label: "Payments" },
               ].map((stat, i) => (
-                <div key={i} className="border border-yellow-400/20 rounded-xl p-4 flex flex-col gap-1 bg-white/5">
-                  <span className="text-[min(3vh,1.8vw)] font-black text-yellow-400 leading-none">{stat.value}</span>
-                  <span className="text-[min(1.6vh,0.9vw)] font-mono text-white/50 uppercase tracking-widest">{stat.label}</span>
+                <div key={i} className="border border-black/20 rounded-xl p-4 flex flex-col gap-1 bg-black/5">
+                  <span className="text-[min(2.8vh,1.7vw)] font-black text-black leading-none">{stat.value}</span>
+                  <span className="text-[min(1.6vh,0.9vw)] font-mono text-black/60 uppercase tracking-widest">{stat.label}</span>
                 </div>
               ))}
             </motion.div>
@@ -730,7 +690,7 @@ function App() {
               className="flex gap-2 flex-wrap"
             >
               {["React", "Payment Integration", "Real-time Billing", "Sri Eshwar"].map(tag => (
-                <span key={tag} className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-[min(1.4vh,0.85vw)] font-black rounded-full uppercase tracking-wide">
+                <span key={tag} className="px-3 py-1 bg-black/5 border border-black/25 text-black text-[min(1.4vh,0.85vw)] font-black rounded-full uppercase tracking-wide">
                   {tag}
                 </span>
               ))}
@@ -745,11 +705,11 @@ function App() {
               whileInView={{ opacity: 1, x: 0, rotate: 5 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.15 }}
-              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-yellow-400/10"
+              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-black/10"
               style={{ transformOrigin: "center center" }}
             >
               <img src={bill4food1} alt="Bill4Food App" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/20" />
+              <div className="absolute inset-0 bg-black/5" />
             </motion.div>
 
             {/* Front screenshot */}
@@ -758,22 +718,22 @@ function App() {
               whileInView={{ opacity: 1, x: 0, rotate: -3 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.3 }}
-              className="absolute inset-4 rounded-2xl overflow-hidden shadow-[0_30px_80px_rgba(250,204,21,0.15)] border-2 border-yellow-400/30"
+              className="absolute inset-4 rounded-2xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.1)] border-2 border-black/25"
               style={{ transformOrigin: "center center" }}
             >
               <img src={bill4food} alt="Bill4Food Dashboard" className="w-full h-full object-cover" />
               {/* Glow edge */}
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-yellow-400/20" />
+              <div className="absolute inset-0 rounded-2xl ring-1 ring-black/10" />
             </motion.div>
           </div>
 
           {/* Bottom Ticker */}
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-yellow-400/20 py-3 z-20">
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden border-t border-black/20 py-3 z-20">
             <div
-              className="flex gap-12 whitespace-nowrap text-yellow-400/40 font-mono text-[min(1.6vh,1vw)] uppercase tracking-widest"
+              className="flex gap-12 whitespace-nowrap text-black/45 font-mono text-[min(1.6vh,1vw)] uppercase tracking-widest"
               style={{ animation: "marquee 18s linear infinite" }}
             >
-              {Array(4).fill(["Live", "Revenue Generating", "Sri Eshwar College", "Digital Cafeteria", "Real-time Billing", "Zero Cash", "Instant Receipts"]).flat().map((item, i) => (
+              {Array(4).fill(["Live & Deployed", "Revenue Generating", "Sri Eshwar College", "Digital Cafeteria", "Real-time Billing", "Zero Cash", "Instant Receipts"]).flat().map((item, i) => (
                 <span key={i}>{item} &nbsp;·</span>
               ))}
             </div>
