@@ -838,7 +838,7 @@ function App() {
         <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-yellow-400 text-black">
 
           {/* Background CONNECT watermark */}
-          <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden z-0">
             <span className="text-[min(55vh,35vw)] font-black tracking-[-0.1em] text-black/[0.04] select-none leading-none pr-[2vw]">
               CONNECT
             </span>
@@ -847,8 +847,8 @@ function App() {
           {/* Main content — grows to fill, split layout */}
           <div className="flex-1 flex items-center px-[6vw] gap-[6vw] z-10 min-h-0">
 
-            {/* Left — Title + tagline + status */}
-            <div className="flex flex-col gap-[3vh] flex-shrink-0 max-w-[46vw]">
+            {/* Left — Title + Tagline + Opportunity badge */}
+            <div className="flex flex-col gap-[4vh] flex-shrink-0 max-w-[46vw]">
 
               {/* Section label */}
               <div className="flex items-center gap-3">
@@ -858,127 +858,77 @@ function App() {
 
               {/* Big letter title */}
               <div className="flex items-end leading-[0.8]">
-                <h1 className="text-[min(28vh,14vw)] font-black tracking-[-0.08em]">C</h1>
+                <h1 className="text-[min(24vh,12vw)] font-black tracking-[-0.08em]">C</h1>
                 <span className="text-[min(7.5vh,4.2vw)] font-bold ml-[1vw] mb-[2vh]">onnect</span>
               </div>
 
-              {/* Tagline */}
-              <motion.p
+              {/* Heavy tagline */}
+              <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.1, type: "spring", stiffness: 280, damping: 25 }}
-                className="text-[min(3.2vh,2vw)] font-black leading-tight tracking-tight uppercase max-w-lg"
+                transition={{ type: "spring", stiffness: 280, damping: 25 }}
+                className="text-[min(5vh,3vw)] font-black leading-tight tracking-tighter uppercase max-w-lg"
               >
-                Let's build something<br />
-                <span className="text-black/40">remarkable together.</span>
-              </motion.p>
+                Let's build<br />
+                <span className="text-black/40">something remarkable.</span>
+              </motion.h2>
 
-              {/* Description */}
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-[min(2.2vh,1.4vw)] font-semibold leading-relaxed text-black/70 max-w-md"
-              >
-                I'm an AI Engineer & Web Developer based in Coimbatore, passionate about RAG systems, AI agents, and scalable full-stack solutions. Always open to new ideas.
-              </motion.p>
-
-              {/* Open to work status */}
+              {/* Open to work status pill */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3, type: "spring", stiffness: 300, damping: 22 }}
-                className="inline-flex items-center gap-3 px-5 py-2.5 bg-black rounded-full self-start"
+                transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 22 }}
+                className="inline-flex items-center gap-3 px-5 py-2.5 bg-black rounded-full self-start text-yellow-400 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_rgba(0,0,0,0.15)] select-none"
               >
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-70" />
                   <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400" />
                 </span>
-                <span className="text-yellow-400 font-black text-[min(1.8vh,1.1vw)] uppercase tracking-widest">Open to Opportunities</span>
+                <span>Open to Opportunities</span>
               </motion.div>
             </div>
 
-            {/* Right — Contact cards */}
-            <div className="flex-1 flex flex-col gap-[2.5vh]">
+            {/* Right — Sliding fill interactive rows */}
+            <div className="flex-1 flex flex-col gap-2">
+              {[
+                { label: "Email", value: "suryapr.exe14@gmail.com", href: "mailto:suryapr.exe14@gmail.com", target: "" },
+                { label: "GitHub", value: "github.com/Surya-ux-max", href: "https://github.com/Surya-ux-max", target: "_blank" },
+                { label: "LinkedIn", value: "linkedin.com/in/suryaprakash-s", href: "https://www.linkedin.com/in/suryaprakash-s-20269631a/", target: "_blank" },
+              ].map((link, idx) => (
+                <motion.a
+                  key={idx}
+                  href={link.href}
+                  target={link.target || undefined}
+                  rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 + idx * 0.1, type: "spring", stiffness: 280, damping: 24 }}
+                  className="group relative flex items-center justify-between py-6 border-b-4 border-black overflow-hidden cursor-pointer select-none text-black"
+                >
+                  {/* Sliding hover background */}
+                  <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                  
+                  {/* Content */}
+                  <div className="relative z-10 flex items-baseline gap-6">
+                    <span className="font-mono text-xs opacity-50 group-hover:text-yellow-400/50 transition-colors uppercase">
+                      0{idx + 1} // {link.label}
+                    </span>
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black uppercase tracking-tight group-hover:text-yellow-400 transition-colors">
+                      {link.value}
+                    </span>
+                  </div>
 
-              {/* Email */}
-              <motion.a
-                href="mailto:suryapr.exe14@gmail.com"
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.15, type: "spring", stiffness: 260, damping: 24 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
-              >
-                <div className="w-14 h-14 rounded-xl bg-yellow-400 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-7 h-7 text-black" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                  </svg>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">Email</p>
-                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] truncate group-hover:text-white transition-colors">suryapr.exe14@gmail.com</p>
-                </div>
-                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </motion.a>
-
-              {/* GitHub */}
-              <motion.a
-                href="https://github.com/Surya-ux-max"
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.25, type: "spring", stiffness: 260, damping: 24 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
-              >
-                <div className="w-14 h-14 rounded-xl bg-yellow-400 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-7 h-7 text-black" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-                  </svg>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">GitHub</p>
-                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] group-hover:text-white transition-colors">@Surya-ux-max</p>
-                </div>
-                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </motion.a>
-
-              {/* LinkedIn */}
-              <motion.a
-                href="https://www.linkedin.com/in/suryaprakash-s-20269631a/"
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.35, type: "spring", stiffness: 260, damping: 24 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="group flex items-center gap-6 bg-black rounded-2xl px-7 py-6 border-2 border-transparent hover:border-yellow-400/40 transition-all duration-300 cursor-pointer"
-              >
-                <div className="w-14 h-14 rounded-xl bg-[#0a66c2] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-yellow-400/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mb-1">LinkedIn</p>
-                  <p className="text-yellow-400 font-black text-[min(2.4vh,1.5vw)] group-hover:text-white transition-colors">Suryaprakash S</p>
-                </div>
-                <svg className="w-6 h-6 text-yellow-400/30 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </motion.a>
+                  {/* Dynamic Arrow */}
+                  <div className="relative z-10 w-12 h-12 rounded-full border-2 border-black group-hover:border-yellow-400 flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
+                    <svg className="w-5 h-5 text-black group-hover:text-yellow-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/>
+                    </svg>
+                  </div>
+                </motion.a>
+              ))}
             </div>
           </div>
 
