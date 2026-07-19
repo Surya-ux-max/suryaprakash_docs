@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Brain, 
@@ -9,13 +9,7 @@ import {
   Wrench, 
   Cloud, 
   Rocket, 
-  Layers,
-  Car,
-  Bike,
-  Mountain,
-  UtensilsCrossed,
-  Gamepad2,
-  Globe2
+  Layers
 } from "lucide-react";
 import pic from "./images/pic.png";
 import pic3 from "./images/pic3.png";
@@ -38,6 +32,7 @@ import CardSwap, { Card } from "./CardSwap";
 import certServicenow from "./certificates/Servicenow.png";
 import certGuidewire from "./certificates/guidewire.png";
 import certPowerBI from "./certificates/powerbi.png";
+import Hobbies from "./Hobbies";
 
 const ROLES = [
   "SURYAPRAKASH",
@@ -154,14 +149,6 @@ const CERT_DATA = [
   },
 ];
 
-const HOBBIES_DATA = [
-  { icon: <Car size={48} />, title: "Driving Cars", color: "bg-yellow-400 text-black" },
-  { icon: <Bike size={48} />, title: "Bike Riding", color: "bg-black text-yellow-400" },
-  { icon: <Mountain size={48} />, title: "Trekking", color: "bg-yellow-400 text-black" },
-  { icon: <UtensilsCrossed size={48} />, title: "Cooking", color: "bg-black text-yellow-400" },
-  { icon: <Gamepad2 size={48} />, title: "Video Games", color: "bg-yellow-400 text-black" },
-  { icon: <Globe2 size={48} />, title: "Geopolitics", color: "bg-black text-yellow-400" }
-];
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -792,48 +779,8 @@ function App() {
             </div>
           </div>
         </section>
-
         {/* Hobbies Section */}
-        <section className="h-screen w-full snap-start relative flex items-center justify-center overflow-hidden bg-yellow-400 px-[6vw]">
-          {/* Header */}
-          <div className="absolute top-[8vh] left-[6vw] z-20 flex items-end leading-[0.8]">
-            <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em]">
-              H
-            </h1>
-            <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh]">
-              obbies
-            </span>
-          </div>
-
-          {/* Interactive Hobby Grid */}
-          <div className="relative w-full h-[60vh] flex items-center justify-center">
-            <div className="grid grid-cols-3 gap-4 w-full max-w-[800px]">
-              {HOBBIES_DATA.map((hobby, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scale: 0, rotate: -15 }}
-                  whileInView={{ scale: 1, rotate: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: i * 0.1, type: "spring", stiffness: 300, damping: 20 }}
-                  whileHover={{ scale: 1.15, rotate: 5, y: -10 }}
-                  className={`aspect-square rounded-3xl flex flex-col items-center justify-center gap-4 shadow-2xl cursor-pointer border-4 border-black ${hobby.color}`}
-                >
-                  {hobby.icon}
-                  <h3 className="text-xl font-black uppercase tracking-tight">
-                    {hobby.title}
-                  </h3>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Background Text Pattern */}
-          <div className="absolute left-0 bottom-0 pointer-events-none opacity-5">
-            <h1 className="text-[min(80vh,40vw)] font-black leading-none tracking-[-0.1em] select-none">
-              LIVE
-            </h1>
-          </div>
-        </section>
+        <Hobbies />
 
         {/* CTA / Connect Section */}
         <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-yellow-400 text-black">
