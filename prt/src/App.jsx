@@ -9,7 +9,9 @@ import {
   Wrench, 
   Cloud, 
   Rocket, 
-  Layers
+  Layers,
+  CheckCircle2,
+  Copy
 } from "lucide-react";
 import pic from "./images/pic.webp";
 import pic3 from "./images/pic3.webp";
@@ -241,6 +243,15 @@ function App() {
   const [achievementIndex, setAchievementIndex] = useState(0);
   const [bioTilt, setBioTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [activeSkillCategory, setActiveSkillCategory] = useState(0);
+  const [copiedToast, setCopiedToast] = useState(false);
+
+  const handleCopyEmail = (email) => {
+    if (email.includes("@")) {
+      navigator.clipboard?.writeText(email);
+      setCopiedToast(true);
+      setTimeout(() => setCopiedToast(false), 2200);
+    }
+  };
 
   return (
     <>
@@ -531,6 +542,23 @@ function App() {
                 >
                   {ACHIEVEMENT_DATA[achievementIndex].desc}
                 </motion.p>
+
+                {/* Interactive Achievement Selector Buttons */}
+                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                  {ACHIEVEMENT_DATA.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setAchievementIndex(idx)}
+                      className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold uppercase transition-all duration-300 border-2 cursor-pointer ${
+                        achievementIndex === idx
+                          ? "bg-black text-yellow-400 border-black shadow-[4px_4px_0px_#000] -translate-y-0.5"
+                          : "bg-transparent text-black/60 border-black/20 hover:border-black hover:text-black"
+                      }`}
+                    >
+                      0{idx + 1} {item.title.split(" ")[0]}
+                    </button>
+                  ))}
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -903,6 +931,11 @@ function App() {
                   href={link.href}
                   target={link.target || undefined}
                   rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+                  onClick={(e) => {
+                    if (link.label === "Email") {
+                      handleCopyEmail(link.value);
+                    }
+                  }}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -917,8 +950,11 @@ function App() {
                     <span className="font-mono text-xs opacity-50 group-hover:text-yellow-400/50 transition-colors uppercase">
                       0{idx + 1} // {link.label}
                     </span>
-                    <span className="text-xl sm:text-2xl lg:text-3xl font-black uppercase tracking-tight group-hover:text-yellow-400 transition-colors">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black uppercase tracking-tight group-hover:text-yellow-400 transition-colors flex items-center gap-3">
                       {link.value}
+                      {link.label === "Email" && (
+                        <Copy size={20} className="opacity-60 group-hover:opacity-100 transition-opacity" />
+                      )}
                     </span>
                   </div>
 
@@ -932,6 +968,20 @@ function App() {
               ))}
             </div>
           </div>
+
+          {/* Copy Toast Alert */}
+          <AnimatePresence>
+            {copiedToast && (
+              <motion.div
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[120] bg-black text-yellow-400 px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest border-2 border-yellow-400 shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center gap-2 pointer-events-none"
+              >
+                <CheckCircle2 size={16} className="text-green-400" /> Email Copied to Clipboard!
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Bottom — Marquee + Footer */}
           <div className="flex-shrink-0 z-10">
