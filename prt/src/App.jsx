@@ -11,7 +11,9 @@ import {
   Rocket, 
   Layers,
   CheckCircle2,
-  Copy
+  Copy,
+  GraduationCap,
+  Building2
 } from "lucide-react";
 import pic from "./images/pic.webp";
 import pic3 from "./images/pic3.webp";
@@ -154,6 +156,35 @@ const CERT_DATA = [
   },
 ];
 
+const EDUCATION_DATA = [
+  {
+    type: "COLLEGE",
+    institution: "Sri Eshwar College of Engineering",
+    period: "2024 - 2028",
+    status: "PURSUING DEGREE",
+    highlight: "Artificial Intelligence & Web Engineering",
+    details: [
+      "Specializing in RAG Systems, Multi-Agent AI Architectures, and Full-Stack Engineering.",
+      "Active Hackathon Innovator with state-level recognitions (Freshathon, Adya AI).",
+      "Architecting production web apps and payment portals (Bill4Food, Survex)."
+    ],
+    tags: ["AI Engineering", "RAG Pipelines", "Full-Stack Dev", "Data Structures"]
+  },
+  {
+    type: "SCHOOL",
+    institution: "Srinivasa Vidhyalaya Matric Higher Secondary School",
+    period: "2021 - 2024",
+    status: "COMPLETED",
+    highlight: "Computer Science & Mathematics",
+    details: [
+      "Completed Higher Secondary with focus on Mathematics and Computer Science.",
+      "Built strong foundation in algorithmic logic, problem solving, and programming.",
+      "Participated in regional academic science and mathematics expos."
+    ],
+    tags: ["Computer Science", "Mathematics", "Physics", "Foundation"]
+  }
+];
+
 
 function SkillCard({ item, index }) {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
@@ -244,6 +275,7 @@ function App() {
   const [achievementIndex, setAchievementIndex] = useState(0);
   const [bioTilt, setBioTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [activeSkillCategory, setActiveSkillCategory] = useState(0);
+  const [activeEducationIndex, setActiveEducationIndex] = useState(0);
   const [copiedToast, setCopiedToast] = useState(false);
 
   const handleCopyEmail = (email) => {
@@ -360,47 +392,140 @@ function App() {
         </div>
       </section>
 
-       {/* Education Section */}
-       <section className="h-screen w-full snap-start relative flex items-center overflow-hidden bg-yellow-400 px-[6vw]">
-         {/* Education Text Container - Left Aligned */}
-         <div className="flex flex-col gap-[4vh] max-w-[55vw] z-10">
-           {/* Education Name/Title */}
-           <div className="flex items-end leading-[0.8]">
-             <h1 className="text-[min(40vh,20vw)] font-black tracking-[-0.08em]">
-               E
-             </h1>
-             <span className="text-[min(10vh,5vw)] font-bold ml-[1.5vw] mb-[2.5vh]">
-               ducation
-             </span>
-           </div>
+        {/* Education Section — Redesigned Interactive Editorial UI */}
+        <section className="h-screen w-full snap-start relative flex flex-col justify-center overflow-hidden bg-yellow-400 px-[6vw]">
 
-           {/* Education Content */}
-           <div className="flex flex-col gap-[6vh]">
-             <div className="flex flex-col gap-2">
-               <h3 className="text-[min(3.5vh,2.2vw)] font-black tracking-tight">SCHOOL</h3>
-               <p className="text-[min(2.8vh,1.8vw)] leading-relaxed font-semibold">
-                 Srinivasa Vidhyalaya Matric Higher Secondary School
-                 <br />
-                 <span className="text-black/60 font-mono">2021 - 2024</span>
-               </p>
-             </div>
+          {/* Background Sketch Overlay */}
+          <SketchLayer paths={SKETCHES_BACK} strokeColor="black" opacityMultiplier={0.3} />
 
-             <div className="flex flex-col gap-2">
-               <h3 className="text-[min(3.5vh,2.2vw)] font-black tracking-tight">COLLEGE</h3>
-               <p className="text-[min(2.8vh,1.8vw)] leading-relaxed font-semibold">
-                 Sri Eshwar College of Engineering
-                 <br />
-                 <span className="text-black/60 font-mono">2024 - 2028</span>
-               </p>
-             </div>
-           </div>
-         </div>
-
-         {/* Education Image Placeholder - Fixed to right edge (can be replaced with a specific image later) */}
-         <div className="absolute right-0 bottom-0 h-full flex items-end pointer-events-none opacity-20">
-            <h1 className="text-[min(90vh,50vw)] font-black leading-none tracking-[-0.1em] select-none">
+          {/* Background Watermark */}
+          <div className="absolute right-[-2vw] bottom-0 pointer-events-none opacity-[0.05] leading-none select-none">
+            <h1 className="text-[min(90vh,55vw)] font-black tracking-[-0.1em] text-black">
               EDU
             </h1>
+          </div>
+
+          {/* Section Header */}
+          <div className="flex justify-between items-end leading-[0.8] mb-[4vh] z-10 select-none">
+            <div className="flex items-end">
+              <h1 className="text-[min(20vh,12vw)] font-black tracking-[-0.08em] text-black">
+                E
+              </h1>
+              <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh] text-black">
+                ducation
+              </span>
+            </div>
+
+            {/* Quick Stats Pill */}
+            <div className="hidden sm:flex items-center gap-3 border-2 border-black px-4 py-2 rounded-full font-mono text-xs font-bold uppercase tracking-widest bg-yellow-400 text-black shadow-[3px_3px_0px_#000]">
+              <GraduationCap size={16} /> 2021 — 2028 Academic Journey
+            </div>
+          </div>
+
+          {/* Interactive Layout Grid */}
+          <div className="w-full h-[60vh] flex flex-col lg:flex-row items-center justify-between gap-8 z-10">
+            
+            {/* Left Column: Interactive Timeline Switcher */}
+            <div className="flex flex-col gap-4 w-full lg:w-[35%]">
+              {EDUCATION_DATA.map((edu, idx) => {
+                const isActive = activeEducationIndex === idx;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveEducationIndex(idx)}
+                    className={`group relative w-full border-4 border-black p-5 rounded-2xl text-left font-black transition-all duration-300 cursor-pointer ${
+                      isActive 
+                        ? "bg-black text-yellow-400 -translate-y-1 shadow-[8px_8px_0px_#000]"
+                        : "bg-transparent text-black hover:bg-black/5 hover:-translate-y-0.5 border-black/80"
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <span className={`font-mono text-xs px-2.5 py-1 rounded-md border font-bold uppercase tracking-wider ${
+                        isActive ? "border-yellow-400/30 text-yellow-400/70 bg-yellow-400/10" : "border-black/20 text-black/60"
+                      }`}>
+                        {edu.period}
+                      </span>
+                      <span className={`text-xs font-mono font-bold tracking-widest ${isActive ? "text-yellow-400" : "text-black/50"}`}>
+                        0{idx + 1}
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl sm:text-2xl uppercase tracking-tight font-black leading-tight mt-1">
+                      {edu.type}
+                    </h3>
+                    <p className={`text-xs font-medium mt-1 truncate ${isActive ? "text-yellow-400/80" : "text-black/70"}`}>
+                      {edu.institution}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Active Education Card Display */}
+            <div className="w-full lg:w-[60%] h-full flex items-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeEducationIndex}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full bg-black text-yellow-400 p-8 sm:p-10 rounded-3xl border-4 border-black shadow-[12px_12px_0px_#000] flex flex-col justify-between relative overflow-hidden select-none min-h-[48vh]"
+                >
+                  {/* Status Stamp Badge */}
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl border-2 border-yellow-400/20 bg-yellow-400/10 flex items-center justify-center text-yellow-400">
+                        {EDUCATION_DATA[activeEducationIndex].type === "COLLEGE" ? <GraduationCap size={22} /> : <Building2 size={22} />}
+                      </div>
+                      <div>
+                        <span className="font-mono text-xs text-yellow-400/60 uppercase tracking-widest block">
+                          {EDUCATION_DATA[activeEducationIndex].period}
+                        </span>
+                        <h4 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white leading-tight">
+                          {EDUCATION_DATA[activeEducationIndex].institution}
+                        </h4>
+                      </div>
+                    </div>
+
+                    <span className="px-3 py-1 bg-yellow-400 text-black font-mono text-[10px] sm:text-xs font-black uppercase tracking-widest rounded border-2 border-black shadow-[2px_2px_0px_#facc15] flex-shrink-0">
+                      {EDUCATION_DATA[activeEducationIndex].status}
+                    </span>
+                  </div>
+
+                  {/* Highlight bar */}
+                  <div className="my-5 border-y border-yellow-400/15 py-3">
+                    <span className="font-mono text-xs text-yellow-400/50 uppercase tracking-widest block mb-1">Focus & Specialization</span>
+                    <p className="text-lg sm:text-xl font-bold text-yellow-400 tracking-tight">
+                      {EDUCATION_DATA[activeEducationIndex].highlight}
+                    </p>
+                  </div>
+
+                  {/* Bullet Details */}
+                  <ul className="space-y-2 mb-6">
+                    {EDUCATION_DATA[activeEducationIndex].details.map((detail, dIdx) => (
+                      <li key={dIdx} className="flex items-start gap-2.5 text-sm text-yellow-400/80 leading-relaxed">
+                        <span className="text-yellow-400 font-bold mt-1">▸</span>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Skill Tag Pills */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {EDUCATION_DATA[activeEducationIndex].tags.map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 font-mono text-xs uppercase tracking-wider rounded-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
           </div>
         </section>
 
