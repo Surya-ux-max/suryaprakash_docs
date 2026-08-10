@@ -36,6 +36,7 @@ import certServicenow from "./certificates/Servicenow.webp";
 import certGuidewire from "./certificates/guidewire.webp";
 import certPowerBI from "./certificates/powerbi.webp";
 import Hobbies from "./Hobbies";
+import { SketchLayer, SKETCHES_BACK, SKETCHES_FRONT } from "./SketchLayer";
 
 const ROLES = [
   "SURYAPRAKASH",
@@ -260,6 +261,10 @@ function App() {
       <main className="h-screen overflow-y-auto snap-y snap-mandatory bg-yellow-400 select-none scroll-smooth text-black">
         {/* Hero Section */}
       <section className="h-screen w-full snap-start relative flex items-center overflow-hidden">
+        {/* Background & foreground sketch line art overlay */}
+        <SketchLayer paths={SKETCHES_BACK} strokeColor="black" opacityMultiplier={0.7} />
+        <SketchLayer paths={SKETCHES_FRONT} strokeColor="black" opacityMultiplier={0.7} className="z-[15]" />
+
         {/* Text Container - Left Aligned with fixed width constraint */}
         <div className="flex items-end whitespace-nowrap px-[4vw] z-10 w-full max-w-[65vw]">
           <div className="relative flex items-end">
@@ -865,6 +870,9 @@ function App() {
 
         {/* CTA / Connect Section */}
         <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-black text-yellow-400">
+          {/* Sketch overlay line art */}
+          <SketchLayer paths={SKETCHES_BACK} strokeColor="#facc15" opacityMultiplier={0.4} />
+          <SketchLayer paths={SKETCHES_FRONT} strokeColor="#facc15" opacityMultiplier={0.4} className="z-[15]" />
 
           {/* Background CONNECT watermark */}
           <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden z-0">
