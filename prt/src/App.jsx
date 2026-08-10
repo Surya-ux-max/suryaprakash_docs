@@ -864,11 +864,11 @@ function App() {
         <Hobbies />
 
         {/* CTA / Connect Section */}
-        <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-yellow-400 text-black">
+        <section className="h-screen w-full snap-start relative flex flex-col overflow-hidden bg-black text-yellow-400">
 
           {/* Background CONNECT watermark */}
           <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden z-0">
-            <span className="text-[min(55vh,35vw)] font-black tracking-[-0.1em] text-black/[0.04] select-none leading-none pr-[2vw]">
+            <span className="text-[min(55vh,35vw)] font-black tracking-[-0.1em] text-yellow-400/[0.03] select-none leading-none pr-[2vw]">
               CONNECT
             </span>
           </div>
@@ -881,14 +881,14 @@ function App() {
 
               {/* Section label */}
               <div className="flex items-center gap-3">
-                <div className="h-[2px] w-10 bg-black" />
-                <span className="font-mono text-[min(1.6vh,1vw)] uppercase tracking-[0.25em] text-black/60">Get In Touch</span>
+                <div className="h-[2px] w-10 bg-yellow-400" />
+                <span className="font-mono text-[min(1.6vh,1vw)] uppercase tracking-[0.25em] text-yellow-400/60">Get In Touch</span>
               </div>
 
               {/* Big letter title */}
               <div className="flex items-end leading-[0.8]">
-                <h1 className="text-[min(24vh,12vw)] font-black tracking-[-0.08em]">C</h1>
-                <span className="text-[min(7.5vh,4.2vw)] font-bold ml-[1vw] mb-[2vh]">onnect</span>
+                <h1 className="text-[min(24vh,12vw)] font-black tracking-[-0.08em] text-yellow-400">C</h1>
+                <span className="text-[min(7.5vh,4.2vw)] font-bold ml-[1vw] mb-[2vh] text-yellow-400">onnect</span>
               </div>
 
               {/* Heavy tagline */}
@@ -897,10 +897,10 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 280, damping: 25 }}
-                className="text-[min(5vh,3vw)] font-black leading-tight tracking-tighter uppercase max-w-lg"
+                className="text-[min(5vh,3vw)] font-black leading-tight tracking-tighter uppercase max-w-lg text-yellow-400"
               >
                 Let's build<br />
-                <span className="text-black/40">something remarkable.</span>
+                <span className="text-yellow-400/40">something remarkable.</span>
               </motion.h2>
 
               {/* Open to work status pill */}
@@ -909,11 +909,11 @@ function App() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.15, type: "spring", stiffness: 300, damping: 22 }}
-                className="inline-flex items-center gap-3 px-5 py-2.5 bg-black rounded-full self-start text-yellow-400 font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_rgba(0,0,0,0.15)] select-none"
+                className="inline-flex items-center gap-3 px-5 py-2.5 bg-yellow-400 rounded-full self-start text-black font-black text-xs uppercase tracking-widest shadow-[4px_4px_0px_rgba(250,204,21,0.2)] select-none"
               >
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-70" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-600" />
                 </span>
                 <span>Open to Opportunities</span>
               </motion.div>
@@ -940,17 +940,17 @@ function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + idx * 0.1, type: "spring", stiffness: 280, damping: 24 }}
-                  className="group relative flex items-center justify-between py-6 border-b-4 border-black overflow-hidden cursor-pointer select-none text-black"
+                  className="group relative flex items-center justify-between py-6 border-b-4 border-yellow-400/20 hover:border-yellow-400 overflow-hidden cursor-pointer select-none text-yellow-400 transition-colors"
                 >
                   {/* Sliding hover background */}
-                  <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
+                  <div className="absolute inset-0 bg-yellow-400 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
                   
                   {/* Content */}
                   <div className="relative z-10 flex items-baseline gap-6">
-                    <span className="font-mono text-xs opacity-50 group-hover:text-yellow-400/50 transition-colors uppercase">
+                    <span className="font-mono text-xs text-yellow-400/50 group-hover:text-black/60 transition-colors uppercase">
                       0{idx + 1} // {link.label}
                     </span>
-                    <span className="text-xl sm:text-2xl lg:text-3xl font-black uppercase tracking-tight group-hover:text-yellow-400 transition-colors flex items-center gap-3">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-black uppercase tracking-tight text-yellow-400 group-hover:text-black transition-colors flex items-center gap-3">
                       {link.value}
                       {link.label === "Email" && (
                         <Copy size={20} className="opacity-60 group-hover:opacity-100 transition-opacity" />
@@ -959,8 +959,8 @@ function App() {
                   </div>
 
                   {/* Dynamic Arrow */}
-                  <div className="relative z-10 w-12 h-12 rounded-full border-2 border-black group-hover:border-yellow-400 flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
-                    <svg className="w-5 h-5 text-black group-hover:text-yellow-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <div className="relative z-10 w-12 h-12 rounded-full border-2 border-yellow-400/40 group-hover:border-black flex items-center justify-center group-hover:rotate-45 transition-all duration-300">
+                    <svg className="w-5 h-5 text-yellow-400 group-hover:text-black transition-colors" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/>
                     </svg>
                   </div>
@@ -976,9 +976,9 @@ function App() {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[120] bg-black text-yellow-400 px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest border-2 border-yellow-400 shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center gap-2 pointer-events-none"
+                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[120] bg-yellow-400 text-black px-6 py-3 rounded-full font-mono text-xs uppercase tracking-widest border-2 border-black shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex items-center gap-2 pointer-events-none"
               >
-                <CheckCircle2 size={16} className="text-green-400" /> Email Copied to Clipboard!
+                <CheckCircle2 size={16} className="text-black" /> Email Copied to Clipboard!
               </motion.div>
             )}
           </AnimatePresence>
@@ -986,9 +986,9 @@ function App() {
           {/* Bottom — Marquee + Footer */}
           <div className="flex-shrink-0 z-10">
             {/* Marquee */}
-            <div className="w-full overflow-hidden border-t-2 border-black/10 py-3">
+            <div className="w-full overflow-hidden border-t-2 border-yellow-400/10 py-3">
               <div
-                className="flex gap-12 whitespace-nowrap font-mono text-[min(1.5vh,0.9vw)] uppercase tracking-[0.2em] text-black/30"
+                className="flex gap-12 whitespace-nowrap font-mono text-[min(1.5vh,0.9vw)] uppercase tracking-[0.2em] text-yellow-400/30"
                 style={{ animation: "marquee 22s linear infinite" }}
               >
                 {Array(6).fill(["AI Engineer", "RAG Specialist", "Web Developer", "Full-Stack", "LLM Ops", "Open to Work", "Coimbatore", "Sri Eshwar"]).flat().map((item, i) => (
@@ -998,12 +998,12 @@ function App() {
             </div>
 
             {/* Footer strip */}
-            <div className="w-full border-t border-black/10 px-[6vw] py-4 flex items-center justify-between bg-black/5">
-              <span className="font-black text-[min(1.8vh,1.1vw)] uppercase tracking-widest">Suryaprakash S</span>
-              <span className="font-mono text-[min(1.4vh,0.85vw)] text-black/50 uppercase tracking-widest">© 2026 · Built with React &amp; Motion</span>
+            <div className="w-full border-t border-yellow-400/15 px-[6vw] py-4 flex items-center justify-between bg-yellow-400/5 text-yellow-400">
+              <span className="font-black text-[min(1.8vh,1.1vw)] uppercase tracking-widest text-yellow-400">Suryaprakash S</span>
+              <span className="font-mono text-[min(1.4vh,0.85vw)] text-yellow-400/50 uppercase tracking-widest">© 2026 · Built with React &amp; Motion</span>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-[min(1.4vh,0.85vw)] text-black/50 uppercase tracking-widest">Designed &amp; Developed by</span>
-                <span className="font-black text-[min(1.6vh,1vw)] uppercase tracking-widest">Surya</span>
+                <span className="font-mono text-[min(1.4vh,0.85vw)] text-yellow-400/50 uppercase tracking-widest">Designed &amp; Developed by</span>
+                <span className="font-black text-[min(1.6vh,1vw)] uppercase tracking-widest text-yellow-400">Surya</span>
               </div>
             </div>
           </div>
