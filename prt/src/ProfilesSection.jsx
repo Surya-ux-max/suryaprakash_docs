@@ -1,5 +1,5 @@
-import image1 from './contribute/image1.png';
-import image2 from './contribute/image.png';
+import image1 from './contribute/image1.webp';
+import image2 from './contribute/image.webp';
 
 const GITHUB_USERNAME = 'Surya-ux-max';
 const LEETCODE_USERNAME = 'Surya-17-exe';

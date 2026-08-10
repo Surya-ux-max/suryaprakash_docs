@@ -11,17 +11,17 @@ import {
   Rocket, 
   Layers
 } from "lucide-react";
-import pic from "./images/pic.png";
-import pic3 from "./images/pic3.png";
-import pic4 from "./achieve/pic4.jpeg";
-import pic5 from "./achieve/pic5.jpeg";
-import pic6 from "./achieve/pic6.jpeg";
-import pic7 from "./achieve/pic7.jpeg";
-import pic8 from "./achieve/pic8.jpeg";
-import bill4food from "./projects/Bill4Food.png";
-import bill4food1 from "./projects/Bill4Food1.png";
-import trinetra1 from "./projects/trinetra1.png";
-import survex from "./projects/Survex.png";
+import pic from "./images/pic.webp";
+import pic3 from "./images/pic3.webp";
+import pic4 from "./achieve/pic4.webp";
+import pic5 from "./achieve/pic5.webp";
+import pic6 from "./achieve/pic6.webp";
+import pic7 from "./achieve/pic7.webp";
+import pic8 from "./achieve/pic8.webp";
+import bill4food from "./projects/Bill4Food.webp";
+import bill4food1 from "./projects/Bill4Food1.webp";
+import trinetra1 from "./projects/trinetra1.webp";
+import survex from "./projects/Survex.webp";
 import survexVideo from "./projects/video.mp4";
 import RotatingText from "./RotatingText";
 import { HelloIntro } from "./HelloIntro";
@@ -30,9 +30,9 @@ import ImagePeel from "./ImagePeel";
 import ProfilesSection from "./ProfilesSection";
 import ResumeDrawer from "./ResumeDrawer";
 import CardSwap, { Card } from "./CardSwap";
-import certServicenow from "./certificates/Servicenow.png";
-import certGuidewire from "./certificates/guidewire.png";
-import certPowerBI from "./certificates/powerbi.png";
+import certServicenow from "./certificates/Servicenow.webp";
+import certGuidewire from "./certificates/guidewire.webp";
+import certPowerBI from "./certificates/powerbi.webp";
 import Hobbies from "./Hobbies";
 
 const ROLES = [
@@ -679,6 +679,7 @@ function App() {
               loop
               muted
               playsInline
+              preload="none"
               className="w-full h-full object-cover opacity-100"
             />
           </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import introImg from "./images/intro.png";
+import introImg from "./images/intro.webp";
 
 export function HelloIntro() {
   const [isVisible, setIsVisible] = useState(true);
@@ -11,28 +11,48 @@ export function HelloIntro() {
   const [exactBgColor, setExactBgColor] = useState("#facc15");
 
   useEffect(() => {
-    // Dynamically extract the exact background color
+    let timers = [];
+    let sequenceStarted = false;
+
+    // Start the animation sequence — guarded so it only fires once
+    // even if both onload and the fallback timer are in-flight.
+    const startSequence = () => {
+      if (sequenceStarted) return;
+      sequenceStarted = true;
+      timers.push(setTimeout(() => setPhase(0.5), 0));    // curtains open
+      timers.push(setTimeout(() => setPhase(1),   400));  // image fades in
+      timers.push(setTimeout(() => setPhase(2),   1000)); // name rises
+      timers.push(setTimeout(() => setPhase(3),   1500)); // badges fade in
+      timers.push(setTimeout(() => setIsExiting(true), 3800)); // exit
+      timers.push(setTimeout(() => setIsVisible(false), 4800)); // unmount
+    };
+
+    // Extract bg colour from image pixel AND start sequence after image loads.
+    // This guarantees the image is ready before we fade it in.
     const img = new Image();
     img.src = introImg;
     img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 1;
-      canvas.height = 1;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, 1, 1);
-      const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
-      setExactBgColor(`rgb(${r}, ${g}, ${b})`);
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 1;
+        canvas.height = 1;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 1, 1);
+        const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+        setExactBgColor(`rgb(${r}, ${g}, ${b})`);
+      } catch (_) { /* canvas taint safety — color stays default */ }
+      startSequence();
     };
+    img.onerror = () => startSequence(); // image 404 — still run intro
 
-    // Sleek, professional timing sequence
-    const t0 = setTimeout(() => setPhase(0.5), 200); // Trigger curtains
-    const t1 = setTimeout(() => setPhase(1), 600);   // Image smoothly fades in
-    const t2 = setTimeout(() => setPhase(2), 1200);  // Name elegantly rises
-    const t3 = setTimeout(() => setPhase(3), 1700);  // Badges elegantly fade in
-    const t4 = setTimeout(() => setIsExiting(true), 4000); // Smooth slide up exit
-    const t5 = setTimeout(() => setIsVisible(false), 5000); // Fully unmount
+    // Safety fallback: if image doesn't load within 1.5 s (e.g. very slow
+    // network), start the sequence anyway so the intro doesn't freeze.
+    const fallback = setTimeout(startSequence, 1500);
 
-    return () => { [t0,t1,t2,t3,t4,t5].forEach(clearTimeout); };
+    return () => {
+      timers.forEach(clearTimeout);
+      clearTimeout(fallback);
+    };
   }, []);
 
   // Jump/Skip functionality
