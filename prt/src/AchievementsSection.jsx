@@ -20,7 +20,7 @@ const ACHIEVEMENT_DATA = [
     status: "Winner",
     desc: "Secured 1st Place at NGP Institute of Technology for outstanding innovation & technical excellence in AI towards Sustainable Development Goals.",
     image: achieveNgp,
-    position: "center bottom",
+    position: "center center",
   },
   {
     title: "My First AI Workshop",

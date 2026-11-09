@@ -44,7 +44,7 @@ export default function ImagePeel({ images = [], activeIndex: controlledIndex, o
             opacity: 0,
             transition: { duration: 0.7, ease: "easeInOut" } 
           }}
-          className="absolute inset-0 z-20"
+          className="absolute inset-0 z-20 [backface-visibility:hidden]"
           style={{ transformOrigin: "left center" }}
         >
           <img

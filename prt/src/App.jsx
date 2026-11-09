@@ -171,24 +171,33 @@ function SkillCard({ item, index }) {
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showIntro] = useState(() => {
-    const lastIntroTime = localStorage.getItem("lastIntroTime");
-    const now = Date.now();
-    const cooldown = 1 * 60 * 1000; // 1 minute cooldown
-    const shouldShow = !lastIntroTime || now - parseInt(lastIntroTime) > cooldown;
-    if (shouldShow) {
-      localStorage.setItem("lastIntroTime", now.toString());
+    try {
+      const lastIntroTime = localStorage.getItem("lastIntroTime");
+      const now = Date.now();
+      const cooldown = 1 * 60 * 1000; // 1 minute cooldown
+      const shouldShow = !lastIntroTime || now - parseInt(lastIntroTime, 10) > cooldown;
+      if (shouldShow) {
+        localStorage.setItem("lastIntroTime", now.toString());
+      }
+      return shouldShow;
+    } catch {
+      return false;
     }
-    return shouldShow;
   });
   const [activeSkillCategory, setActiveSkillCategory] = useState(0);
   const [activeEducationIndex, setActiveEducationIndex] = useState(0);
   const [copiedToast, setCopiedToast] = useState(false);
 
   const handleCopyEmail = (email) => {
-    if (email.includes("@")) {
-      navigator.clipboard?.writeText(email);
-      setCopiedToast(true);
-      setTimeout(() => setCopiedToast(false), 2200);
+    if (email && email.includes("@")) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        navigator.clipboard.writeText(email)
+          .then(() => {
+            setCopiedToast(true);
+            setTimeout(() => setCopiedToast(false), 2200);
+          })
+          .catch(() => {});
+      }
     }
   };
 
@@ -196,7 +205,7 @@ function App() {
     <>
       {showIntro && <HelloIntro />}
       <ResumeDrawer />
-      <main className="h-screen overflow-y-auto snap-y snap-mandatory bg-yellow-400 select-none scroll-smooth text-black">
+      <main className="h-screen w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory bg-yellow-400 select-none scroll-smooth text-black">
         {/* Hero Section */}
       <section className="h-screen w-full snap-start relative flex items-center overflow-hidden">
         {/* Background & foreground sketch line art overlay */}
