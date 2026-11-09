@@ -30,9 +30,11 @@ prt/
 │   ├── intern/               # Intern section module
 │   │   ├── InternSection.jsx # Intern section coordinator & stage
 │   │   ├── IBuilding.jsx     # Architectural "I" skyscraper with 3D depth & trusses
-│   │   ├── ClimbingRope.jsx  # Interactive climbing rope with sway physics
-│   │   ├── TinyHumans.jsx    # Rooftop, climber, cradle & ground crew figures
-│   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details card
+│   │   ├── Skyline.jsx       # Metropolis city skyline with 14+ skyscrapers flanking the center
+│   │   ├── Clouds.jsx        # Multi-layer graphic black storm clouds rolling along the horizon
+│   │   ├── ClimbingRope.jsx  # High-visibility hazard climbing rope with animated pointer beacon
+│   │   ├── TinyHumans.jsx    # Rooftop crane engineer, rope climber, cradle & ground winch crew
+│   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots
 │   ├── App.jsx               # Main app coordinator
