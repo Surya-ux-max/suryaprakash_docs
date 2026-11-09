@@ -28,11 +28,11 @@ prt/
 │   ├── achieve/              # Achievement photos (NGP, Workshop, Unstop, etc.)
 │   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
 │   ├── intern/               # Intern section module
-│   │   ├── InternSection.jsx # Intern section coordinator & stage
-│   │   ├── IBuilding.jsx     # Architectural "I" skyscraper with 3D depth & trusses
-│   │   ├── Skyline.jsx       # Metropolis city skyline with 14+ skyscrapers flanking the center
+│   │   ├── InternSection.jsx # Intern section coordinator & NYC cityscape stage
+│   │   ├── IBuilding.jsx     # Architectural "I" skyscraper with 3D depth & trusses (zero text)
+│   │   ├── NYCBuildings.jsx  # Chrysler, Empire State, water tank high-rises side-by-side with space
 │   │   ├── Clouds.jsx        # Multi-layer graphic black storm clouds rolling along the horizon
-│   │   ├── ClimbingRope.jsx  # High-visibility hazard climbing rope with animated pointer beacon
+│   │   ├── ClimbingRope.jsx  # High-visibility hazard climbing rope with minimal beacon & sway
 │   │   ├── TinyHumans.jsx    # Rooftop crane engineer, rope climber, cradle & ground winch crew
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack

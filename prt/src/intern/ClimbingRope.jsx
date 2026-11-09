@@ -7,10 +7,10 @@ import { RopeClimber } from "./TinyHumans";
  * High-visibility industrial climbing rope suspended from the rooftop crane.
  * Features:
  * - Dual-tone braided hazard pattern (bold black & bright safety yellow).
- * - Gentle continuous atmospheric wind sway so visitors spot it immediately.
- * - Prominent interactive beacon & pointer tag ("← HOVER TO CLIMB // AGENTIC AI INTERN").
+ * - Gentle continuous wind sway for immediate visual discovery.
+ * - Minimal, non-intrusive interactive beacon indicator.
  * - Dynamic tactile spring tension when hovered or clicked.
- * - Coordinates climber ascent and reveals the Agentic AI Intern details card.
+ * - Coordinates climber ascent and triggers the InternCard.
  */
 export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
   const [localHover, setLocalHover] = useState(false);
@@ -36,8 +36,8 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onClick={handleClick}
-      className="absolute top-[4%] bottom-[4%] left-[64%] md:left-[66%] w-36 -translate-x-1/2 z-30 cursor-pointer group select-none flex flex-col items-center justify-between"
-      aria-label="Climbing rope - Hover to view Agentic AI Intern details"
+      className="absolute top-[4%] bottom-[4%] left-[64%] md:left-[66%] w-32 -translate-x-1/2 z-30 cursor-pointer group select-none flex flex-col items-center justify-between"
+      aria-label="Climbing rope - Inspect Intern details"
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
@@ -47,40 +47,31 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
         }
       }}
     >
-      {/* ── Extended Hit Box (Generous 160px width for effortless hover) ── */}
-      <div className="absolute inset-y-0 w-40 -translate-x-1/2 left-1/2 z-10" />
+      {/* ── Extended Hit Box (Generous width for effortless hover) ── */}
+      <div className="absolute inset-y-0 w-36 -translate-x-1/2 left-1/2 z-10" />
 
-      {/* ── Interactive Callout Pointer Badge (Directs New Visitors) ───── */}
+      {/* ── Minimalist Visual Beacon Cue ─────────────────────────────── */}
       <motion.div
-        initial={{ opacity: 0, x: 12 }}
         animate={{
-          opacity: 1,
           x: active ? [0, -3, 0] : [0, 4, 0],
-          scale: active ? 1.05 : 1,
+          scale: active ? 1.08 : 1,
         }}
         transition={{
-          x: { repeat: Infinity, duration: active ? 1 : 2.2, ease: "easeInOut" },
-          scale: { type: "spring", stiffness: 300, damping: 20 },
+          x: { repeat: Infinity, duration: active ? 1 : 2, ease: "easeInOut" },
+          scale: { type: "spring", stiffness: 320, damping: 20 },
         }}
-        className={`absolute top-[42%] left-[65%] z-40 whitespace-nowrap px-3.5 py-1.5 rounded-full font-mono text-[10px] sm:text-xs font-black uppercase tracking-wider border-2 transition-all duration-300 pointer-events-none drop-shadow-[4px_4px_0px_#000] flex items-center gap-2 ${
+        className={`absolute top-[44%] left-[68%] z-40 px-2.5 py-1 rounded-full border-2 transition-all duration-300 pointer-events-none drop-shadow-[3px_3px_0px_#000] flex items-center gap-1.5 ${
           active
-            ? "bg-black text-yellow-400 border-black shadow-[4px_4px_0px_#facc15]"
+            ? "bg-black text-yellow-400 border-black shadow-[3px_3px_0px_#facc15]"
             : "bg-black text-yellow-400 border-yellow-400 animate-bounce"
         }`}
       >
-        {/* Pulsing Target Beacon Dot */}
-        <span className="relative flex h-2.5 w-2.5">
+        <span className="relative flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-80" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-yellow-400" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400" />
         </span>
-
-        {/* Dynamic Directive Text */}
-        <span className="flex items-center gap-1.5">
-          <span>{active ? "✦ ASCENDING" : "← HOVER ROPE"}</span>
-          <span className="opacity-60 hidden sm:inline">//</span>
-          <span className="hidden sm:inline font-bold">
-            {active ? "ROLE REVEALED" : "AGENTIC AI INTERN"}
-          </span>
+        <span className="font-mono text-[10px] font-black uppercase tracking-wider">
+          {active ? "✦" : "←"}
         </span>
       </motion.div>
 
@@ -99,20 +90,12 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
         viewBox="0 0 40 600"
       >
         <defs>
-          {/* Braided Hazard Rope Texture */}
-          <pattern id="hazard-braid" width="12" height="16" patternUnits="userSpaceOnUse">
-            <rect width="12" height="16" fill="#000" />
-            <polygon points="0,0 6,0 12,8 12,14 6,6 0,6" fill="#facc15" />
-            <polygon points="0,8 6,8 12,16 6,16 0,14" fill="#facc15" />
-          </pattern>
-
-          {/* High-voltage active glow filter */}
           <filter id="active-rope-glow" x="-40%" y="-10%" width="180%" height="120%">
             <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#facc15" floodOpacity="0.8" />
           </filter>
         </defs>
 
-        {/* Heavy Black Under-Shadow (High-contrast against any building facet) */}
+        {/* Heavy Black Under-Shadow (High-contrast against building facets) */}
         <motion.path
           animate={{
             d: active
@@ -168,23 +151,7 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
           fill="none"
         />
 
-        {/* Secondary White/Gold Reflective Tracer Strand */}
-        <motion.path
-          animate={{
-            d: active
-              ? "M 20 0 Q 30 150 20 300 Q 10 450 20 600"
-              : "M 20 0 Q 22 150 20 300 Q 18 450 20 600",
-          }}
-          transition={{ type: "spring", stiffness: 220, damping: 14 }}
-          stroke="#fff"
-          strokeWidth="1.5"
-          strokeDasharray="4 12"
-          strokeLinecap="round"
-          fill="none"
-          opacity="0.8"
-        />
-
-        {/* Tactical Climbing Knots & Steel Ring Hardware at 4 Key Intervals */}
+        {/* Tactical Climbing Knots & Steel Hardware at Intervals */}
         {[80, 200, 340, 480].map((knotY) => (
           <g key={knotY}>
             <ellipse
@@ -203,24 +170,6 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
 
       {/* ── Climber Micro-Figure Clipped to Rope ───────────────────────── */}
       <RopeClimber progress={active ? 0.40 : 0.48} isHovered={active} />
-
-      {/* ── Bottom Anchor Label (Near the Ground Crew) ──────────────────── */}
-      <motion.div
-        animate={{
-          scale: active ? 1.08 : 1,
-          y: active ? -2 : 0,
-        }}
-        className={`absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest border-2 transition-all duration-300 pointer-events-none drop-shadow-[2px_2px_0px_#000] ${
-          active
-            ? "bg-yellow-400 text-black border-black shadow-[2px_2px_0px_#000]"
-            : "bg-black text-yellow-400 border-yellow-400/60 group-hover:border-yellow-400"
-        }`}
-      >
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 group-hover:animate-ping" />
-          {active ? "Tension Locked" : "Rope Hoist 420M"}
-        </span>
-      </motion.div>
     </div>
   );
 }

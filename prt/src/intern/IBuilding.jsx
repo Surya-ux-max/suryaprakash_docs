@@ -1,12 +1,13 @@
 /**
  * IBuilding
- * A cinematic architectural skyscraper shaped as a gigantic bold letter "I".
- * Features realistic high-rise details:
+ * Cinematic architectural skyscraper shaped as a gigantic bold letter "I".
+ * Features high-rise New York City style structural details:
  * - Rooftop communications spire with blinking aviation beacon
  * - Structural steel X-bracing trusses (John Hancock style)
- * - 16-story illuminated glass curtain wall
+ * - 16-story illuminated glass curtain wall with glowing window matrix
  * - Architectural 3D depth extrusion on the right flank
- * - Double-height grand lobby entrance with canopy & foundation pillars
+ * - Grand double-height entrance lobby with canopy & foundation pillars
+ * Pure architectural structure, zero text stencils.
  */
 export default function IBuilding({ className = "", isHovered = false }) {
   return (
@@ -17,7 +18,7 @@ export default function IBuilding({ className = "", isHovered = false }) {
     >
       <svg
         viewBox="0 0 340 560"
-        className="w-full h-full max-h-[72vh] overflow-visible drop-shadow-[14px_14px_0px_rgba(0,0,0,0.9)]"
+        className="w-full h-full max-h-[70vh] overflow-visible drop-shadow-[14px_14px_0px_rgba(0,0,0,0.9)]"
       >
         <defs>
           {/* Subtle gradient for facade glass reflection */}
@@ -32,23 +33,12 @@ export default function IBuilding({ className = "", isHovered = false }) {
             <stop offset="0%" stopColor="#111" />
             <stop offset="100%" stopColor="#000" />
           </linearGradient>
-
-          {/* Laser scanning beam */}
-          <linearGradient id="laser-beam" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#facc15" stopOpacity="0" />
-            <stop offset="50%" stopColor="#facc15" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#facc15" stopOpacity="0" />
-          </linearGradient>
         </defs>
 
         {/* ── 1. 3D Architectural Extrusion (Right Depth Facet) ───────── */}
-        {/* Top Serif Depth */}
         <path d="M 270 48 L 290 32 L 290 88 L 270 104 Z" fill="url(#extrusion-shade)" />
-        {/* Shaft Depth */}
         <path d="M 215 104 L 235 88 L 235 440 L 215 456 Z" fill="url(#extrusion-shade)" />
-        {/* Bottom Serif Depth */}
         <path d="M 285 456 L 305 440 L 305 510 L 285 526 Z" fill="url(#extrusion-shade)" />
-        {/* Architectural depth edge accents */}
         <path
           d="M 290 32 L 290 88 L 235 88 L 235 440 L 305 440 L 305 510"
           stroke="#000"
@@ -58,24 +48,23 @@ export default function IBuilding({ className = "", isHovered = false }) {
 
         {/* ── 2. Rooftop Telecommunications Spire / Mast ───────────────── */}
         <g id="rooftop-mast">
-          {/* Lattice spire tower */}
-          <line x1="155" y1="48" x2="155" y2="12" stroke="#000" strokeWidth="3" />
-          <line x1="151" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.5" />
-          <line x1="159" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.5" />
-          {/* Crossbars on spire */}
-          <line x1="150" y1="28" x2="160" y2="28" stroke="#000" strokeWidth="2" />
-          <line x1="152" y1="38" x2="158" y2="38" stroke="#000" strokeWidth="2" />
+          <line x1="155" y1="48" x2="155" y2="10" stroke="#000" strokeWidth="3.5" />
+          <line x1="150" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.8" />
+          <line x1="160" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.8" />
+          <line x1="148" y1="28" x2="162" y2="28" stroke="#000" strokeWidth="2.5" />
+          <line x1="151" y1="38" x2="159" y2="38" stroke="#000" strokeWidth="2" />
+          
           {/* Top aviation obstacle beacon (red blinking light) */}
-          <circle cx="155" cy="11" r="3.5" fill="#ef4444">
+          <circle cx="155" cy="9" r="4" fill="#ef4444">
             <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
           </circle>
+          
           {/* Secondary rooftop antenna */}
-          <line x1="180" y1="48" x2="180" y2="28" stroke="#000" strokeWidth="2" strokeDasharray="3 2" />
-          <circle cx="180" cy="28" r="2" fill="#facc15" />
+          <line x1="182" y1="48" x2="182" y2="26" stroke="#000" strokeWidth="2" strokeDasharray="3 2" />
+          <circle cx="182" cy="25" r="2.5" fill="#facc15" />
         </g>
 
         {/* ── 3. The Gigantic "I" Facade (Front Elevation) ─────────────── */}
-        {/* Combined Monolithic "I" Silhouette Body */}
         <path
           d="
             M 45 48
@@ -103,7 +92,7 @@ export default function IBuilding({ className = "", isHovered = false }) {
           {/* Parapet cap line */}
           <line x1="45" y1="53" x2="270" y2="53" stroke="#facc15" strokeWidth="2" opacity="0.4" />
           {/* Roof penthouse mechanical louvers */}
-          <g opacity="0.3">
+          <g opacity="0.35">
             {Array.from({ length: 18 }).map((_, i) => (
               <line
                 key={i}
@@ -116,46 +105,11 @@ export default function IBuilding({ className = "", isHovered = false }) {
               />
             ))}
           </g>
-          {/* Helipad Stencil Marking [ H ] */}
-          <circle cx="85" cy="78" r="14" stroke="#facc15" strokeWidth="1.5" fill="none" opacity="0.6" />
-          <text
-            x="85"
-            y="83"
-            textAnchor="middle"
-            fill="#facc15"
-            fontSize="12"
-            fontFamily="monospace"
-            fontWeight="bold"
-            opacity="0.7"
-          >
-            H
-          </text>
-          {/* Top architectural signage */}
-          <text
-            x="250"
-            y="76"
-            textAnchor="end"
-            fill="#facc15"
-            fontSize="9"
-            fontFamily="monospace"
-            fontWeight="900"
-            letterSpacing="2"
-            opacity="0.8"
-          >
-            AGENTIC // TOWER
-          </text>
-          <text
-            x="250"
-            y="90"
-            textAnchor="end"
-            fill="#facc15"
-            fontSize="7"
-            fontFamily="monospace"
-            letterSpacing="1"
-            opacity="0.4"
-          >
-            ALT 420.0M · LAT 11°N
-          </text>
+          {/* Helipad Marking Circle */}
+          <circle cx="85" cy="78" r="14" stroke="#facc15" strokeWidth="2" fill="none" opacity="0.6" />
+          <circle cx="85" cy="78" r="7" stroke="#facc15" strokeWidth="1" fill="none" opacity="0.4" />
+          <line x1="77" y1="78" x2="93" y2="78" stroke="#facc15" strokeWidth="1.5" opacity="0.5" />
+          <line x1="85" y1="70" x2="85" y2="86" stroke="#facc15" strokeWidth="1.5" opacity="0.5" />
         </g>
 
         {/* ── 5. Central Shaft Details (Curtain-Wall Windows & Steel Trusses) */}
@@ -168,7 +122,6 @@ export default function IBuilding({ className = "", isHovered = false }) {
             const floorY = 112 + i * 21;
             return (
               <g key={i}>
-                {/* Horizontal floor beam */}
                 <line
                   x1="100"
                   y1={floorY}
@@ -180,7 +133,6 @@ export default function IBuilding({ className = "", isHovered = false }) {
                 {/* Windows on this floor (4 per floor) */}
                 {Array.from({ length: 4 }).map((_, w) => {
                   const winX = 106 + w * 25;
-                  // Organic illuminated windows pattern
                   const isGold = (i + w * 2) % 5 === 0;
                   const isAmber = (i * 3 + w) % 4 === 0;
 
@@ -210,7 +162,6 @@ export default function IBuilding({ className = "", isHovered = false }) {
 
           {/* ── John Hancock Style Structural Steel Chevron Bracing (X-Trusses) ── */}
           <g id="structural-trusses" stroke="#000" strokeWidth="4" opacity="0.85">
-            {/* Major X-braces across the tower shaft */}
             <line x1="100" y1="108" x2="210" y2="190" strokeLinecap="round" />
             <line x1="210" y1="108" x2="100" y2="190" strokeLinecap="round" />
 
@@ -238,7 +189,7 @@ export default function IBuilding({ className = "", isHovered = false }) {
           </g>
 
           {/* Exterior Service Ladder / Elevator Shaft (Left Column Edge) */}
-          <g id="elevator-ladder" stroke="#facc15" strokeWidth="1" opacity="0.3">
+          <g id="elevator-ladder" stroke="#facc15" strokeWidth="1" opacity="0.35">
             <line x1="97" y1="104" x2="97" y2="456" strokeWidth="1.5" />
             <line x1="102" y1="104" x2="102" y2="456" strokeWidth="1.5" />
             {Array.from({ length: 32 }).map((_, idx) => (
@@ -251,21 +202,6 @@ export default function IBuilding({ className = "", isHovered = false }) {
               />
             ))}
           </g>
-
-          {/* Vertical Architectural Stencil Text down the shaft */}
-          <text
-            x="108"
-            y="280"
-            fill="#facc15"
-            fontSize="8"
-            fontFamily="monospace"
-            letterSpacing="4"
-            opacity="0.3"
-            transform="rotate(-90 108 280)"
-            fontWeight="bold"
-          >
-            AUTONOMOUS AGENTS
-          </text>
         </g>
 
         {/* ── 6. Bottom Serif (Grand Lobby & Foundation Plinth) ────────── */}
@@ -275,6 +211,7 @@ export default function IBuilding({ className = "", isHovered = false }) {
 
           {/* Double-Height Grand Glass Lobby */}
           <rect x="95" y="468" width="120" height="50" fill="#000" stroke="#facc15" strokeWidth="1" opacity="0.9" />
+          
           {/* Lobby Entrance Columns / Pillars */}
           {Array.from({ length: 5 }).map((_, i) => (
             <line
@@ -288,6 +225,7 @@ export default function IBuilding({ className = "", isHovered = false }) {
               opacity="0.7"
             />
           ))}
+          
           {/* Revolving Door Silhouette */}
           <circle cx="155" cy="500" r="11" fill="none" stroke="#facc15" strokeWidth="1.5" opacity="0.7" />
           <line x1="147" y1="500" x2="163" y2="500" stroke="#facc15" strokeWidth="1.5" opacity="0.7" />
@@ -312,59 +250,6 @@ export default function IBuilding({ className = "", isHovered = false }) {
               opacity="0.5"
             />
           ))}
-
-          {/* Base Plinth Title */}
-          <text
-            x="40"
-            y="488"
-            fill="#facc15"
-            fontSize="8"
-            fontFamily="monospace"
-            letterSpacing="1.5"
-            fontWeight="bold"
-            opacity="0.7"
-          >
-            SECTOR // 01
-          </text>
-          <text
-            x="40"
-            y="502"
-            fill="#facc15"
-            fontSize="10"
-            fontFamily="monospace"
-            fontWeight="900"
-            letterSpacing="1"
-            opacity="0.9"
-          >
-            AGENTIC LAB
-          </text>
-
-          <text
-            x="270"
-            y="488"
-            textAnchor="end"
-            fill="#facc15"
-            fontSize="8"
-            fontFamily="monospace"
-            letterSpacing="1.5"
-            fontWeight="bold"
-            opacity="0.7"
-          >
-            HEADQUARTERS
-          </text>
-          <text
-            x="270"
-            y="502"
-            textAnchor="end"
-            fill="#facc15"
-            fontSize="10"
-            fontFamily="monospace"
-            fontWeight="900"
-            letterSpacing="1"
-            opacity="0.9"
-          >
-            AI INTERN // 2026
-          </text>
         </g>
       </svg>
     </div>

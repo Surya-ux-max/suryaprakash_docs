@@ -2,160 +2,184 @@ import { motion } from "motion/react";
 
 /**
  * Clouds
- * Graphic black storm clouds rolling across the metropolis skyline,
- * framing the skyscraper spires in a high-contrast editorial neo-noir aesthetic.
+ * Cinematic New York City storm atmosphere with multi-layered, organic graphic black clouds.
+ * Features rolling billows, atmospheric depth gradients, and lower wisps drifting
+ * across the skyscraper spires. Pure visual art, zero text.
  */
 export default function Clouds({ className = "" }) {
   return (
     <div
-      className={`absolute inset-x-0 top-0 h-[42vh] pointer-events-none select-none overflow-hidden z-10 ${className}`}
+      className={`absolute inset-x-0 top-0 h-[48vh] pointer-events-none select-none overflow-hidden ${className}`}
       aria-hidden="true"
     >
-      {/* ── Layer 1: Distant Upper Storm Shelf (Heavy top horizon black cap) ── */}
+      {/* ── Atmospheric Overhead Vignette Gradient ──────────────────────── */}
+      <div
+        className="absolute inset-x-0 top-0 h-[24vh] z-1"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)",
+        }}
+      />
+
+      {/* ── Layer 1: Distant Heavy Storm Shelf (Slow rolling drift) ──────── */}
       <motion.svg
-        initial={{ x: "-1%" }}
-        animate={{ x: ["-1%", "1.5%", "-1%"] }}
-        transition={{ repeat: Infinity, duration: 32, ease: "easeInOut" }}
-        viewBox="0 0 1600 300"
+        initial={{ x: "-2%" }}
+        animate={{ x: ["-2%", "2%", "-2%"] }}
+        transition={{ repeat: Infinity, duration: 38, ease: "easeInOut" }}
+        viewBox="0 0 1800 340"
         preserveAspectRatio="none"
-        className="absolute -top-6 -left-[5%] w-[110%] h-[80%] opacity-95 overflow-visible"
+        className="absolute -top-6 -left-[5%] w-[110%] h-[85%] z-2 opacity-90 overflow-visible"
       >
         <defs>
-          <linearGradient id="cloud-depth-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <linearGradient id="cloud-noir-deep" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#000000" />
-            <stop offset="70%" stopColor="#080808" />
-            <stop offset="100%" stopColor="#141414" />
+            <stop offset="65%" stopColor="#0a0a0a" />
+            <stop offset="100%" stopColor="#181818" />
           </linearGradient>
         </defs>
 
-        {/* Heavy overarching storm deck */}
+        {/* Deep atmospheric rolling cloud banks */}
         <path
           d="
             M -80 0
-            L 1680 0
-            L 1680 130
-            Q 1600 95 1520 120
-            Q 1420 80 1320 110
-            Q 1220 70 1100 105
-            Q 990 60 880 100
-            Q 770 50 640 95
-            Q 530 65 420 105
-            Q 310 60 200 95
-            Q 90 70 -80 110
+            L 1880 0
+            L 1880 140
+            Q 1800 90 1710 120
+            Q 1600 75 1490 110
+            Q 1380 60 1250 100
+            Q 1130 50 1010 95
+            Q 890 55 770 105
+            Q 650 60 520 95
+            Q 400 50 280 100
+            Q 160 65 50 105
+            Q -20 80 -80 120
             Z
           "
-          fill="url(#cloud-depth-grad)"
+          fill="url(#cloud-noir-deep)"
         />
       </motion.svg>
 
-      {/* ── Layer 2: Mid-Altitude Rolling Cloud Billows (Left & Right Banks) ── */}
+      {/* ── Layer 2: Mid-Level Billowing Storm Clouds (Volumetric curves) ─── */}
       <motion.svg
         initial={{ x: "1.5%" }}
         animate={{ x: ["1.5%", "-2.5%", "1.5%"] }}
-        transition={{ repeat: Infinity, duration: 24, ease: "easeInOut" }}
-        viewBox="0 0 1600 320"
+        transition={{ repeat: Infinity, duration: 28, ease: "easeInOut" }}
+        viewBox="0 0 1800 360"
         preserveAspectRatio="none"
-        className="absolute -top-4 -left-[3%] w-[108%] h-full opacity-90 overflow-visible"
+        className="absolute -top-4 -left-[4%] w-[108%] h-full z-3 opacity-95 overflow-visible"
       >
-        {/* Left billowing storm bank */}
+        {/* Left NYC Storm Bank */}
         <path
           d="
-            M -60 -20
-            L 720 -20
-            Q 700 65 630 75
-            Q 550 40 470 65
-            Q 390 30 310 60
-            Q 220 25 140 65
-            Q 60 35 -60 75
+            M -80 -20
+            L 860 -20
+            Q 840 75 760 90
+            Q 670 45 580 75
+            Q 490 35 400 70
+            Q 300 25 200 70
+            Q 100 35 -80 80
             Z
           "
           fill="#000000"
         />
 
-        {/* Right billowing storm bank */}
+        {/* Right NYC Storm Bank */}
         <path
           d="
-            M 920 -20
-            L 1680 -20
-            L 1680 90
-            Q 1590 50 1500 75
-            Q 1410 30 1320 65
-            Q 1230 40 1140 70
-            Q 1050 45 970 70
-            Q 940 35 920 -20
+            M 1020 -20
+            L 1880 -20
+            L 1880 110
+            Q 1780 60 1680 90
+            Q 1580 40 1470 80
+            Q 1360 45 1250 85
+            Q 1150 50 1060 80
+            Q 1030 35 1020 -20
             Z
           "
           fill="#000000"
         />
       </motion.svg>
 
-      {/* ── Layer 3: Foreground Graphic Clouds (Cutting across building spires) ── */}
+      {/* ── Layer 3: Foreground Billows & Spire-Cutting Tendrils ──────────── */}
       <motion.svg
         initial={{ x: "0%" }}
-        animate={{ x: ["0%", "3.5%", "0%"] }}
-        transition={{ repeat: Infinity, duration: 28, ease: "easeInOut" }}
-        viewBox="0 0 1600 320"
+        animate={{ x: ["0%", "3%", "0%"] }}
+        transition={{ repeat: Infinity, duration: 32, ease: "easeInOut" }}
+        viewBox="0 0 1800 360"
         preserveAspectRatio="none"
-        className="absolute top-0 left-0 w-full h-full opacity-100 overflow-visible"
+        className="absolute top-0 left-0 w-full h-full z-4 opacity-100 overflow-visible"
       >
-        {/* Top-rim serrated graphic billows */}
+        {/* Continuous top horizon serrated cap */}
         <path
           d="
-            M -40 0
-            L 1640 0
-            L 1640 55
-            Q 1560 20 1480 42
-            Q 1400 15 1310 38
-            Q 1220 8 1120 36
-            Q 1020 15 930 42
-            Q 840 8 740 38
-            Q 640 15 540 40
-            Q 440 5 350 36
-            Q 260 15 160 42
-            Q 70 10 -40 48
+            M -60 0
+            L 1860 0
+            L 1860 65
+            Q 1770 25 1680 50
+            Q 1590 18 1490 45
+            Q 1390 10 1280 42
+            Q 1170 18 1060 50
+            Q 960 10 840 45
+            Q 730 18 610 48
+            Q 500 8 390 42
+            Q 290 18 170 50
+            Q 70 12 -60 55
             Z
           "
           fill="#000000"
         />
 
-        {/* Floating atmospheric puff cluster (Left) */}
+        {/* Floating Gotham-style puffy cloud masses that interlock with skyscrapers */}
+        {/* West Manhattan Cloud Cluster */}
         <path
           d="
-            M 110 85
-            C 145 55 200 55 235 80
-            C 270 65 325 70 355 100
-            C 385 90 420 110 420 130
-            C 420 155 375 165 340 160
-            C 305 170 235 170 190 155
-            C 145 165 95 150 100 120
-            C 90 105 100 90 110 85
-            Z
-          "
-          fill="#000000"
-          opacity="0.95"
-        />
-
-        {/* Floating atmospheric puff cluster (Right) */}
-        <path
-          d="
-            M 1240 80
-            C 1275 50 1330 50 1365 75
-            C 1400 60 1455 65 1485 95
-            C 1515 90 1550 105 1550 130
-            C 1550 150 1505 162 1470 155
-            C 1435 165 1370 165 1325 150
-            C 1280 160 1235 145 1240 115
-            C 1230 100 1235 88 1240 80
+            M 140 95
+            C 180 60 245 60 285 90
+            C 325 72 385 78 420 110
+            C 455 100 495 122 495 145
+            C 495 172 445 184 405 178
+            C 365 190 285 190 235 172
+            C 185 184 130 166 135 132
+            C 125 116 135 100 140 95
             Z
           "
           fill="#000000"
           opacity="0.95"
         />
 
-        {/* Central brooding cloud wisp behind the "I" mast */}
-        <ellipse cx="800" cy="45" rx="140" ry="24" fill="#000000" opacity="0.8" />
-        <ellipse cx="760" cy="55" rx="90" ry="18" fill="#000000" opacity="0.9" />
-        <ellipse cx="840" cy="52" rx="95" ry="19" fill="#000000" opacity="0.9" />
+        {/* East Manhattan Cloud Cluster */}
+        <path
+          d="
+            M 1340 90
+            C 1380 55 1445 55 1485 85
+            C 1525 68 1585 74 1620 106
+            C 1655 96 1695 118 1695 142
+            C 1695 168 1645 180 1605 174
+            C 1565 186 1485 186 1435 168
+            C 1385 180 1330 162 1335 130
+            C 1325 114 1335 98 1340 90
+            Z
+          "
+          fill="#000000"
+          opacity="0.95"
+        />
+
+        {/* Midtown Central Storm Billow framing the "I" Mast */}
+        <path
+          d="
+            M 760 55
+            C 800 35 850 35 880 52
+            C 915 40 960 46 985 70
+            C 1010 65 1035 80 1035 95
+            C 1035 115 1000 125 970 120
+            C 940 128 880 128 840 115
+            C 800 124 760 112 765 90
+            C 755 78 760 65 760 55
+            Z
+          "
+          fill="#000000"
+          opacity="0.88"
+        />
       </motion.svg>
     </div>
   );
