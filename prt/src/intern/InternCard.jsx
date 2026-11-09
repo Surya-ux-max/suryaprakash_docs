@@ -17,7 +17,7 @@ export default function InternCard({ isOpen, onClose }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 10, scale: 0.95 }}
         transition={{ type: "spring", stiffness: 360, damping: 24 }}
-        className="absolute top-1/2 -translate-y-1/2 left-[calc(50%+40px)] md:left-[calc(50%+60px)] z-40 w-[290px] sm:w-[330px] bg-black text-yellow-400 p-5 rounded-2xl border-2 border-black shadow-[10px_10px_0px_#000] select-none"
+        className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-[calc(62%+20px)] z-40 w-[min(88vw,330px)] bg-black text-yellow-400 p-5 rounded-2xl border-2 border-black shadow-[10px_10px_0px_#000] select-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Subtle leader-line connector pointing to the climber */}

@@ -28,7 +28,8 @@ prt/
 │   ├── achieve/              # Achievement photos (NGP, Workshop, Unstop, etc.)
 │   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
 │   ├── intern/               # Intern section module
-│   │   ├── InternSection.jsx # Gigantic "I" skyscraper & interactive stage
+│   │   ├── InternSection.jsx # Intern section coordinator & stage
+│   │   ├── IBuilding.jsx     # Architectural "I" skyscraper with 3D depth & trusses
 │   │   ├── ClimbingRope.jsx  # Interactive climbing rope with sway physics
 │   │   ├── TinyHumans.jsx    # Rooftop, climber, cradle & ground crew figures
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details card

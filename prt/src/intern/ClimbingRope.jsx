@@ -32,7 +32,7 @@ export default function ClimbingRope({ isHovered, onHoverChange, onToggle }) {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onClick={handleClick}
-      className="absolute top-[8%] bottom-[5%] left-[58%] md:left-[60%] w-24 -translate-x-1/2 z-25 cursor-pointer group select-none flex flex-col items-center justify-between"
+      className="absolute top-[7%] bottom-[5%] left-[61%] md:left-[62%] w-24 -translate-x-1/2 z-25 cursor-pointer group select-none flex flex-col items-center justify-between"
       aria-label="Climbing rope - Hover to view Agentic AI Intern details"
       role="button"
       tabIndex={0}
