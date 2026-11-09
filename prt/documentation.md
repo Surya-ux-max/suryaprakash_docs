@@ -27,6 +27,12 @@ prt/
 │   ├── images/               # Hero and Bio images
 │   ├── achieve/              # Achievement photos (NGP, Workshop, Unstop, etc.)
 │   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
+│   ├── intern/               # Intern section module
+│   │   ├── InternSection.jsx # Gigantic "I" skyscraper & interactive stage
+│   │   ├── ClimbingRope.jsx  # Interactive climbing rope with sway physics
+│   │   ├── TinyHumans.jsx    # Rooftop, climber & ground crew micro-figures
+│   │   ├── InternHUD.jsx     # Floating Agentic AI Intern details panel
+│   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots
 │   ├── App.jsx               # Main app coordinator
 │   ├── AchievementsSection.jsx # Achievements interactive peel & selector
@@ -51,11 +57,14 @@ prt/
 3. **Bio**: Personal introduction with image
 4. **Education**: School and college info
 5. **Skills**: Interactive planner grid with 3D stacks
-6. **Achievements**: Image peel effect with dynamic text
-7. **Profiles**: Connect via various platforms
-8. **Projects**: Hover-expanding split panels
-9. **Hobbies**: Bouncing grid of hobby cards
-10. **CTA**: GitHub-style connect section with contact info
+6. **Intern**: Gigantic "I" skyscraper with climbing rope & Agentic AI Intern HUD
+7. **Achievements**: Image peel effect with dynamic text
+8. **Certificates**: 3D CardSwap deck of verified credentials
+9. **Profiles**: Connect via various platforms
+10. **Projects**: Full-section video showcases
+11. **Flagship Impact**: Live revenue-generating Bill4Food showcase
+12. **Hobbies**: Bouncing grid of hobby cards
+13. **CTA / Connect**: Editorial contact section with clipboard copy
 
 ## Key Components
 

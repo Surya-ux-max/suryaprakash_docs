@@ -24,6 +24,7 @@ import RotatingText from "./RotatingText";
 import { HelloIntro } from "./HelloIntro";
 import ProfilesSection from "./ProfilesSection";
 import ResumeDrawer from "./ResumeDrawer";
+import InternSection from "./intern/InternSection";
 import AchievementsSection from "./AchievementsSection";
 import CertificatesSection from "./CertificatesSection";
 import Hobbies from "./Hobbies";
@@ -514,6 +515,9 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Intern Section */}
+        <InternSection />
 
         {/* Achievements Section */}
         <AchievementsSection />
