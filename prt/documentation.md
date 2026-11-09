@@ -24,17 +24,22 @@ prt/
 │   ├── favicon.svg
 │   └── icons.svg
 ├── src/
-│   ├── images/           # Hero and Bio images
-│   ├── achieve/          # Achievement photos
-│   ├── projects/         # Project screenshots
-│   ├── App.jsx           # Main app + sections
-│   ├── HelloIntro.jsx    # Opening greeting animation
-│   ├── ImagePeel.jsx     # Interactive peel effect for Achievements
-│   ├── ProfilesSection.jsx # Profiles section component
-│   ├── RotatingText.jsx  # Animated text rotation
-│   ├── Stack.jsx         # 3D card stack component
-│   ├── index.css         # Global styles
-│   └── main.jsx          # App entry point
+│   ├── images/               # Hero and Bio images
+│   ├── achieve/              # Achievement photos (NGP, Workshop, Unstop, etc.)
+│   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
+│   ├── projects/             # Project screenshots
+│   ├── App.jsx               # Main app coordinator
+│   ├── AchievementsSection.jsx # Achievements interactive peel & selector
+│   ├── CertificatesSection.jsx # Certificates 3D CardSwap deck
+│   ├── HelloIntro.jsx        # Opening greeting animation
+│   ├── ImagePeel.jsx         # Interactive peel effect for Achievements
+│   ├── ProfilesSection.jsx   # Profiles section component
+│   ├── RotatingText.jsx      # Animated text rotation
+│   ├── CardSwap.jsx          # 3D cascading card deck animation
+│   ├── Stack.jsx             # 3D card stack component
+│   ├── Hobbies.jsx           # Interactive hobbies grid
+│   ├── index.css             # Global styles
+│   └── main.jsx              # App entry point
 ├── index.html
 ├── vite.config.js
 └── package.json

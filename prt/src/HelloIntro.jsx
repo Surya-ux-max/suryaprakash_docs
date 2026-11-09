@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { SketchLayer, SKETCHES_BACK, SKETCHES_FRONT } from "./SketchLayer";
+import { SketchLayer } from "./SketchLayer";
+import { SKETCHES_BACK, SKETCHES_FRONT } from "./sketchData";
 
 const EXIT_MS    = 5400;
 const UNMOUNT_MS = 6400;

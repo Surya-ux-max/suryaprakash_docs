@@ -17,28 +17,18 @@ import {
 } from "lucide-react";
 import pic from "./images/pic.webp";
 import pic3 from "./images/pic3.webp";
-import pic4 from "./achieve/pic4.webp";
-import pic5 from "./achieve/pic5.webp";
-import pic6 from "./achieve/pic6.webp";
-import pic7 from "./achieve/pic7.webp";
-import pic8 from "./achieve/pic8.webp";
 import bill4food from "./projects/Bill4Food.webp";
 import bill4food1 from "./projects/Bill4Food1.webp";
-import trinetra1 from "./projects/trinetra1.webp";
-import survex from "./projects/Survex.webp";
 import survexVideo from "./projects/video.mp4";
 import RotatingText from "./RotatingText";
 import { HelloIntro } from "./HelloIntro";
-import Stack from "./Stack";
-import ImagePeel from "./ImagePeel";
 import ProfilesSection from "./ProfilesSection";
 import ResumeDrawer from "./ResumeDrawer";
-import CardSwap, { Card } from "./CardSwap";
-import certServicenow from "./certificates/Servicenow.webp";
-import certGuidewire from "./certificates/guidewire.webp";
-import certPowerBI from "./certificates/powerbi.webp";
+import AchievementsSection from "./AchievementsSection";
+import CertificatesSection from "./CertificatesSection";
 import Hobbies from "./Hobbies";
-import { SketchLayer, SKETCHES_BACK, SKETCHES_FRONT } from "./SketchLayer";
+import { SketchLayer } from "./SketchLayer";
+import { SKETCHES_BACK, SKETCHES_FRONT } from "./sketchData";
 
 const ROLES = [
   "SURYAPRAKASH",
@@ -72,88 +62,6 @@ const SKILL_GROUPS = [
       { icon: <Layers size={48} />, title: "DevOps", desc: "Containerization and CI/CD best practices." }
     ]
   }
-];
-
-const ACHIEVEMENT_DATA = [
-  {
-    title: "Freshathon Hackathon",
-    status: "Runner",
-    desc: "Built a Comprehensive Agricultural E-Commerce platform.",
-    image: pic4
-  },
-  {
-    title: "Adya AI Hackathon",
-    status: "Runner",
-    desc: "Built a Sustainable green website and won 3000 cash prize.",
-    image: pic5
-  },
-  {
-    title: "Gen AI Hackathon",
-    status: "Top 10",
-    desc: "Recognized among top 10 teams in a competitive field.",
-    image: pic6
-  },
-  {
-    title: "48H Hacksprint",
-    status: "Finalist",
-    desc: "Intensive 48-hour development sprint at Karpagam.",
-    image: pic7
-  },
-  {
-    title: "Wayfinder AI",
-    status: "Innovator",
-    desc: "Developed for AmirthaVidyapeedam's Hackathon.",
-    image: pic8
-  }
-];
-
-const PROJECT_DATA = [
-  {
-    id: "bill4food",
-    title: "Bill4Food",
-    desc: "An online payment and billing platform designed specifically for Sri Eshwar students, enabling seamless food purchases and instant bill generation. The system simplifies cafeteria transactions by providing digital payments, real-time billing, and quick access to purchase history, reducing waiting time and improving the overall dining experience.",
-    image: bill4food,
-    tags: ["React", "Payment Integration", "Real-time Billing"]
-  },
-  {
-    id: "trinetra",
-    title: "Trinetra",
-    desc: "An intelligent object and movement detection system developed for defense applications, capable of identifying suspicious activities in real time and forwarding instant alerts to authorized personnel. By leveraging computer vision and automated monitoring, Trinetra enhances surveillance capabilities, improves situational awareness, and supports rapid response in critical security environments.",
-    image: trinetra1,
-    tags: ["Computer Vision", "AI Monitoring", "Real-time Alerts"]
-  },
-  {
-    id: "survex",
-    title: "Survex",
-    desc: "An intelligent AI assistant inspired by Jarvis, designed for natural, engaging conversations. Survex is built to be supportive, loyal, and personable—creating a comfortable interaction experience while assisting with queries, brainstorming, and everyday tasks.",
-    image: survex,
-    video: survexVideo,
-    tags: ["AI Assistant", "LLM", "Natural Language"]
-  }
-];
-
-const CERT_DATA = [
-  {
-    title: "ServiceNow CSA",
-    issuer: "ServiceNow",
-    year: "2025",
-    color: "#81B5A1",
-    image: certServicenow,
-  },
-  {
-    title: "Guidewire",
-    issuer: "Guidewire Software",
-    year: "2025",
-    color: "#F4A825",
-    image: certGuidewire,
-  },
-  {
-    title: "Power BI",
-    issuer: "Microsoft",
-    year: "2024",
-    color: "#F2C811",
-    image: certPowerBI,
-  },
 ];
 
 const EDUCATION_DATA = [
@@ -272,8 +180,6 @@ function App() {
     }
     return shouldShow;
   });
-  const [achievementIndex, setAchievementIndex] = useState(0);
-  const [bioTilt, setBioTilt] = useState({ rotateX: 0, rotateY: 0 });
   const [activeSkillCategory, setActiveSkillCategory] = useState(0);
   const [activeEducationIndex, setActiveEducationIndex] = useState(0);
   const [copiedToast, setCopiedToast] = useState(false);
@@ -601,227 +507,10 @@ function App() {
         </section>
 
         {/* Achievements Section */}
-        <section className="h-screen w-full snap-start relative flex items-center overflow-hidden bg-yellow-400 px-[6vw]">
-          {/* Text Content - Left */}
-          <div className="flex flex-col gap-[4vh] max-w-[50vw] z-10">
-            {/* Header */}
-            <div className="flex items-end leading-[0.8]">
-              <h1 className="text-[min(40vh,15vw)] font-black tracking-[-0.08em]">
-                A
-              </h1>
-              <span className="text-[min(10vh,5vw)] font-bold ml-[1.5vw] mb-[2.5vh]">
-                chievements
-              </span>
-            </div>
-
-            {/* Dynamic Achievement Text */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={achievementIndex}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 30 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="flex flex-col gap-6"
-              >
-                {/* Status Badge — Large Stamp Style */}
-                <div className="flex items-center gap-5">
-                  <motion.div
-                    initial={{ scale: 2.8, rotate: -15, opacity: 0 }}
-                    animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                    transition={{ type: "spring", damping: 12, stiffness: 350, delay: 0.1 }}
-                    className="relative"
-                  >
-                    <div className="relative px-6 py-3 bg-black border-4 border-black">
-                      <span className="text-[min(5vh,3vw)] font-black uppercase tracking-[0.15em] text-yellow-400 leading-none drop-shadow-[0_0_12px_rgba(250,204,21,0.4)]">
-                        {ACHIEVEMENT_DATA[achievementIndex].status}
-                      </span>
-                      {/* Corner accents */}
-                      <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-[3px] border-l-[3px] border-yellow-400" />
-                      <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t-[3px] border-r-[3px] border-yellow-400" />
-                      <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b-[3px] border-l-[3px] border-yellow-400" />
-                      <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-[3px] border-r-[3px] border-yellow-400" />
-                    </div>
-                  </motion.div>
-
-
-                </div>
-
-                {/* Decorative Divider */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-                  className="h-[3px] bg-black w-24 origin-left"
-                />
-
-                <motion.h3
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25 }}
-                  className="text-[min(4vh,2.5vw)] font-black uppercase tracking-tight leading-tight"
-                >
-                  {ACHIEVEMENT_DATA[achievementIndex].title}
-                </motion.h3>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 }}
-                  className="text-[min(2.5vh,1.5vw)] font-semibold leading-relaxed opacity-80 max-w-xl"
-                >
-                  {ACHIEVEMENT_DATA[achievementIndex].desc}
-                </motion.p>
-
-                {/* Interactive Achievement Selector Buttons */}
-                <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  {ACHIEVEMENT_DATA.map((item, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setAchievementIndex(idx)}
-                      className={`px-3 py-1.5 rounded-lg font-mono text-xs font-bold uppercase transition-all duration-300 border-2 cursor-pointer ${
-                        achievementIndex === idx
-                          ? "bg-black text-yellow-400 border-black shadow-[4px_4px_0px_#000] -translate-y-0.5"
-                          : "bg-transparent text-black/60 border-black/20 hover:border-black hover:text-black"
-                      }`}
-                    >
-                      0{idx + 1} {item.title.split(" ")[0]}
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Image Peel Effect - Right */}
-          <div className="absolute right-[6vw] top-1/2 -translate-y-1/2 w-[min(60vh,35vw)] h-[min(75vh,45vw)] z-20">
-            <ImagePeel 
-              images={ACHIEVEMENT_DATA.map(a => a.image)} 
-              onPeel={setAchievementIndex}
-            />
-            {/* Interaction Hint */}
-            <div className="absolute bottom-[-6vh] left-1/2 -translate-x-1/2 flex items-center gap-2 text-black/60">
-              <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-              </svg>
-              <span className="text-sm font-bold uppercase tracking-widest">Click to Peel</span>
-            </div>
-          </div>
-
-          {/* Background Text Pattern */}
-          <div className="absolute left-0 bottom-0 pointer-events-none opacity-5">
-            <h1 className="text-[min(80vh,40vw)] font-black leading-none tracking-[-0.1em] select-none">
-              WIN
-            </h1>
-          </div>
-        </section>
+        <AchievementsSection />
 
         {/* Certificates Section */}
-        <section className="h-screen w-full snap-start relative flex overflow-hidden bg-black">
-
-          {/* Left Sidebar — narrow, title + index */}
-          <div className="flex flex-col justify-center gap-[3vh] px-[5vw] w-[30vw] flex-shrink-0 z-10 border-r border-yellow-400/10">
-
-            {/* Label */}
-            <div className="flex items-center gap-3">
-              <div className="h-[2px] w-8 bg-yellow-400" />
-              <span className="text-yellow-400/50 font-mono text-xs uppercase tracking-[0.25em]">Verified Skills</span>
-            </div>
-
-            {/* Title */}
-            <div className="flex items-end leading-[0.8]">
-              <h1 className="text-[min(22vh,10vw)] font-black tracking-[-0.08em] text-yellow-400">C</h1>
-              <span className="text-[min(6vh,3.2vw)] font-bold ml-[0.8vw] mb-[1.5vh] text-yellow-400">ertificates</span>
-            </div>
-
-            {/* Numbered cert index */}
-            <div className="flex flex-col gap-5 mt-2">
-              {CERT_DATA.map((cert, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, type: "spring", stiffness: 300, damping: 25 }}
-                  className="flex items-start gap-3 group"
-                >
-                  <span className="text-yellow-400/30 font-mono text-xs mt-1 w-5 flex-shrink-0">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: cert.color }} />
-                      <span className="text-white font-black text-[min(2vh,1.1vw)] uppercase tracking-tight">
-                        {cert.title}
-                      </span>
-                    </div>
-                    <span className="text-white/35 font-mono text-[min(1.3vh,0.75vw)] uppercase tracking-widest mt-0.5 block">
-                      {cert.issuer}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* More coming */}
-            <div className="flex items-center gap-2 mt-4">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-40" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400/60" />
-              </span>
-              <span className="text-yellow-400/30 font-mono text-xs uppercase tracking-widest">More coming soon</span>
-            </div>
-          </div>
-
-          {/* Right — Large centered CardSwap */}
-          <div className="flex-1 flex items-center justify-center relative overflow-hidden">
-
-            {/* Subtle radial glow behind stack */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[50vw] h-[50vw] rounded-full bg-yellow-400/5 blur-[80px]" />
-            </div>
-
-
-
-            {/* The card stack — centered via containerClassName */}
-            {/* We give a relative host div sized to give breathing room around the stack */}
-            <div className="relative" style={{ width: 'min(58vh, 38vw)', height: 'min(44vh, 29vw)' }}>
-              <CardSwap
-                width="min(58vh, 38vw)"
-                height="min(44vh, 29vw)"
-                cardDistance={52}
-                verticalDistance={58}
-                delay={3800}
-                pauseOnHover={false}
-                skewAmount={4}
-                easing="elastic"
-                containerClassName="absolute bottom-0 right-0 translate-x-[8%] translate-y-[12%] overflow-visible"
-              >
-                {CERT_DATA.map((cert, i) => (
-                  <Card key={i} customClass="overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.9)] border-2 border-yellow-400/15">
-                    <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="w-full h-full object-cover"
-                      draggable={false}
-                    />
-                    {/* Overlay gradient + label */}
-                    <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-gradient-to-t from-black via-black/60 to-transparent">
-                      <p className="text-yellow-400 font-black text-[min(2.2vh,1.4vw)] uppercase tracking-tight leading-none">{cert.title}</p>
-                      <p className="text-white/50 font-mono text-[min(1.4vh,0.85vw)] uppercase tracking-widest mt-1">{cert.issuer}</p>
-                    </div>
-
-                  </Card>
-                ))}
-              </CardSwap>
-            </div>
-          </div>
-
-          {/* Background C watermark */}
-          <div className="absolute right-0 bottom-0 pointer-events-none opacity-[0.025] leading-none select-none">
-            <span className="text-[min(90vh,50vw)] font-black tracking-[-0.1em] text-yellow-400">C</span>
-          </div>
-        </section>
+        <CertificatesSection />
 
         {/* Profiles Section */}
         <ProfilesSection />
@@ -1064,7 +753,7 @@ function App() {
                   href={link.href}
                   target={link.target || undefined}
                   rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-                  onClick={(e) => {
+                  onClick={() => {
                     if (link.label === "Email") {
                       handleCopyEmail(link.value);
                     }
