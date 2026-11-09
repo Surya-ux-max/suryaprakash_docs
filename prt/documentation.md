@@ -30,8 +30,8 @@ prt/
 │   ├── intern/               # Intern section module
 │   │   ├── InternSection.jsx # Gigantic "I" skyscraper & interactive stage
 │   │   ├── ClimbingRope.jsx  # Interactive climbing rope with sway physics
-│   │   ├── TinyHumans.jsx    # Rooftop, climber & ground crew micro-figures
-│   │   ├── InternHUD.jsx     # Floating Agentic AI Intern details panel
+│   │   ├── TinyHumans.jsx    # Rooftop, climber, cradle & ground crew figures
+│   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots
 │   ├── App.jsx               # Main app coordinator
