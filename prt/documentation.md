@@ -29,9 +29,9 @@ prt/
 │   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
 │   ├── intern/               # Intern section module
 │   │   ├── InternSection.jsx # Intern section coordinator & NYC cityscape stage
-│   │   ├── ABuilding.jsx     # Monumental capital "A" skyscraper with skybridge & hover effects
+│   │   ├── IBuilding.jsx     # Majestic tallest "I" skyscraper with full-facade hover effects
 │   │   ├── NYCBuildings.jsx  # Chrysler, Empire State, water tank high-rises side-by-side with space
-│   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping section title 100% visible
+│   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping "I ntern" title 100% visible
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots
