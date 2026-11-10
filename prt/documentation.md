@@ -32,7 +32,6 @@ prt/
 │   │   ├── IBuilding.jsx     # Majestic tallest "I" skyscraper with full-facade hover effects
 │   │   ├── NYCBuildings.jsx  # Chrysler, Empire State, water tank high-rises side-by-side with space
 │   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping "I ntern" title 100% visible
-│   │   ├── TinyHumans.jsx    # Rooftop engineer, lobby plaza crew & suspended cradle
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots

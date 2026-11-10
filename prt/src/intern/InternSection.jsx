@@ -11,7 +11,6 @@ import {
   NYCLoftWaterTank,
   DistantNYCSkyline,
 } from "./NYCBuildings";
-import { RooftopWorker, GroundCrew, SuspendedCradle } from "./TinyHumans";
 import InternCard from "./InternCard";
 import { INTERN_DATA } from "./internData";
 
@@ -24,7 +23,7 @@ import { INTERN_DATA } from "./internData";
  * - Majestic "I" Skyscraper towering tall as the undisputed apex peak of the NYC skyline.
  * - Full-facade interactive hover effect directly on the building itself (aura glow, window illumination wave).
  * - Compact, clean floating simple card displaying role details on building hover or click.
- * - Zero ropes, zero clutter, pure architectural prestige.
+ * - Pure architectural prestige, zero clutter.
  */
 export default function InternSection() {
   const [isBuildingHovered, setIsBuildingHovered] = useState(false);
@@ -105,23 +104,8 @@ export default function InternSection() {
             className="relative h-full flex-shrink-0 flex items-end justify-center w-[min(76vw,440px)] cursor-pointer"
             title="Agentic Monolith - Hover or click to inspect role details"
           >
-            {/* Rooftop Observation Terrace & Engineer */}
-            <div className="absolute -top-7 md:-top-9 right-[16%] md:right-[20%] z-25 pointer-events-none">
-              <RooftopWorker />
-            </div>
-
-            {/* Suspended Inspection Cradle (Left Flank) */}
-            <div className="absolute top-[28%] -left-7 md:-left-10 z-25 hidden sm:block pointer-events-none">
-              <SuspendedCradle />
-            </div>
-
             {/* The Majestic "I" Monolith Skyscraper (Tallest Peak) */}
             <IBuilding isHovered={showDetails} />
-
-            {/* Ground Lobby Plaza Crew */}
-            <div className="absolute -bottom-6 md:-bottom-7 left-[42%] md:left-[45%] z-25 pointer-events-none">
-              <GroundCrew />
-            </div>
 
             {/* Floating Simple Role Details Card */}
             <InternCard
