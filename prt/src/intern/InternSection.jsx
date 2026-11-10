@@ -12,26 +12,25 @@ import {
   DistantNYCSkyline,
 } from "./NYCBuildings";
 import { RooftopWorker, GroundCrew, SuspendedCradle } from "./TinyHumans";
-import ExteriorElevator from "./ExteriorElevator";
 import InternCard from "./InternCard";
 import { INTERN_DATA } from "./internData";
 
 /**
  * InternSection
- * Manhattan architectural centerpiece showcasing the Agentic AI Intern role.
+ * Majestic New York City architectural centerpiece showcasing the Agentic AI Intern role.
  * Features:
  * - Dynamic storm clouds sculpted to keep the "I ntern" title 100% visible and unobstructed.
- * - Prominent New York City skyscrapers standing side-by-side on the ground baseline with street-level spacing across all screen sizes.
- * - Flagship "I" skyscraper headquarters in the center.
- * - High-tech futuristic exterior glass capsule elevator (observation lift) with interactive glide physics, glowing cockpit, and downward headlights.
- * - Compact, clean floating simple card displaying role details on elevator hover or click.
- * - Pure architectural aesthetic, zero text clutter.
+ * - Prominent Manhattan skyscrapers standing side-by-side on the ground baseline with street-level spacing.
+ * - Majestic "I" Skyscraper towering tall as the undisputed apex peak of the NYC skyline.
+ * - Full-facade interactive hover effect directly on the building itself (aura glow, window illumination wave).
+ * - Compact, clean floating simple card displaying role details on building hover or click.
+ * - Zero ropes, zero clutter, pure architectural prestige.
  */
 export default function InternSection() {
-  const [isElevatorHovered, setIsElevatorHovered] = useState(false);
+  const [isBuildingHovered, setIsBuildingHovered] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
 
-  const showDetails = isElevatorHovered || isPinned;
+  const showDetails = isBuildingHovered || isPinned;
 
   return (
     <section
@@ -57,7 +56,7 @@ export default function InternSection() {
         }}
       />
 
-      {/* ── Atmospheric Clouds (Sculpted to never overlap the title) ──────── */}
+      {/* ── Atmospheric Storm Clouds (Sculpted to never overlap title) ────── */}
       <Clouds className="z-10" />
 
       {/* ── Top Header Navigation Bar ──────────────────────────────────────── */}
@@ -78,7 +77,7 @@ export default function InternSection() {
         </div>
       </div>
 
-      {/* ── Center Stage: NYC Skyline Side-by-Side with Realistic Space ────── */}
+      {/* ── Center Stage: NYC Skyline with Majestic "I" Towering in Center ── */}
       <div className="relative flex-1 flex items-end justify-center z-20 w-full overflow-hidden my-[0.5vh]">
         {/* Distant Background Manhattan Silhouettes (Depth Layer) */}
         <div className="absolute inset-x-0 bottom-0 h-[48vh] pointer-events-none z-1">
@@ -86,68 +85,61 @@ export default function InternSection() {
         </div>
 
         {/* Continuous NYC Street Block: Side by Side on Same Ground Baseline */}
-        <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-7 xl:gap-8 h-[68vh] max-h-[530px] w-full max-w-[1600px] px-2">
+        <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-7 xl:gap-8 h-[72vh] max-h-[580px] w-full max-w-[1600px] px-2">
           
           {/* ── West Manhattan Skyscrapers (Left of "I" Building) ──────────── */}
           <div className="flex items-end gap-2 sm:gap-3 md:gap-4 lg:gap-5 h-full flex-shrink-0">
-            {/* Building L1: Pre-War with Rooftop Wooden Water Tank */}
+            {/* Building L1: Pre-War with Rooftop Wooden Water Tank (~54% height) */}
             <NYCPreWarWaterTank className="hidden sm:flex" />
-            {/* Building L2: Art Deco Chrysler Spire */}
+            {/* Building L2: Art Deco Chrysler Spire (~78% height) */}
             <NYCChryslerSpire />
-            {/* Building L3: Midtown Slanted Glass Tower */}
+            {/* Building L3: Midtown Slanted Glass Tower (~65% height) */}
             <NYCSlantedGlassTower className="hidden md:flex" />
           </div>
 
-          {/* ── Centerpiece Hero: Flagship "I" Headquarters & Glass Elevator ─ */}
-          <div className="relative h-full flex-shrink-0 flex items-end justify-center w-[min(72vw,430px)]">
-            
-            {/* Rooftop Observation Deck & Engineer */}
-            <div className="absolute -top-7 md:-top-9 right-[16%] md:right-[20%] z-25">
+          {/* ── Centerpiece Hero: Majestic Flagship "I" Skyscraper (100% Height - Tallest) ── */}
+          <div
+            onMouseEnter={() => setIsBuildingHovered(true)}
+            onMouseLeave={() => setIsBuildingHovered(false)}
+            onClick={() => setIsPinned((prev) => !prev)}
+            className="relative h-full flex-shrink-0 flex items-end justify-center w-[min(76vw,440px)] cursor-pointer"
+            title="Agentic Monolith - Hover or click to inspect role details"
+          >
+            {/* Rooftop Observation Terrace & Engineer */}
+            <div className="absolute -top-7 md:-top-9 right-[16%] md:right-[20%] z-25 pointer-events-none">
               <RooftopWorker />
             </div>
 
             {/* Suspended Inspection Cradle (Left Flank) */}
-            <div className="absolute top-[28%] -left-7 md:-left-10 z-25 hidden sm:block">
+            <div className="absolute top-[28%] -left-7 md:-left-10 z-25 hidden sm:block pointer-events-none">
               <SuspendedCradle />
             </div>
 
-            {/* The Flagship "I" Monolith Skyscraper */}
-            <div
-              className="w-full h-full flex items-end justify-center cursor-pointer"
-              onClick={() => setIsPinned((prev) => !prev)}
-            >
-              <IBuilding isHovered={showDetails} />
-            </div>
+            {/* The Majestic "I" Monolith Skyscraper (Tallest Peak) */}
+            <IBuilding isHovered={showDetails} />
 
-            {/* High-Tech Futuristic Exterior Glass Capsule Elevator (Replaces Rope) */}
-            <ExteriorElevator
-              isHovered={showDetails}
-              onHoverChange={setIsElevatorHovered}
-              onToggle={() => setIsPinned((prev) => !prev)}
-            />
-
-            {/* Ground Lobby Dispatch Crew */}
-            <div className="absolute -bottom-6 md:-bottom-7 left-[42%] md:left-[45%] z-25">
+            {/* Ground Lobby Plaza Crew */}
+            <div className="absolute -bottom-6 md:-bottom-7 left-[42%] md:left-[45%] z-25 pointer-events-none">
               <GroundCrew />
             </div>
 
-            {/* Clean Floating Simple Card */}
+            {/* Floating Simple Role Details Card */}
             <InternCard
               isOpen={showDetails}
               onClose={() => {
                 setIsPinned(false);
-                setIsElevatorHovered(false);
+                setIsBuildingHovered(false);
               }}
             />
           </div>
 
           {/* ── East Manhattan Skyscrapers (Right of "I" Building) ─────────── */}
           <div className="flex items-end gap-2 sm:gap-3 md:gap-4 lg:gap-5 h-full flex-shrink-0">
-            {/* Building R1: Empire State-Style Stepped Tower */}
+            {/* Building R1: Empire State-Style Stepped Tower (~80% height) */}
             <NYCEmpireStateTower />
-            {/* Building R2: Contemporary Diamond Crown Pinnacle */}
+            {/* Building R2: Contemporary Diamond Crown Pinnacle (~68% height) */}
             <NYCDiamondCrown className="hidden md:flex" />
-            {/* Building R3: Tribeca Loft with Rooftop Water Tank & Dish */}
+            {/* Building R3: Tribeca Loft with Rooftop Water Tank & Dish (~52% height) */}
             <NYCLoftWaterTank className="hidden sm:flex" />
           </div>
         </div>
@@ -158,7 +150,7 @@ export default function InternSection() {
         {/* Subtle Status Indicator */}
         <div className="flex items-center gap-2 font-mono text-[11px] font-bold">
           <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
-          <span className="opacity-70 hidden sm:inline">NYC Autonomous Headquarters</span>
+          <span className="opacity-70 hidden sm:inline">NYC Autonomous Headquarters // Sector 01</span>
         </div>
 
         {/* Minimal Inspect / Close Button */}

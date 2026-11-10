@@ -1,22 +1,21 @@
 /**
  * NYCBuildings
- * Prominent New York City skyscrapers flanking the central "I" building.
- * Engineered with explicit responsive dimensions, high-contrast silhouettes,
- * and illuminated window bays for maximum visibility across all screens.
- * Features:
- * - Lower Manhattan pre-war high-rise with iconic rooftop wooden water tank
- * - Art Deco Chrysler-style stepped spire with sunburst crown & flashing beacon
- * - Midtown diagonal-crown glass curtain-wall tower
- * - Empire State-style tiered setback skyscraper with broadcast mast
+ * Iconic Manhattan skyscrapers designed to flank the majestic central "I" building.
+ * Calibrated in height so the "I" monolith stands as the undisputed tallest skyscraper.
+ * Features quintessential New York City architectural landmarks:
+ * - Chrysler-style Art Deco stepped spire with radiating sunburst arches
+ * - Empire State-style tiered setback skyscraper with mooring broadcast mast
+ * - Pre-war high-rises with iconic wooden rooftop water tanks on steel trestles
+ * - Midtown diagonal-sheared glass crown tower
  * - Contemporary diamond-faceted glass pinnacle
- * - Tribeca loft with rooftop water tank & communications dish
- * - Background Manhattan silhouette layer for depth
+ * - Tribeca loft with classical cornice, rooftop water tank & satellite dish
+ * - Distant Manhattan supertalls silhouette backdrop
  */
 
-// 1. Classic Pre-War NYC High-Rise with Rooftop Wooden Water Tank
+// 1. Classic Pre-War NYC High-Rise with Rooftop Wooden Water Tank (Height ~54%)
 export function NYCPreWarWaterTank({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[68%] w-14 sm:w-18 md:w-22 lg:w-26 xl:w-28 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[54%] w-14 sm:w-16 md:w-20 lg:w-24 xl:w-26 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 110 380"
         preserveAspectRatio="xMidYMax meet"
@@ -44,7 +43,7 @@ export function NYCPreWarWaterTank({ className = "" }) {
         {/* Main Building Shaft */}
         <rect x="12" y="98" width="86" height="282" fill="#0a0a0a" stroke="#000" strokeWidth="4" />
 
-        {/* Illuminated Pre-War Sash Windows Grid */}
+        {/* Pre-War Windows Grid */}
         {Array.from({ length: 11 }).map((_, row) => {
           const yPos = 114 + row * 24;
           return (
@@ -61,20 +60,20 @@ export function NYCPreWarWaterTank({ className = "" }) {
   );
 }
 
-// 2. The Art Deco Chrysler-Style Spire Skyscraper
+// 2. The Art Deco Chrysler-Style Spire Skyscraper (Height ~78%)
 export function NYCChryslerSpire({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[92%] w-16 sm:w-20 md:w-26 lg:w-30 xl:w-34 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[78%] w-16 sm:w-20 md:w-24 lg:w-28 xl:w-30 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 140 520"
         preserveAspectRatio="xMidYMax meet"
         className="w-full h-full overflow-visible drop-shadow-[7px_7px_0px_rgba(0,0,0,0.9)]"
       >
         {/* ── Spire Needle with Red Flashing Aviation Beacon ───────────── */}
-        <line x1="70" y1="80" x2="70" y2="10" stroke="#000" strokeWidth="4" />
-        <line x1="63" y1="80" x2="70" y2="32" stroke="#000" strokeWidth="2" />
-        <line x1="77" y1="80" x2="70" y2="32" stroke="#000" strokeWidth="2" />
-        <circle cx="70" cy="8" r="4.5" fill="#ef4444" className="animate-pulse" />
+        <line x1="70" y1="80" x2="70" y2="12" stroke="#000" strokeWidth="4" />
+        <line x1="63" y1="80" x2="70" y2="34" stroke="#000" strokeWidth="2" />
+        <line x1="77" y1="80" x2="70" y2="34" stroke="#000" strokeWidth="2" />
+        <circle cx="70" cy="10" r="4.5" fill="#ef4444" className="animate-pulse" />
 
         {/* ── Art Deco Arched Crown (Tier 3) ──────────────────────────── */}
         <polygon points="42,130 70,78 98,130" fill="#000" stroke="#facc15" strokeWidth="2" />
@@ -88,9 +87,9 @@ export function NYCChryslerSpire({ className = "" }) {
         <line x1="30" y1="130" x2="110" y2="130" stroke="#facc15" strokeWidth="2.5" opacity="0.6" />
         {Array.from({ length: 2 }).map((_, r) => (
           <g key={r}>
-            <rect x="42" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity="0.9" />
-            <rect x="64" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity="0.95" />
-            <rect x="86" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity="0.9" />
+            <rect x="42" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity={0.9} />
+            <rect x="64" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity={0.95} />
+            <rect x="86" y={142 + r * 18} width="12" height="11" rx="1" fill="#facc15" opacity={0.9} />
           </g>
         ))}
 
@@ -115,10 +114,10 @@ export function NYCChryslerSpire({ className = "" }) {
   );
 }
 
-// 3. Contemporary Midtown Slanted Glass Tower
+// 3. Contemporary Midtown Slanted Glass Tower (Height ~65%)
 export function NYCSlantedGlassTower({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[82%] w-14 sm:w-18 md:w-22 lg:w-26 xl:w-28 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[65%] w-14 sm:w-16 md:w-20 lg:w-24 xl:w-26 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 120 440"
         preserveAspectRatio="xMidYMax meet"
@@ -131,7 +130,7 @@ export function NYCSlantedGlassTower({ className = "" }) {
           stroke="#000"
           strokeWidth="4"
         />
-        {/* Antenna Mast on Highest Edge */}
+        {/* Antenna Mast */}
         <line x1="102" y1="38" x2="102" y2="4" stroke="#000" strokeWidth="3" />
         <circle cx="102" cy="4" r="3" fill="#facc15" />
 
@@ -156,20 +155,20 @@ export function NYCSlantedGlassTower({ className = "" }) {
   );
 }
 
-// 4. Empire State-Style Tiered Observation Tower
+// 4. Empire State-Style Tiered Observation Tower (Height ~80%)
 export function NYCEmpireStateTower({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[94%] w-16 sm:w-20 md:w-26 lg:w-30 xl:w-34 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[80%] w-16 sm:w-20 md:w-24 lg:w-28 xl:w-30 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 140 520"
         preserveAspectRatio="xMidYMax meet"
         className="w-full h-full overflow-visible drop-shadow-[7px_7px_0px_rgba(0,0,0,0.9)]"
       >
         {/* ── Mooring Broadcast Spire with Red Collision Beacon ───────── */}
-        <line x1="70" y1="70" x2="70" y2="6" stroke="#000" strokeWidth="4" />
+        <line x1="70" y1="70" x2="70" y2="8" stroke="#000" strokeWidth="4" />
         <line x1="63" y1="70" x2="70" y2="28" stroke="#000" strokeWidth="2" />
         <line x1="77" y1="70" x2="70" y2="28" stroke="#000" strokeWidth="2" />
-        <circle cx="70" cy="5" r="4.5" fill="#ef4444" className="animate-pulse" />
+        <circle cx="70" cy="7" r="4.5" fill="#ef4444" className="animate-pulse" />
 
         {/* ── Tier 4: Observation Deck Crown ───────────────────────────── */}
         <rect x="50" y="70" width="40" height="35" fill="#000" stroke="#000" strokeWidth="2.5" />
@@ -178,19 +177,19 @@ export function NYCEmpireStateTower({ className = "" }) {
         {/* ── Tier 3: Upper Setback ─────────────────────────────────────── */}
         <rect x="38" y="105" width="64" height="45" fill="#000" stroke="#000" strokeWidth="3" />
         <line x1="38" y1="105" x2="102" y2="105" stroke="#facc15" strokeWidth="2" opacity="0.5" />
-        <rect x="46" y="118" width="13" height="12" rx="1" fill="#facc15" opacity="0.9" />
-        <rect x="63" y="118" width="13" height="12" rx="1" fill="#facc15" opacity="0.95" />
-        <rect x="80" y="118" width="13" height="12" rx="1" fill="#facc15" opacity="0.9" />
+        <rect x="46" y="118" width="13" height="12" rx="1" fill="#facc15" opacity={0.9} />
+        <rect x="63" y="118" width="13" height="12" rx="1" fill="#facc15" opacity={0.95} />
+        <rect x="80" y="118" width="13" height="12" rx="1" fill="#facc15" opacity={0.9} />
 
         {/* ── Tier 2: Mid Setback ───────────────────────────────────────── */}
         <rect x="24" y="150" width="92" height="60" fill="#080808" stroke="#000" strokeWidth="3.5" />
         <line x1="24" y1="150" x2="116" y2="150" stroke="#facc15" strokeWidth="2" opacity="0.5" />
         {Array.from({ length: 2 }).map((_, r) => (
           <g key={r}>
-            <rect x="34" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity="0.85" />
-            <rect x="54" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity="0.95" />
-            <rect x="74" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity="0.9" />
-            <rect x="94" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity="0.8" />
+            <rect x="34" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity={0.85} />
+            <rect x="54" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity={0.95} />
+            <rect x="74" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity={0.9} />
+            <rect x="94" y={165 + r * 22} width="14" height="13" rx="1" fill="#facc15" opacity={0.8} />
           </g>
         ))}
 
@@ -215,10 +214,10 @@ export function NYCEmpireStateTower({ className = "" }) {
   );
 }
 
-// 5. Contemporary Diamond-Faceted Crown Tower
+// 5. Contemporary Diamond-Faceted Crown Tower (Height ~68%)
 export function NYCDiamondCrown({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[82%] w-14 sm:w-18 md:w-22 lg:w-26 xl:w-28 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[68%] w-14 sm:w-16 md:w-20 lg:w-24 xl:w-26 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 120 440"
         preserveAspectRatio="xMidYMax meet"
@@ -253,10 +252,10 @@ export function NYCDiamondCrown({ className = "" }) {
   );
 }
 
-// 6. Classic NYC Industrial Loft with Rooftop Water Tank & Dish
+// 6. Classic NYC Industrial Loft with Rooftop Water Tank & Dish (Height ~52%)
 export function NYCLoftWaterTank({ className = "" }) {
   return (
-    <div className={`relative flex items-end h-[68%] w-14 sm:w-18 md:w-22 lg:w-26 xl:w-28 flex-shrink-0 select-none pointer-events-none ${className}`}>
+    <div className={`relative flex items-end h-[52%] w-14 sm:w-16 md:w-20 lg:w-24 xl:w-26 flex-shrink-0 select-none pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 110 380"
         preserveAspectRatio="xMidYMax meet"
@@ -281,7 +280,7 @@ export function NYCLoftWaterTank({ className = "" }) {
         {/* Main Building Shaft */}
         <rect x="10" y="96" width="90" height="284" fill="#0a0a0a" stroke="#000" strokeWidth="4" />
 
-        {/* Industrial Sash Windows */}
+        {/* Industrial Windows */}
         {Array.from({ length: 11 }).map((_, r) => {
           const yPos = 112 + r * 24;
           return (
@@ -304,7 +303,7 @@ export function DistantNYCSkyline({ className = "" }) {
     <svg
       viewBox="0 0 1600 360"
       preserveAspectRatio="none"
-      className={`w-full h-full overflow-hidden select-none pointer-events-none opacity-35 ${className}`}
+      className={`w-full h-full overflow-hidden select-none pointer-events-none opacity-30 ${className}`}
     >
       <path
         d="

@@ -1,158 +1,262 @@
+import { motion } from "motion/react";
+
 /**
  * IBuilding
- * Cinematic architectural skyscraper shaped as a gigantic bold letter "I".
- * Features high-rise New York City style structural details:
- * - Rooftop communications spire with blinking aviation beacon
- * - Structural steel X-bracing trusses (John Hancock style)
- * - 16-story illuminated glass curtain wall with glowing window matrix
- * - Architectural 3D depth extrusion on the right flank
- * - Grand double-height entrance lobby with canopy & foundation pillars
- * Pure architectural structure, zero text stencils.
+ * The Majestic Flagship Skyscraper of the NYC Skyline shaped as a gigantic bold letter "I".
+ * Towering tall above all surrounding Manhattan skyscrapers with full-facade hover effects:
+ * - Soaring rooftop observation deck & telecommunications spire with flashing beacons
+ * - 18 storeys of illuminated glass curtain walls with responsive hover glow
+ * - Structural steel John Hancock-style X-bracing trusses
+ * - 3D architectural side-extrusion depth bevels
+ * - Grand double-height entrance lobby at street level with pillars & revolving doors
+ * - Interactive hover state: facade lights up, windows glow in synchronized waves, and role card opens
  */
 export default function IBuilding({ className = "", isHovered = false }) {
   return (
-    <div
-      className={`relative w-full h-full flex items-center justify-center select-none transition-all duration-300 ${
-        isHovered ? "brightness-105" : ""
-      } ${className}`}
+    <motion.div
+      animate={{
+        scale: isHovered ? 1.025 : 1,
+        y: isHovered ? -6 : 0,
+      }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+      className={`relative w-full h-full flex items-end justify-center select-none transition-all duration-300 cursor-pointer group ${className}`}
     >
+      {/* ── Majestic Architectural Hover Aura Glow ────────────────────── */}
+      <div
+        className={`absolute inset-0 -top-8 pointer-events-none transition-opacity duration-500 rounded-2xl ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 40%, rgba(250,204,21,0.28) 0%, rgba(250,204,21,0.08) 50%, transparent 75%)",
+          filter: "blur(18px)",
+        }}
+      />
+
+      {/* ── Interactive Pointer Beacon Tag over Spire ─────────────────── */}
+      <motion.div
+        animate={{
+          y: isHovered ? [0, -3, 0] : [0, 4, 0],
+          scale: isHovered ? 1.08 : 1,
+        }}
+        transition={{
+          y: { repeat: Infinity, duration: isHovered ? 1 : 2.2, ease: "easeInOut" },
+          scale: { type: "spring", stiffness: 300, damping: 20 },
+        }}
+        className={`absolute -top-11 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full font-mono text-[10px] font-black uppercase tracking-wider border-2 transition-all duration-300 pointer-events-none drop-shadow-[4px_4px_0px_#000] flex items-center gap-1.5 z-40 ${
+          isHovered
+            ? "bg-black text-yellow-400 border-black shadow-[4px_4px_0px_#facc15]"
+            : "bg-black text-yellow-400 border-yellow-400 animate-bounce"
+        }`}
+      >
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-80" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400" />
+        </span>
+        <span>{isHovered ? "✦ AGENTIC HEADQUARTERS" : "⚡ HOVER SKYSCRAPER"}</span>
+      </motion.div>
+
+      {/* ── Monumental "I" Skyscraper SVG (Tallest in Skyline: Height 600) ── */}
       <svg
-        viewBox="0 0 340 560"
-        className="w-full h-full max-h-[70vh] overflow-visible drop-shadow-[14px_14px_0px_rgba(0,0,0,0.9)]"
+        viewBox="0 0 320 600"
+        preserveAspectRatio="xMidYMax meet"
+        className={`w-full h-full max-h-[74vh] overflow-visible transition-all duration-300 ${
+          isHovered
+            ? "drop-shadow-[0_0_24px_rgba(250,204,21,0.6)] drop-shadow-[16px_16px_0px_#000]"
+            : "drop-shadow-[14px_14px_0px_rgba(0,0,0,0.9)]"
+        }`}
       >
         <defs>
-          {/* Subtle gradient for facade glass reflection */}
-          <linearGradient id="facade-sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* Facade reflective sheen gradient */}
+          <linearGradient id="facade-sheen-majestic" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#222" />
-            <stop offset="50%" stopColor="#0a0a0a" />
-            <stop offset="100%" stopColor="#161616" />
+            <stop offset="45%" stopColor="#080808" />
+            <stop offset="100%" stopColor="#181818" />
           </linearGradient>
 
-          {/* 3D side-extrusion shadow gradient */}
-          <linearGradient id="extrusion-shade" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#111" />
-            <stop offset="100%" stopColor="#000" />
+          {/* 3D Depth facet shadow */}
+          <linearGradient id="extrusion-shade-majestic" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#141414" />
+            <stop offset="100%" stopColor="#000000" />
+          </linearGradient>
+
+          {/* Active hover laser sweep */}
+          <linearGradient id="active-laser-sheen" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#facc15" stopOpacity="0" />
+            <stop offset="50%" stopColor="#facc15" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#facc15" stopOpacity="0" />
           </linearGradient>
         </defs>
 
-        {/* ── 1. 3D Architectural Extrusion (Right Depth Facet) ───────── */}
-        <path d="M 270 48 L 290 32 L 290 88 L 270 104 Z" fill="url(#extrusion-shade)" />
-        <path d="M 215 104 L 235 88 L 235 440 L 215 456 Z" fill="url(#extrusion-shade)" />
-        <path d="M 285 456 L 305 440 L 305 510 L 285 526 Z" fill="url(#extrusion-shade)" />
+        {/* ── 1. 3D Architectural Depth Extrusions (Right Facet) ───────── */}
+        <path d="M 260 48 L 280 30 L 280 92 L 260 110 Z" fill="url(#extrusion-shade-majestic)" />
+        <path d="M 210 110 L 230 92 L 230 480 L 210 498 Z" fill="url(#extrusion-shade-majestic)" />
+        <path d="M 275 498 L 295 480 L 295 558 L 275 576 Z" fill="url(#extrusion-shade-majestic)" />
         <path
-          d="M 290 32 L 290 88 L 235 88 L 235 440 L 305 440 L 305 510"
+          d="M 280 30 L 280 92 L 230 92 L 230 480 L 295 480 L 295 558"
           stroke="#000"
-          strokeWidth="2.5"
+          strokeWidth="3"
           fill="none"
         />
 
-        {/* ── 2. Rooftop Telecommunications Spire / Mast ───────────────── */}
+        {/* ── 2. Soaring Rooftop Communications Spire & Antenna Array ─── */}
         <g id="rooftop-mast">
-          <line x1="155" y1="48" x2="155" y2="10" stroke="#000" strokeWidth="3.5" />
-          <line x1="150" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.8" />
-          <line x1="160" y1="48" x2="155" y2="24" stroke="#000" strokeWidth="1.8" />
-          <line x1="148" y1="28" x2="162" y2="28" stroke="#000" strokeWidth="2.5" />
-          <line x1="151" y1="38" x2="159" y2="38" stroke="#000" strokeWidth="2" />
-          
-          {/* Top aviation obstacle beacon (red blinking light) */}
-          <circle cx="155" cy="9" r="4" fill="#ef4444">
-            <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite" />
-          </circle>
-          
-          {/* Secondary rooftop antenna */}
-          <line x1="182" y1="48" x2="182" y2="26" stroke="#000" strokeWidth="2" strokeDasharray="3 2" />
-          <circle cx="182" cy="25" r="2.5" fill="#facc15" />
+          {/* Main telecommunications needle (Reaches to y=6, tallest peak) */}
+          <line x1="145" y1="48" x2="145" y2="6" stroke="#000" strokeWidth="4" />
+          <line x1="140" y1="48" x2="145" y2="22" stroke="#000" strokeWidth="2" />
+          <line x1="150" y1="48" x2="145" y2="22" stroke="#000" strokeWidth="2" />
+          <line x1="138" y1="26" x2="152" y2="26" stroke="#000" strokeWidth="2.5" />
+          <line x1="141" y1="36" x2="149" y2="36" stroke="#000" strokeWidth="2.5" />
+
+          {/* Top aviation obstacle beacon (High-intensity pulsing red strobe) */}
+          <circle cx="145" cy="5" r="4.5" fill="#ef4444" className="animate-pulse" />
+          {isHovered && (
+            <circle cx="145" cy="5" r="9" fill="#ef4444" opacity="0.4" className="animate-ping" />
+          )}
+
+          {/* Secondary microwave relay antenna */}
+          <line x1="175" y1="48" x2="175" y2="24" stroke="#000" strokeWidth="2.5" strokeDasharray="3 2" />
+          <circle cx="175" cy="23" r="3" fill="#facc15" />
+          {/* Rooftop satellite dish */}
+          <ellipse cx="112" cy="40" rx="12" ry="6" fill="#000" stroke="#facc15" strokeWidth="1.5" />
+          <line x1="112" y1="40" x2="112" y2="28" stroke="#facc15" strokeWidth="2" />
         </g>
 
-        {/* ── 3. The Gigantic "I" Facade (Front Elevation) ─────────────── */}
+        {/* ── 3. The Gigantic "I" Facade (Front Elevation Silhouette) ───── */}
         <path
           d="
-            M 45 48
-            L 270 48
-            L 270 104
-            L 215 104
-            L 215 456
-            L 285 456
-            L 285 526
-            L 25 526
-            L 25 456
-            L 95 456
-            L 95 104
-            L 45 104
+            M 35 48
+            L 260 48
+            L 260 110
+            L 210 110
+            L 210 498
+            L 275 498
+            L 275 576
+            L 15 576
+            L 15 498
+            L 80 498
+            L 80 110
+            L 35 110
             Z
           "
-          fill="url(#facade-sheen)"
+          fill="url(#facade-sheen-majestic)"
           stroke="#000"
-          strokeWidth="5"
+          strokeWidth="6"
           strokeLinejoin="round"
         />
 
-        {/* ── 4. Top Serif Details (Roof Terrace & Observation Lounge) ──── */}
+        {/* Active Hover Facade Neon Edge Highlight */}
+        {isHovered && (
+          <path
+            d="
+              M 35 48
+              L 260 48
+              L 260 110
+              L 210 110
+              L 210 498
+              L 275 498
+              L 275 576
+              L 15 576
+              L 15 498
+              L 80 498
+              L 80 110
+              L 35 110
+              Z
+            "
+            stroke="#facc15"
+            strokeWidth="3"
+            strokeLinejoin="round"
+            fill="none"
+          />
+        )}
+
+        {/* ── 4. Top Serif (Rooftop Observation Terrace & Helipad) ─────── */}
         <g id="top-serif">
           {/* Parapet cap line */}
-          <line x1="45" y1="53" x2="270" y2="53" stroke="#facc15" strokeWidth="2" opacity="0.4" />
-          {/* Roof penthouse mechanical louvers */}
-          <g opacity="0.35">
+          <line x1="35" y1="54" x2="260" y2="54" stroke="#facc15" strokeWidth="2.5" opacity="0.6" />
+          
+          {/* Mechanical penthouse ventilation louvers */}
+          <g opacity={isHovered ? "0.6" : "0.35"}>
             {Array.from({ length: 18 }).map((_, i) => (
               <line
                 key={i}
-                x1={55 + i * 11}
-                y1="60"
-                x2={62 + i * 11}
-                y2="76"
+                x1={48 + i * 11}
+                y1="62"
+                x2={55 + i * 11}
+                y2="78"
                 stroke="#facc15"
-                strokeWidth="1.5"
+                strokeWidth="2"
               />
             ))}
           </g>
-          {/* Helipad Marking Circle */}
-          <circle cx="85" cy="78" r="14" stroke="#facc15" strokeWidth="2" fill="none" opacity="0.6" />
-          <circle cx="85" cy="78" r="7" stroke="#facc15" strokeWidth="1" fill="none" opacity="0.4" />
-          <line x1="77" y1="78" x2="93" y2="78" stroke="#facc15" strokeWidth="1.5" opacity="0.5" />
-          <line x1="85" y1="70" x2="85" y2="86" stroke="#facc15" strokeWidth="1.5" opacity="0.5" />
+
+          {/* Rooftop Helipad Circle Marking */}
+          <circle cx="75" cy="82" r="15" stroke="#facc15" strokeWidth="2" fill="none" opacity="0.75" />
+          <circle cx="75" cy="82" r="8" stroke="#facc15" strokeWidth="1.2" fill="none" opacity="0.5" />
+          <line x1="67" y1="82" x2="83" y2="82" stroke="#facc15" strokeWidth="1.8" opacity="0.7" />
+          <line x1="75" y1="74" x2="75" y2="90" stroke="#facc15" strokeWidth="1.8" opacity="0.7" />
+
+          {/* Observation Deck Panoramic Glass Band */}
+          <rect x="135" y="66" width="115" height="32" rx="3" fill="#000" stroke="#facc15" strokeWidth="1.5" />
+          {Array.from({ length: 7 }).map((_, i) => (
+            <rect
+              key={i}
+              x={140 + i * 15}
+              y="70"
+              width="11"
+              height="24"
+              rx="1"
+              fill="#facc15"
+              opacity={isHovered ? 0.95 : 0.6}
+              className={isHovered ? "animate-pulse" : undefined}
+            />
+          ))}
         </g>
 
-        {/* ── 5. Central Shaft Details (Curtain-Wall Windows & Steel Trusses) */}
+        {/* ── 5. Central Shaft (18 Storeys of Curtain-Wall Windows & Trusses) ── */}
         <g id="shaft-tower">
-          {/* Window bays background glow */}
-          <rect x="100" y="108" width="110" height="344" fill="#0d0d0d" />
+          {/* Window bays dark glass foundation */}
+          <rect x="85" y="114" width="120" height="380" fill="#0a0a0a" />
 
-          {/* Floor Slabs (16 distinct architectural storeys) */}
-          {Array.from({ length: 16 }).map((_, i) => {
-            const floorY = 112 + i * 21;
+          {/* 18 Architectural Floors with Window Grids */}
+          {Array.from({ length: 18 }).map((_, i) => {
+            const floorY = 118 + i * 21;
             return (
               <g key={i}>
+                {/* Floor Beam Slab */}
                 <line
-                  x1="100"
+                  x1="85"
                   y1={floorY}
-                  x2="210"
+                  x2="205"
                   y2={floorY}
-                  stroke="#222"
+                  stroke="#1c1c1c"
                   strokeWidth="2"
                 />
-                {/* Windows on this floor (4 per floor) */}
+                {/* 4 Windows per floor */}
                 {Array.from({ length: 4 }).map((_, w) => {
-                  const winX = 106 + w * 25;
-                  const isGold = (i + w * 2) % 5 === 0;
-                  const isAmber = (i * 3 + w) % 4 === 0;
+                  const winX = 92 + w * 28;
+                  const isGold = (i + w * 2) % 4 === 0 || isHovered;
+                  const isAmber = (i * 3 + w) % 3 === 0;
 
                   return (
                     <rect
                       key={w}
                       x={winX}
                       y={floorY + 3}
-                      width="19"
-                      height="14"
+                      width="21"
+                      height="15"
                       rx="1"
                       fill={
-                        isGold
+                        isHovered
+                          ? "#facc15"
+                          : isGold
                           ? "#facc15"
                           : isAmber
                           ? "#ca8a04"
-                          : "rgba(250,204,21,0.12)"
+                          : "rgba(250,204,21,0.15)"
                       }
-                      opacity={isGold ? 0.95 : isAmber ? 0.65 : 0.3}
-                      className={isGold ? "animate-pulse" : undefined}
+                      opacity={isHovered ? 0.95 : isGold ? 0.9 : isAmber ? 0.6 : 0.25}
+                      className={isGold || isHovered ? "animate-pulse" : undefined}
                     />
                   );
                 })}
@@ -161,97 +265,106 @@ export default function IBuilding({ className = "", isHovered = false }) {
           })}
 
           {/* ── John Hancock Style Structural Steel Chevron Bracing (X-Trusses) ── */}
-          <g id="structural-trusses" stroke="#000" strokeWidth="4" opacity="0.85">
-            <line x1="100" y1="108" x2="210" y2="190" strokeLinecap="round" />
-            <line x1="210" y1="108" x2="100" y2="190" strokeLinecap="round" />
+          <g id="structural-trusses" stroke="#000" strokeWidth="4.5" opacity="0.9">
+            <line x1="85" y1="114" x2="205" y2="205" strokeLinecap="round" />
+            <line x1="205" y1="114" x2="85" y2="205" strokeLinecap="round" />
 
-            <line x1="100" y1="190" x2="210" y2="274" strokeLinecap="round" />
-            <line x1="210" y1="190" x2="100" y2="274" strokeLinecap="round" />
+            <line x1="85" y1="205" x2="205" y2="296" strokeLinecap="round" />
+            <line x1="205" y1="205" x2="85" y2="296" strokeLinecap="round" />
 
-            <line x1="100" y1="274" x2="210" y2="358" strokeLinecap="round" />
-            <line x1="210" y1="274" x2="100" y2="358" strokeLinecap="round" />
+            <line x1="85" y1="296" x2="205" y2="387" strokeLinecap="round" />
+            <line x1="205" y1="296" x2="85" y2="387" strokeLinecap="round" />
 
-            <line x1="100" y1="358" x2="210" y2="452" strokeLinecap="round" />
-            <line x1="210" y1="358" x2="100" y2="452" strokeLinecap="round" />
+            <line x1="85" y1="387" x2="205" y2="494" strokeLinecap="round" />
+            <line x1="205" y1="387" x2="85" y2="494" strokeLinecap="round" />
 
-            {/* Accent gold truss pins at intersection nodes */}
-            {[149, 232, 316, 405].map((nodeY) => (
+            {/* Accent Gold Truss Intersection Pins */}
+            {[160, 250, 341, 440].map((nodeY) => (
               <circle
                 key={nodeY}
-                cx="155"
+                cx="145"
                 cy={nodeY}
-                r="3.5"
+                r="4"
                 fill="#facc15"
                 stroke="#000"
-                strokeWidth="1.5"
+                strokeWidth="1.8"
               />
             ))}
           </g>
 
-          {/* Exterior Service Ladder / Elevator Shaft (Left Column Edge) */}
-          <g id="elevator-ladder" stroke="#facc15" strokeWidth="1" opacity="0.35">
-            <line x1="97" y1="104" x2="97" y2="456" strokeWidth="1.5" />
-            <line x1="102" y1="104" x2="102" y2="456" strokeWidth="1.5" />
-            {Array.from({ length: 32 }).map((_, idx) => (
+          {/* Exterior High-Rise Service Elevator Ladder Column */}
+          <g id="service-column" stroke="#facc15" strokeWidth="1.2" opacity={isHovered ? "0.6" : "0.35"}>
+            <line x1="82" y1="110" x2="82" y2="498" strokeWidth="2" />
+            <line x1="87" y1="110" x2="87" y2="498" strokeWidth="2" />
+            {Array.from({ length: 34 }).map((_, idx) => (
               <line
                 key={idx}
-                x1="97"
-                y1={108 + idx * 11}
-                x2="102"
-                y2={108 + idx * 11}
+                x1="82"
+                y1={114 + idx * 11}
+                x2="87"
+                y2={114 + idx * 11}
               />
             ))}
           </g>
         </g>
 
-        {/* ── 6. Bottom Serif (Grand Lobby & Foundation Plinth) ────────── */}
+        {/* ── 6. Bottom Serif (Grand Lobby & Street Plinth) ─────────────── */}
         <g id="bottom-serif">
           {/* Foundation Beam Line */}
-          <line x1="25" y1="460" x2="285" y2="460" stroke="#facc15" strokeWidth="2" opacity="0.4" />
+          <line x1="15" y1="504" x2="275" y2="504" stroke="#facc15" strokeWidth="2.5" opacity="0.6" />
 
-          {/* Double-Height Grand Glass Lobby */}
-          <rect x="95" y="468" width="120" height="50" fill="#000" stroke="#facc15" strokeWidth="1" opacity="0.9" />
-          
-          {/* Lobby Entrance Columns / Pillars */}
+          {/* Double-Height Grand Glass Entrance Lobby */}
+          <rect
+            x="80"
+            y="512"
+            width="130"
+            height="58"
+            fill="#000"
+            stroke="#facc15"
+            strokeWidth={isHovered ? "2.5" : "1.5"}
+            opacity="0.95"
+          />
+
+          {/* Lobby Architectural Pillars */}
           {Array.from({ length: 5 }).map((_, i) => (
             <line
               key={i}
-              x1={102 + i * 26}
-              y1="468"
-              x2={102 + i * 26}
-              y2="518"
+              x1={88 + i * 28}
+              y1="512"
+              x2={88 + i * 28}
+              y2="570"
               stroke="#facc15"
-              strokeWidth="2.5"
-              opacity="0.7"
+              strokeWidth="3"
+              opacity="0.8"
             />
           ))}
-          
-          {/* Revolving Door Silhouette */}
-          <circle cx="155" cy="500" r="11" fill="none" stroke="#facc15" strokeWidth="1.5" opacity="0.7" />
-          <line x1="147" y1="500" x2="163" y2="500" stroke="#facc15" strokeWidth="1.5" opacity="0.7" />
-          <line x1="155" y1="492" x2="155" y2="508" stroke="#facc15" strokeWidth="1.5" opacity="0.7" />
 
-          {/* Entrance Canopy / Awning */}
+          {/* Grand Revolving Entrance Doors */}
+          <circle cx="145" cy="548" r="13" fill="none" stroke="#facc15" strokeWidth="2" opacity="0.8" />
+          <line x1="135" y1="548" x2="155" y2="548" stroke="#facc15" strokeWidth="2" opacity="0.8" />
+          <line x1="145" y1="538" x2="145" y2="558" stroke="#facc15" strokeWidth="2" opacity="0.8" />
+
+          {/* Entrance Awning / Canopy */}
           <polygon
-            points="130,486 180,486 186,494 124,494"
+            points="115,532 175,532 182,542 108,542"
             fill="#facc15"
             stroke="#000"
-            strokeWidth="2"
+            strokeWidth="2.5"
           />
 
-          {/* Foundation Structural Rivet Bolts */}
+          {/* Foundation Heavy Rivet Bolts */}
           {Array.from({ length: 8 }).map((_, i) => (
             <circle
               key={i}
-              cx={40 + i * 29}
-              cy="520"
-              r="2.5"
+              cx={28 + i * 32}
+              cy="570"
+              r="3"
               fill="#facc15"
-              opacity="0.5"
+              opacity="0.6"
             />
           ))}
         </g>
       </svg>
-    </div>
+    </motion.div>
   );
 }
