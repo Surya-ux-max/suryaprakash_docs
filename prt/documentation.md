@@ -31,9 +31,9 @@ prt/
 │   │   ├── InternSection.jsx # Intern section coordinator & NYC cityscape stage
 │   │   ├── IBuilding.jsx     # Architectural "I" skyscraper with 3D depth & trusses (zero text)
 │   │   ├── NYCBuildings.jsx  # Chrysler, Empire State, water tank high-rises side-by-side with space
-│   │   ├── Clouds.jsx        # Multi-layer graphic black storm clouds rolling along the horizon
-│   │   ├── ClimbingRope.jsx  # High-visibility hazard climbing rope with minimal beacon & sway
-│   │   ├── TinyHumans.jsx    # Rooftop crane engineer, rope climber, cradle & ground winch crew
+│   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping "I ntern" title 100% visible
+│   │   ├── ExteriorElevator.jsx # Futuristic exterior glass capsule elevator with interactive glide
+│   │   ├── TinyHumans.jsx    # Rooftop engineer, lobby dispatch crew & suspended cradle
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── projects/             # Project screenshots
