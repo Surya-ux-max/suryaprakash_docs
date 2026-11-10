@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Briefcase, ArrowUpRight } from "lucide-react";
-import IBuilding from "./IBuilding";
+import ABuilding from "./ABuilding";
 import Clouds from "./Clouds";
 import {
   NYCPreWarWaterTank,
@@ -18,10 +18,10 @@ import { INTERN_DATA } from "./internData";
  * InternSection
  * Majestic New York City architectural centerpiece showcasing the Agentic AI Intern role.
  * Features:
- * - Dynamic storm clouds sculpted to keep the "I ntern" title 100% visible and unobstructed.
+ * - Dynamic storm clouds sculpted to keep the "Agentic AI Intern" title 100% visible and unobstructed.
  * - Prominent Manhattan skyscrapers standing side-by-side on the ground baseline with street-level spacing.
- * - Majestic "I" Skyscraper towering tall as the undisputed apex peak of the NYC skyline.
- * - Full-facade interactive hover effect directly on the building itself (aura glow, window illumination wave).
+ * - Monumental Capital "A" Skyscraper towering tall as the apex flagship of the NYC skyline.
+ * - Full-facade interactive hover effect directly on the "A" building (aura glow, skybridge illumination, window wave).
  * - Compact, clean floating simple card displaying role details on building hover or click.
  * - Pure architectural prestige, zero clutter.
  */
@@ -60,13 +60,13 @@ export default function InternSection() {
 
       {/* ── Top Header Navigation Bar ──────────────────────────────────────── */}
       <div className="flex justify-between items-end leading-[0.8] z-30 select-none">
-        {/* Section Title (Completely Clear & Unobstructed) */}
+        {/* Section Title with "A" Initial matching the "A" Skyscraper */}
         <div className="flex items-end">
           <h1 className="text-[min(18vh,11vw)] font-black tracking-[-0.08em] text-black drop-shadow-[2px_2px_0px_rgba(255,255,255,0.5)]">
-            I
+            A
           </h1>
           <span className="text-[min(6vh,4vw)] font-bold ml-[1vw] mb-[1.5vh] text-black drop-shadow-[1px_1px_0px_rgba(255,255,255,0.4)]">
-            ntern
+            gentic AI Intern
           </span>
         </div>
 
@@ -76,7 +76,7 @@ export default function InternSection() {
         </div>
       </div>
 
-      {/* ── Center Stage: NYC Skyline with Majestic "I" Towering in Center ── */}
+      {/* ── Center Stage: NYC Skyline with Monumental "A" Skyscraper in Center ── */}
       <div className="relative flex-1 flex items-end justify-center z-20 w-full overflow-hidden my-[0.5vh]">
         {/* Distant Background Manhattan Silhouettes (Depth Layer) */}
         <div className="absolute inset-x-0 bottom-0 h-[48vh] pointer-events-none z-1">
@@ -86,7 +86,7 @@ export default function InternSection() {
         {/* Continuous NYC Street Block: Side by Side on Same Ground Baseline */}
         <div className="relative z-10 flex items-end justify-center gap-2 sm:gap-4 md:gap-6 lg:gap-7 xl:gap-8 h-[72vh] max-h-[580px] w-full max-w-[1600px] px-2">
           
-          {/* ── West Manhattan Skyscrapers (Left of "I" Building) ──────────── */}
+          {/* ── West Manhattan Skyscrapers (Left of "A" Building) ──────────── */}
           <div className="flex items-end gap-2 sm:gap-3 md:gap-4 lg:gap-5 h-full flex-shrink-0">
             {/* Building L1: Pre-War with Rooftop Wooden Water Tank (~54% height) */}
             <NYCPreWarWaterTank className="hidden sm:flex" />
@@ -96,16 +96,16 @@ export default function InternSection() {
             <NYCSlantedGlassTower className="hidden md:flex" />
           </div>
 
-          {/* ── Centerpiece Hero: Majestic Flagship "I" Skyscraper (100% Height - Tallest) ── */}
+          {/* ── Centerpiece Hero: Monumental Capital "A" Skyscraper (100% Height - Tallest) ── */}
           <div
             onMouseEnter={() => setIsBuildingHovered(true)}
             onMouseLeave={() => setIsBuildingHovered(false)}
             onClick={() => setIsPinned((prev) => !prev)}
-            className="relative h-full flex-shrink-0 flex items-end justify-center w-[min(76vw,440px)] cursor-pointer"
+            className="relative h-full flex-shrink-0 flex items-end justify-center w-[min(78vw,460px)] cursor-pointer"
             title="Agentic Monolith - Hover or click to inspect role details"
           >
-            {/* The Majestic "I" Monolith Skyscraper (Tallest Peak) */}
-            <IBuilding isHovered={showDetails} />
+            {/* The Monumental Capital "A" Skyscraper (Tallest Peak) */}
+            <ABuilding isHovered={showDetails} />
 
             {/* Floating Simple Role Details Card */}
             <InternCard
@@ -117,7 +117,7 @@ export default function InternSection() {
             />
           </div>
 
-          {/* ── East Manhattan Skyscrapers (Right of "I" Building) ─────────── */}
+          {/* ── East Manhattan Skyscrapers (Right of "A" Building) ─────────── */}
           <div className="flex items-end gap-2 sm:gap-3 md:gap-4 lg:gap-5 h-full flex-shrink-0">
             {/* Building R1: Empire State-Style Stepped Tower (~80% height) */}
             <NYCEmpireStateTower />
