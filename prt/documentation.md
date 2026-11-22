@@ -35,12 +35,10 @@ prt/
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
 │   ├── gdg/                  # Google Developer Groups on Campus SECE module
-│   │   ├── GDGSection.jsx    # Master coordinator for GDG section
-│   │   ├── AILogomark.jsx    # Hand-drawn "I am acting as AI Domain lead" with 3D block letters
-│   │   ├── CodeBrackets.jsx  # Iconic `< >` developer code bracket emblem with neon glow
-│   │   ├── GDGHeadline.jsx   # Signature right-aligned headline template ("G" + "DG")
-│   │   ├── GDGImpactCards.jsx # 4-column leadership metric & initiative cards
-│   │   └── GDGData.js        # Leadership stats, tracks, and Google Developer metadata
+│   │   ├── GDGSection.jsx    # Master coordinator for GDG section (pure code layout)
+│   │   ├── AILogomark.jsx    # Pure typography: cursive "I am acting as", "AI", "Domain lead"
+│   │   ├── CodeBrackets.jsx  # Pure code developer brackets `< >` with hollow stroke
+│   │   └── GDGHeadline.jsx   # Signature right-aligned headline template ("G" + "DG" + "On Campus SECE")
 │   ├── projects/             # Project screenshots
 │   ├── App.jsx               # Main app coordinator
 │   ├── AchievementsSection.jsx # Achievements interactive peel & selector
