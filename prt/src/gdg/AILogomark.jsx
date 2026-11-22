@@ -2,11 +2,11 @@ import { motion } from "motion/react";
 
 /**
  * AILogomark
- * Left-side visual anchor directly translating the user's hand-drawn sketch:
- * - "I am acting as" in elegant cursive handwriting (Pinyon Script)
- * - "AI" in monumental display font with hollow outline & hover fill
- * - "Domain lead" in flowing calligraphic script beneath
- * Pure code for fonts, layout, and design (no 3D or 2D graphics).
+ * Left-side visual anchor translating the user's sketch:
+ * - "I AM ACTING AS" in commanding, bold, non-italic uppercase display typography
+ * - "AI" in monumental font-black scale
+ * - "DOMAIN LEAD" in heavy uppercase typography beneath
+ * Pure code for fonts, layouts, and design.
  */
 export default function AILogomark({ className = "" }) {
   return (
@@ -15,35 +15,29 @@ export default function AILogomark({ className = "" }) {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`relative flex flex-col items-center lg:items-start select-none ${className}`}
+      className={`relative flex flex-col items-center lg:items-start text-center lg:text-left select-none ${className}`}
     >
-      {/* ── 1. "I am acting as" in Flowing Cursive Script (Sketch Layout) ── */}
-      <div
-        style={{ fontFamily: "var(--font-cursive, 'Pinyon Script', cursive)" }}
-        className="text-[min(5.5vh,3.8vw)] sm:text-4xl md:text-5xl lg:text-6xl text-yellow-400 tracking-wide font-normal leading-[1.05] drop-shadow-[0_2px_8px_rgba(250,204,21,0.25)]"
-      >
-        <span>I am acting</span>
-        <span className="block ml-6 sm:ml-10 text-yellow-400/90 -mt-1 sm:-mt-2">
-          as
+      {/* ── 1. "I AM ACTING AS" (Large, Bold, Non-Italic) ─────────────── */}
+      <div className="flex flex-col font-black uppercase tracking-wider text-yellow-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.05] drop-shadow-[0_2px_10px_rgba(250,204,21,0.2)]">
+        <span>I AM ACTING</span>
+        <span className="text-yellow-400/80 ml-0 lg:ml-6 mt-0.5">
+          AS
         </span>
       </div>
 
-      {/* ── 2. "AI" (Pure Code for Fonts — Hollow Outline with Hover Fill) ── */}
+      {/* ── 2. "AI" (Monumental Scale Display Typography) ─────────────── */}
       <div className="my-1 sm:my-2 leading-none">
-        <span
-          className="font-black text-[min(22vh,15vw)] tracking-[-0.04em] leading-[0.85] text-transparent [-webkit-text-stroke:2.5px_#facc15] sm:[-webkit-text-stroke:3.5px_#facc15] lg:[-webkit-text-stroke:4px_#facc15] hover:text-yellow-400 transition-colors duration-300 drop-shadow-[0_0_20px_rgba(250,204,21,0.2)] inline-block cursor-default"
+        <h2
+          className="font-black text-[min(28vh,18vw)] tracking-[-0.05em] leading-[0.8] text-yellow-400 drop-shadow-[4px_4px_0px_rgba(250,204,21,0.25)] select-none hover:scale-[1.02] transition-transform duration-200 cursor-default"
           title="Artificial Intelligence"
         >
           AI
-        </span>
+        </h2>
       </div>
 
-      {/* ── 3. "Domain lead" in Calligraphic Cursive Script ───────────── */}
-      <div
-        style={{ fontFamily: "var(--font-cursive, 'Pinyon Script', cursive)" }}
-        className="text-[min(6.5vh,4.5vw)] sm:text-4xl md:text-5xl lg:text-6xl text-yellow-400 tracking-wide font-normal drop-shadow-[0_2px_10px_rgba(250,204,21,0.3)] -mt-1 sm:-mt-2"
-      >
-        <span>Domain lead</span>
+      {/* ── 3. "DOMAIN LEAD" (Large, Heavy, Non-Italic) ───────────────── */}
+      <div className="font-black uppercase tracking-tight text-yellow-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-none mt-1 sm:mt-2 drop-shadow-[0_2px_10px_rgba(250,204,21,0.2)]">
+        <span>DOMAIN LEAD</span>
       </div>
     </motion.div>
   );
