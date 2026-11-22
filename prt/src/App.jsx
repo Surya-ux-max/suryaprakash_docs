@@ -25,6 +25,7 @@ import { HelloIntro } from "./HelloIntro";
 import ProfilesSection from "./ProfilesSection";
 import ResumeDrawer from "./ResumeDrawer";
 import InternSection from "./intern/InternSection";
+import GDGSection from "./gdg/GDGSection";
 import AchievementsSection from "./AchievementsSection";
 import CertificatesSection from "./CertificatesSection";
 import Hobbies from "./Hobbies";
@@ -518,6 +519,9 @@ function App() {
 
         {/* Intern Section */}
         <InternSection />
+
+        {/* Google Developer Groups on Campus SECE */}
+        <GDGSection />
 
         {/* Achievements Section */}
         <AchievementsSection />

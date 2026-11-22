@@ -29,11 +29,18 @@ prt/
 │   ├── certificates/         # Certifications (NVIDIA, ServiceNow, Guidewire, Power BI)
 │   ├── intern/               # Intern section module
 │   │   ├── InternSection.jsx # Intern section coordinator & NYC cityscape stage
-│   │   ├── IBuilding.jsx     # Majestic tallest "I" skyscraper with full-facade hover effects
+│   │   ├── ABuilding.jsx     # Monumental capital "A" skyscraper with skybridge & hover effects
 │   │   ├── NYCBuildings.jsx  # Chrysler, Empire State, water tank high-rises side-by-side with space
-│   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping "I ntern" title 100% visible
+│   │   ├── Clouds.jsx        # Sculpted black storm clouds keeping section title 100% visible
 │   │   ├── InternCard.jsx    # Sleek floating Agentic AI Intern details simple card
 │   │   └── internData.js     # Role details, highlights & tech stack
+│   ├── gdg/                  # Google Developer Groups on Campus SECE module
+│   │   ├── GDGSection.jsx    # Master coordinator for GDG section
+│   │   ├── AILogomark.jsx    # Hand-drawn "I am acting as AI Domain lead" with 3D block letters
+│   │   ├── CodeBrackets.jsx  # Iconic `< >` developer code bracket emblem with neon glow
+│   │   ├── GDGHeadline.jsx   # Signature right-aligned headline template ("G" + "DG")
+│   │   ├── GDGImpactCards.jsx # 4-column leadership metric & initiative cards
+│   │   └── GDGData.js        # Leadership stats, tracks, and Google Developer metadata
 │   ├── projects/             # Project screenshots
 │   ├── App.jsx               # Main app coordinator
 │   ├── AchievementsSection.jsx # Achievements interactive peel & selector
